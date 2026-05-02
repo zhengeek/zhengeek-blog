@@ -84,3 +84,18 @@ Goal: Improve the project into a portfolio-level and competition-level work.
 - [ ] Add project architecture diagram
 - [ ] Write technical documentation
 - [ ] Prepare presentation materials
+
+## Long-term Vision
+
+ZhenGeek is not only a blog, but also my personal digital platform.
+
+It will include:
+
+- Personal homepage
+- Technical blog
+- Learning records
+- Life records
+- Project portfolio
+- Artistic design
+- Message and comment system
+- Future self-media content entrance
