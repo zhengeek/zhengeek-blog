@@ -30,11 +30,29 @@ Vue3页面最终是在浏览器中显示的，但是Vue3项目的开发过程需
 
 ### Definition
 
-Git is a version control tool,which can help me record every important change and manage the long-term project.
+Git is a version control system,which can help me record every important change and manage the long-term project.
 
 ### Why do I need it in ZhenGeek Blog?
 
-Help me manage the project record,record my growth,prevent the loss of important code,and also show me the clear development history.
+In ZhenGeek Blog, I use Git to manage the project history, record my growth, prevent the loss of important code, and show a clear development history.
+
+### My understanding
+
+Git 是一个版本控制工具，可以帮助我记录项目每一次重要修改，方便管理长期项目。
+
+在 ZhenGeek Blog 项目中，Git 就像项目的存档器。每一次 commit 都是一个阶段性存档，我可以通过这些提交记录看到自己从 0 开始搭建项目的过程。
+
+## 3. What is GitHub?
+
+### Definition
+
+GitHub is an online code hosting platform for storing and displaying remote repositories.It also can be used to sharing,exhibition and collaborative development.
+
+### Why do I need it in ZhenGeek Blog?
+
+GitHub provides remote backup, project exhibition, growth recording, and serves as a foundation for engineering collaboration.  
+
+It will also be a part of my personal portfolio and technical brand.
 
 ### Git vs Github
 
@@ -43,6 +61,40 @@ Git：a version control system installed on my computer.
 GitHub:an online code hosting platform for storing and displaying remote repositories.
 
 Git can work without GitHub,but GitHub is built around Git.
+
+### My understanding
+
+需要特别声明的是，GitHub不仅是个普通网盘，它除了保存代码文件，还拥有保存commit记录、修改说明、历史版本、README、Issues等项目相关信息。
+
+它更像是一个完整的工程项目档案馆。
+
+## 4. Basic Git Workflow
+
+### Definition
+
+Git workflow describes how changes move through different stages in a Git project.
+
+A typical Git workflow is:
+
+---text
+Working Directory
+  ↓ git add
+Staging Area
+  ↓ git commit
+Local Repository
+  ↓ git push
+Remote Repository
+
+### Why do I need it in ZhenGeek Blog?
+
+In ZhenGeek Blog, every project update should follow a clear Git workflow.
+
+First, I modify files in the working directory.
+Then, I use git add to move selected changes into the staging area.
+Next, I use git commit to save these changes as a version in the local repository.
+Finally, I use git push to upload local commits to the remote repository on GitHub.
+
+Understanding this workflow helps me manage project versions clearly, avoid losing important changes, and build a professional development history.
 
 ### Basic Commands
 
@@ -53,13 +105,23 @@ git commit -m "message": saves the changes in staging area as a version in local
 git push: upload locan commits to the remote repository on Github
 
 git status: check the current state of a Git repository.
-For example, it can show:
-- Which files have been modified
-- Which new files are not tracked by Git yet
-- Which files have been added to the staging area
-- Whether there is anything to commit or push
 
 
+### Working Directory
+
+The place where I actually modify files in my project.
+
+### Staging Area
+
+The place where I select the changes that will be included in the next commit.
+
+### Local Repository
+
+The Git repository stored on my own computer. It saves my commit history locally.
+
+### Remote Repository
+
+The online repository stored on GitHub. It is used for backup, display, and collaboration.
 
 ### My understanding
 
@@ -75,29 +137,18 @@ git push: 把本地仓库里的 commit 上传到 GitHub。
 
 ↑特别指出，git push上传的不是文件本身，而是提交记录commit（当然commit里包含了文件变化）
 
-## 3. What is GitHub?
+Git 的本地开发流程是：
 
-### Definition
+VSCode 修改文件
+↓
+git status查看状态
+↓
+git add选择要提交的内容
+↓
+git commit保存成本地版本
+↓
+git push同步到 GitHub
 
-### Why do I need it in ZhenGeek Blog?
-
-### My understanding
-
-## 4. Basic Git Workflow
-
-### Working Directory
-
-### Staging Area
-
-### Local Repository
-
-### Remote Repository
-
-### git add
-
-### git commit
-
-### git push
 
 ## 4. What is a Domain Name?
 
