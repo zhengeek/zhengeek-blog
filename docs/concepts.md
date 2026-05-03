@@ -77,11 +77,11 @@ git push: 把本地仓库里的 commit 上传到 GitHub。
 
 ## 3. What is GitHub?
 
-### What is it?
+### Definition
 
 ### Why do I need it in ZhenGeek Blog?
 
-### What do I still not understand?
+### My understanding
 
 ## 4. Basic Git Workflow
 
