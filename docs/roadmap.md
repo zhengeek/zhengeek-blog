@@ -11,6 +11,17 @@ It is designed to become:
 - A growth record system
 - A project for competition and postgraduate interview presentation
 
+It will include:
+
+- Personal homepage
+- Technical blog
+- Learning records
+- Life records
+- Project portfolio
+- Artistic design
+- Message and comment system
+- Future self-media content entrance
+
 ## Phase 1: Infrastructure and Frontend Foundation
 
 Goal: Build the basic project structure and frontend prototype.
@@ -22,7 +33,7 @@ Goal: Build the basic project structure and frontend prototype.
 - [x] Initialize project structure
 - [x] Configure SSL
 - [x] Write Day 1 review
-- [ ] Write basic concepts notes
+- [x] Write basic concepts notes
 - [ ] Initialize Vue3 + TypeScript + Vite frontend project
 - [ ] Build homepage
 - [ ] Build article list page
