@@ -149,15 +149,190 @@ git commit保存成本地版本
 ↓
 git push同步到 GitHub
 
-
-## 4. What is a Domain Name?
-
 ## 5. What is DNS?
 
-## 6. What is SSL / HTTPS?
+### Definition
 
-## 7. Static Website vs Dynamic Website
+DNS is a system that translates domain names into IP addresses or hosting platform addresses.
 
-## 8. What is Frontend-Backend Separation?
+In simple words, DNS is like the phone book of the Internet.
 
-## 9. Basic Git Workflow
+### Why do I need it in ZhenGeek Blog?
+
+When I use `zhengeek.io`, DNS tells the Internet where this domain should point.
+
+Without DNS configuration, the browser may not know which server or platform should respond.
+
+### My Understanding
+
+DNS 可以理解为把域名解析成 IP 地址或托管平台地址的系统。
+
+域名是给人看的网站名字，比如 `zhengeek.io`。  
+IP 地址或托管平台地址才是电脑真正用来寻找服务器的位置。
+
+只购买域名并不能让网站自动访问。配置 DNS 的作用，就是告诉互联网我的域名应该指向哪里。
+
+在 ZhenGeek Blog 项目中，DNS 负责把 `zhengeek.io` 和真正承载网站的服务器或托管平台连接起来。
+
+如我在腾讯云平台（我服务器所部署的平台）里添加的解析记录就是DNS的一种。
+
+## 6. What is Domain Name?
+
+### Definition
+
+A domain name is a human-readable address for a website.
+
+### Why do I need it in ZhenGeek Blog?
+
+In ZhenGeek Blog, `zhengeek.io` is not only my website address, but also part of my personal technical brand.
+
+However, buying a domain name does not mean the website is already online. It still needs DNS configuration and a hosting platform.
+
+### Domain Name vs DNS
+
+A domain name is the readable website address for humans.
+
+DNS is the domain name system that translates a domain name into the real server address or hosting platform address.
+
+### My Understanding
+
+域名是便于人类阅读和记忆的网站地址，比如 `zhengeek.io`。
+
+对 ZhenGeek Blog 来说，它不仅是访问地址，也是我的长期个人品牌。
+
+但域名只是“名字”，还需要通过 DNS 把它指向真正承载网站的服务器或托管平台。
+
+## 7. What is SSL / HTTPS?
+
+### Definition
+
+SSL/TLS is a security technology that protects the connection between a browser and a website.
+
+HTTPS is the secure version of HTTP. It uses SSL/TLS to encrypt data during transmission.
+
+### Why do I need it in ZhenGeek Blog?
+
+In ZhenGeek Blog, HTTPS can make `zhengeek.io` safer and more trustworthy.
+
+It protects the data transmission between users' browsers and my website, and browsers will show the website as a secure connection.
+
+### My Understanding
+
+HTTP：负责浏览器和服务器之间传输网页数据，普通的网页通信
+SSL/TLS：保护浏览器和网站之间连接安全的技术。
+HTTPS：HTTP + SSL/TLS，是加密后的网页安全通信
+
+### Misunderstanding
+
+域名告诉你网站叫什么；DNS 负责找到这个网站在哪里；HTTPS 负责让访问过程更安全。
+
+## 8. Static Website vs Dynamic Website
+
+### Definition
+
+A static website shows fixed content through files such as HTML, CSS, and JavaScript.
+
+A dynamic website can change content based on user actions, backend services, or data from a database.
+
+### Why do I need it in ZhenGeek Blog?
+
+In the early stage, ZhenGeek Blog can start as a static frontend website because it is simpler and easier to build.
+
+Later, when I add backend APIs, a database, article management, login, and comments, it will become a dynamic full-stack website.
+
+### My Understanding
+
+ZhenGeek Blog 前端页面可以先做成静态展示，后续通过后端 API 和数据库提供动态数据，让整个项目升级为动态全栈网站。
+
+先静态后动态在缩小制造成本的同时，也有助于我一步一个脚印的学习前端知识。
+
+## 9. What is Frontend-Backend Separation?
+
+### Definition
+
+Frontend-backend separation means the frontend and backend are developed as two separate parts.
+
+The frontend is responsible for the user interface and user interaction,which is built with Vue3, TypeScript, and Vite, mainly displaying pages and content.  
+
+The backend is responsible for business logic, data processing, authentication, and database operations,which is built with Spring Boot and MySQL, mainly handling data, business logic, and dynamic content.
+
+They communicate through APIs, usually via HTTP requests.
+
+### Why do I need it in ZhenGeek Blog?
+
+This architecture reduces frontend development complexity, allows for dynamic features via backend, and provides a clear, scalable, and professional engineering structure.
+
+### My Understanding
+
+前后端分离意味着前端和后端使用两套系统开发。
+
+前端负责用户看到的界面和交互。  
+后端负责数据处理、逻辑计算和数据库操作，用户看不到，但它是动态网页功能的关键。  
+
+前端和后端通过 API 连接，通常使用 HTTP 请求。  
+
+这种架构比单纯的静态网页更复杂，但可以通过后端实现动态功能，比单纯动态网页更便捷，更节约开发成本，同时提升用户体验。
+
+## 10. API (Application Programming Interface)
+
+### Definition
+
+An API is a set of rules that allows different software applications to communicate.
+
+It defines how requests are made, what data is sent, and what responses are returned.
+
+### Why do I need it in ZhenGeek Blog?
+
+The frontend cannot directly access the database.  
+
+It needs to send requests to backend APIs to retrieve or modify data, such as articles, user profiles, or comments.
+
+APIs make frontend-backend separation possible.
+
+### Format
+
+JSON
+
+### My Understanding
+
+API 是软件之间交流的一组规则，定义请求的发送方式、参数和返回结果。
+
+在前后端分离中，它负责联系前端和后端，确保前端发送的请求可以被后端接收和处理。
+
+比如前端要检索文章或修改数据时，会调用后端 API，并通过 JSON 格式交换数据。
+
+## 11. HTTP (HyperText Transfer Protocol)
+
+### Definition
+
+HTTP is the protocol used by browsers and servers to communicate over the web.  
+
+It defines how requests are sent, how servers respond, and how data is formatted during transmission.
+
+### Why do I need it in ZhenGeek Blog?
+
+All API communication between the frontend and backend is based on HTTP.  
+
+Understanding HTTP methods and stateless nature is essential for building a dynamic full-stack website.
+
+### Key Points
+
+- HTTP is the communication protocol for the web.
+- GET: retrieve data  
+- POST: send new data  
+- PUT: update existing data  
+- DELETE: remove data  
+
+- HTTP is stateless: each request is independent  
+
+- APIs communicate via HTTP requests and responses
+
+### My Understanding
+
+HTTP 是浏览器和服务器之间用来传输网页数据的通信协议，定义了请求的发送方式和服务器的响应方式。
+
+在前后端通信中，HTTP 是所有 API 请求的基础。
+
+常用方法包括 GET（获取数据）、POST（发送数据）、PUT（更新数据）、DELETE（删除数据）。
+
+HTTP 是无状态的：每个请求都是独立的，不会自动记住之前的请求。
