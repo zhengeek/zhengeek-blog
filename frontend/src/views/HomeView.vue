@@ -1,56 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useClock } from '../composables/useClock'
+import { useParallax } from '../composables/useParallax'
 
-const now = ref(new Date())
-const scrollY = ref(0)
-let timer: number | undefined
-
-const clockTime = computed(() => {
-  const hours = String(now.value.getHours()).padStart(2, '0')
-  const minutes = String(now.value.getMinutes()).padStart(2, '0')
-
-  return { hours, minutes }
-})
-
-const dateLabel = computed(() => {
-  const year = now.value.getFullYear()
-  const month = String(now.value.getMonth() + 1).padStart(2, '0')
-  const day = String(now.value.getDate()).padStart(2, '0')
-
-  return `${year} / ${month} / ${day}`
-})
-
-const weekdayLabel = computed(() =>
-  new Intl.DateTimeFormat('zh-CN', { weekday: 'short' }).format(now.value),
-)
-
-const parallaxVars = computed(() => ({
-  '--sky-shift': `${scrollY.value * 0.08}px`,
-  '--moon-shift': `${scrollY.value * 0.18}px`,
-  '--mountain-shift': `${scrollY.value * 0.28}px`,
-  '--cloud-shift': `${scrollY.value * 0.42}px`,
-}))
-
-function updateScroll() {
-  scrollY.value = window.scrollY
-}
-
-onMounted(() => {
-  timer = window.setInterval(() => {
-    now.value = new Date()
-  }, 1000)
-
-  updateScroll()
-  window.addEventListener('scroll', updateScroll, { passive: true })
-})
-
-onUnmounted(() => {
-  if (timer) {
-    window.clearInterval(timer)
-  }
-
-  window.removeEventListener('scroll', updateScroll)
-})
+const { clockTime, dateLabel, weekdayLabel } = useClock()
+const { parallaxVars } = useParallax()
 </script>
 
 <template>
