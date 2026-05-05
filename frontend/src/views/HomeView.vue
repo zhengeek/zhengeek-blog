@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DreamBackdrop from '../components/home/DreamBackdrop.vue'
 import TitleSection from '../components/home/TitleSection.vue'
+import SloganSection from '../components/home/SloganSection.vue'
 import { useClock } from '../composables/useClock'
 import { useParallax } from '../composables/useParallax'
 
@@ -13,13 +14,9 @@ const { parallaxVars } = useParallax()
   <div class="dream-page" :style="parallaxVars">
     <DreamBackdrop />
     <TitleSection />
+    <SloganSection />
 
 
-    <section class="slogan-section" aria-labelledby="slogan-title">
-      <p class="section-kicker">MY CREATIVE RULE</p>
-      <h2 id="slogan-title">Envision. Nurture. Forge. Pioneer.</h2>
-      <p>把灵感养成作品，把技术写成旅途。</p>
-    </section>
 
     <section class="modules-section" aria-label="ZhenGeek Blog modules">
       <main class="dream-desktop">
@@ -184,8 +181,6 @@ const { parallaxVars } = useParallax()
 }
 
 
-.title-section,
-.slogan-section,
 .modules-section {
   min-height: 100svh;
   position: relative;
@@ -194,42 +189,8 @@ const { parallaxVars } = useParallax()
 
 
 
-.slogan-section {
-  display: grid;
-  align-content: center;
-  justify-items: start;
-  padding: 80px min(8vw, 110px);
-}
 
-.section-kicker {
-  margin: 0 0 18px;
-  color: rgba(255, 205, 135, 0.78);
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-}
 
-.slogan-section h2 {
-  max-width: 1050px;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.96);
-  font-size: clamp(54px, 10vw, 144px);
-  line-height: 0.96;
-  font-weight: 950;
-  letter-spacing: 0;
-  text-shadow:
-    0 10px 48px rgba(77, 111, 160, 0.36),
-    0 0 60px rgba(255, 255, 255, 0.38);
-}
-
-.slogan-section p:last-child {
-  max-width: 640px;
-  margin: 28px 0 0;
-  color: rgba(231, 242, 255, 0.86);
-  font-size: 22px;
-  line-height: 1.7;
-  font-weight: 700;
-}
 
 .modules-section {
   display: grid;
@@ -785,9 +746,6 @@ const { parallaxVars } = useParallax()
 
 @media (max-width: 640px) {
   .title-section,
-  .slogan-section {
-    padding: 24px;
-  }
 
   .brand-chip {
     top: 18px;
@@ -799,13 +757,8 @@ const { parallaxVars } = useParallax()
     font-size: clamp(64px, 22vw, 104px);
   }
 
-  .slogan-section h2 {
-    font-size: clamp(46px, 16vw, 78px);
-  }
 
-  .slogan-section p:last-child {
-    font-size: 18px;
-  }
+
 
   .modules-section {
     padding: 14px;
