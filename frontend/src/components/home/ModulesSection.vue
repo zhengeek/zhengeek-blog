@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClock } from '../../composables/useClock'
+import { RouterLink } from 'vue-router'
 
 const { clockTime, dateLabel, weekdayLabel } = useClock()
 </script>
@@ -34,12 +35,12 @@ const { clockTime, dateLabel, weekdayLabel } = useClock()
             </div>
           </div>
 
-          <p class="panel-label">站点导航</p>
+         <p class="panel-label">站点导航</p>
           <nav class="menu-list" aria-label="Homepage sections">
-            <button class="active" type="button"><span>01</span> 近期文章</button>
-            <button type="button"><span>02</span> 项目作品</button>
-            <button type="button"><span>03</span> 关于本站</button>
-            <button type="button"><span>04</span> 灵感实验室</button>
+           <RouterLink class="menu-button active" to="/blog"><span>01</span> 技术博客</RouterLink>
+           <RouterLink class="menu-button" to="/projects"><span>02</span> 项目作品</RouterLink>
+           <RouterLink class="menu-button" to="/about"><span>03</span> 关于小蓁</RouterLink>
+           <RouterLink class="menu-button" to="/lab"><span>04</span> 灵感实验室</RouterLink>
           </nav>
         </aside>
 
@@ -372,7 +373,7 @@ const { clockTime, dateLabel, weekdayLabel } = useClock()
   gap: 10px;
 }
 
-.menu-list button {
+.menu-button {
   min-height: 42px;
   border: 0;
   border-radius: 16px;
@@ -382,17 +383,18 @@ const { clockTime, dateLabel, weekdayLabel } = useClock()
   padding: 0 14px;
   color: #edf6ff;
   background: transparent;
-  cursor: default;
+  cursor: pointer;
+  text-decoration: none;
 }
 
-.menu-list button span {
+.menu-button span {
   color: #ffc3e6;
   font-size: 12px;
   font-weight: 900;
 }
 
 .menu-list .active,
-.menu-list button:hover {
+.menu-button:hover {
   color: #23415f;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 210, 235, 0.66));
   box-shadow: 0 14px 28px rgba(111, 143, 176, 0.18);
