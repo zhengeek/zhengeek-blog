@@ -1,187 +1,128 @@
 <template>
-  <section class="modules-section">
-    <!-- Section Header -->
-    <header class="section-header">
-      <h2 class="section-title">[ SYS.MODULES ]</h2>
-      <p class="section-subtitle">// 导航枢纽 // NAVIGATION_HUB</p>
-    </header>
+  <div class="modules-scattered">
+    
+    <!-- 波点圆：关于 -->
+    <RouterLink class="nav-shape shape-circle bg-magenta" to="/about">
+      <span class="shape-text">ABOUT</span>
+    </RouterLink>
 
-    <!-- Navigation Grid -->
-    <div class="nav-grid">
-      
-      <!-- Home Module -->
-      <RouterLink to="/" class="nav-card bg-white">
-        <div class="card-content">
-          <span class="icon">⌂</span>
-          <h3 class="title">HOME</h3>
-          <span class="desc">// 主页</span>
-        </div>
-      </RouterLink>
+    <!-- 锋利多边形：项目 -->
+    <RouterLink class="nav-shape shape-polygon bg-yellow" to="/projects">
+      <span class="shape-text">PROJECTS</span>
+    </RouterLink>
 
-      <!-- Projects Module -->
-      <RouterLink to="/projects" class="nav-card bg-cyan">
-        <div class="card-content">
-          <span class="icon">⚒</span>
-          <h3 class="title">PROJECTS</h3>
-          <span class="desc">// 项目</span>
-        </div>
-      </RouterLink>
+    <!-- 粗壮矩形：博客 -->
+    <RouterLink class="nav-shape shape-rect bg-cyan" to="/blog">
+      <span class="shape-text">BLOG</span>
+    </RouterLink>
 
-      <!-- Blog Module -->
-      <RouterLink to="/blog" class="nav-card bg-yellow">
-        <div class="card-content">
-          <span class="icon">✍</span>
-          <h3 class="title">BLOG</h3>
-          <span class="desc">// 博客</span>
-        </div>
-      </RouterLink>
+    <!-- 纯黑药丸形：实验室 -->
+    <RouterLink class="nav-shape shape-pill bg-black text-white" to="/lab">
+      <span class="shape-text">LAB_</span>
+    </RouterLink>
 
-      <!-- About Module -->
-      <RouterLink to="/about" class="nav-card bg-magenta text-white">
-        <div class="card-content">
-          <span class="icon">☺</span>
-          <h3 class="title">ABOUT</h3>
-          <span class="desc">// 关于</span>
-        </div>
-      </RouterLink>
-
-      <!-- Lab Module (Distinct styling for experimental feel) -->
-      <RouterLink to="/lab" class="nav-card bg-black text-cyan border-dashed">
-        <div class="card-content">
-          <span class="icon">⚡</span>
-          <h3 class="title">LAB</h3>
-          <span class="desc">// 实验室</span>
-        </div>
-      </RouterLink>
-
-    </div>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
-// Clean, static navigation module component
+// 打破网格的异形导航模块
 </script>
 
 <style scoped>
-/* Section Container */
-.modules-section {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* 这个容器把所有导航限制在右下角 */
+.modules-scattered {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50vw;
+  height: 60vh;
+  z-index: 20;
+  pointer-events: auto; /* 确保这些元素可以被点击 */
 }
 
-/* Header Styling */
-.section-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
-
-.section-title {
-  font-family: 'Fira Code', monospace;
-  font-size: 2.5rem;
-  font-weight: 900;
-  margin: 0;
-  color: #000;
-  text-shadow: 4px 4px 0px #00ffff; /* Cyan shadow */
-}
-
-.section-subtitle {
-  font-family: 'Fira Code', monospace;
-  font-size: 1.2rem;
-  font-weight: bold;
-  background-color: #000;
-  color: #fff;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  border: 3px solid #000;
-  transform: rotate(2deg);
-}
-
-/* Grid Layout */
-.nav-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  width: 100%;
-}
-
-/* Neo-Brutalist Nav Cards */
-.nav-card {
-  text-decoration: none;
-  color: #000;
-  border: 4px solid #000;
-  box-shadow: 8px 8px 0px 0px #000;
-  padding: 2rem 1.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* 基础形状与新粗野主义交互设定 */
+.nav-shape {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 180px;
+  text-decoration: none;
+  border: 4px solid #000;
+  box-shadow: 10px 10px 0px 0px #000;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.nav-card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 12px 12px 0px 0px #000;
+/* Hover 时产生剧烈的弹跳感和加深的阴影 */
+.nav-shape:hover {
+  transform: scale(1.1) translateY(-10px) !important; /* 强制覆盖原本定位 */
+  box-shadow: 20px 20px 0px 0px #000;
+  z-index: 30; /* hover 时确保置顶不被遮挡 */
 }
 
-.nav-card:active {
-  transform: translate(2px, 2px);
-  box-shadow: 4px 4px 0px 0px #000;
-}
-
-.card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-/* Typography inside cards */
-.icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  line-height: 1;
-}
-
-.title {
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 1.8rem;
-  font-weight: 900;
-  margin: 0 0 0.5rem 0;
-  letter-spacing: -0.05em;
-}
-
-.desc {
+/* 极客等宽字体 */
+.shape-text {
   font-family: 'Fira Code', monospace;
-  font-size: 1rem;
-  font-weight: bold;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: inherit;
 }
 
-/* Memphis Color Utilities */
-.bg-white { background-color: #fff; }
-.bg-cyan { background-color: #00ffff; }
-.bg-yellow { background-color: #fffa00; }
-.bg-magenta { background-color: #ff00ff; }
+/* === 具体异形设计与错落定位 === */
+
+/* 1. 圆形 - ABOUT */
+.shape-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  top: 10%;
+  left: 10%;
+  /* 孟菲斯波点纹理模拟 */
+  background-image: radial-gradient(#fff 15%, transparent 16%);
+  background-size: 20px 20px;
+}
+.shape-circle .shape-text { background: #000; padding: 0.2rem 0.5rem; color: #fff; transform: rotate(-10deg); }
+
+/* 2. 多边形 - PROJECTS */
+.shape-polygon {
+  width: 180px;
+  height: 140px;
+  /* 使用 clip-path 裁切出一个锋利的四边形 */
+  clip-path: polygon(10% 0, 100% 10%, 90% 100%, 0 90%);
+  top: 40%;
+  left: 35%;
+  transform: rotate(8deg);
+}
+
+/* 3. 矩形 - BLOG */
+.shape-rect {
+  width: 180px;
+  height: 80px;
+  top: 20%;
+  right: 15%;
+  transform: rotate(-5deg);
+}
+
+/* 4. 药丸形 - LAB */
+.shape-pill {
+  width: 150px;
+  height: 60px;
+  border-radius: 30px;
+  bottom: 20%;
+  right: 10%;
+  transform: rotate(-15deg);
+}
+.shape-pill .shape-text { color: #00ffff; } /* 黑底发光青字 */
+
+/* 颜色工具类 */
+.bg-magenta { background-color: #ff00ff; color: #000; }
+.bg-yellow { background-color: #fffa00; color: #000; }
+.bg-cyan { background-color: #00ffff; color: #000; }
 .bg-black { background-color: #000; }
-
 .text-white { color: #fff; }
-.text-cyan { color: #00ffff; }
 
-.border-dashed { border-style: dashed; }
-
-/* Responsive Adjustments */
+/* 移动端适配防重叠 */
 @media (max-width: 768px) {
-  .modules-section {
-    padding: 3rem 1.5rem;
-  }
-  .nav-grid {
-    grid-template-columns: 1fr; /* Stack vertically on small mobile */
-    gap: 1.5rem;
-  }
+  .modules-scattered { width: 100vw; height: 50vh; bottom: 10%; right: 0; }
+  .shape-polygon { clip-path: none; } /* 移动端防重叠取消裁切 */
 }
 </style>

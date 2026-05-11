@@ -1,61 +1,39 @@
 <template>
   <MainLayout />
+  <CustomCursor />
 </template>
 
 <script setup lang="ts">
-import MainLayout from './layouts/MainLayout.vue';
+import MainLayout from './layouts/MainLayout.vue'
+import CustomCursor from './components/home/CustomCursor.vue'
 </script>
 
 <style>
-/* 
-  Global Resets & Base Styles for ZhenGeek.OS 
-  Neo-Brutalism & Memphis Pop-Art Fundamentals
-*/
-
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-html, body {
-  /* 
-    The background texture is primarily handled by MainLayout, 
-    but we set a fallback color here to prevent white flashes on load.
-  */
-  background-color: #f4f4f0; 
-  color: #000;
-  /* Primary font stack for general UI */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* Ensure scrolling is smooth, helpful for long portfolio pages */
+html {
+  background: #09090b;
   scroll-behavior: smooth;
 }
 
-/* 
-  Selection styling to match the pop-art theme 
-*/
-::selection {
-  background-color: #00ffff; /* Cyan highlight */
-  color: #000;
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #09090b;
+  color: #fafafa;
+  font-family: 'Noto Sans SC', Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* 
-  Scrollbar styling (Webkit) for an extra geeky touch 
-*/
-::-webkit-scrollbar {
-  width: 12px;
-  background-color: #f4f4f0;
-  border-left: 2px solid #000;
+#app {
+  min-height: 100vh;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #000;
-  border: 2px solid #000;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #ff00ff; /* Magenta hover */
+button,
+a {
+  font: inherit;
 }
 </style>
