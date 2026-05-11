@@ -15,7 +15,7 @@
 
 body {
   overflow-x: hidden;
-  cursor: none;
+  cursor: auto;
   background: var(--vg-dark);
   color: var(--vg-light);
 }
@@ -45,7 +45,7 @@ body {
 .hoverable,
 a,
 button {
-  cursor: none;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {
