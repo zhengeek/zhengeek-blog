@@ -37,13 +37,20 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-  // Always scroll to top when navigating to a new route
-  scrollBehavior(_to, _from, savedPosition) {
+  scrollBehavior(to, _from, savedPosition) {
     if (savedPosition) {
       return savedPosition
-    } else {
-      return { top: 0 }
     }
+
+    if (to.hash) {
+      return {
+        el: to.hash,
+        top: 88,
+        behavior: 'smooth'
+      }
+    }
+
+    return { top: 0 }
   }
 })
 
