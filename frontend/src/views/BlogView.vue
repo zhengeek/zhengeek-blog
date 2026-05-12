@@ -45,16 +45,21 @@ import { articles, categories, writingRules } from '../data/articles'
       </div>
 
       <div class="article-list">
-        <InfoCard v-for="article in articles" :key="article.title" class="article-card">
+        <InfoCard v-for="article in articles" :key="article.slug" class="article-card">
           <div class="article-meta">
             <span>{{ article.category }}</span>
             <span>{{ article.date }}</span>
           </div>
-          <h3>{{ article.title }}</h3>
+          <h3>
+            <RouterLink class="article-title-link" :to="`/blog/${article.slug}`">{{ article.title }}</RouterLink>
+          </h3>
           <p>{{ article.summary }}</p>
           <div class="article-bottom">
             <TagList class="tag-row" :tags="article.tags" />
-            <strong>{{ article.status }}</strong>
+            <div class="article-actions">
+              <strong>{{ article.status }}</strong>
+              <RouterLink class="read-more-link" :to="`/blog/${article.slug}`">阅读详情</RouterLink>
+            </div>
           </div>
         </InfoCard>
       </div>
@@ -244,6 +249,15 @@ h3 {
   max-width: 780px;
 }
 
+.article-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.article-title-link:hover {
+  color: var(--vg-accent);
+}
+
 .article-bottom {
   display: flex;
   justify-content: space-between;
@@ -263,6 +277,27 @@ h3 {
   color: var(--vg-accent);
   font-family: var(--font-mono);
   font-size: 0.75rem;
+}
+
+.article-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: flex-end;
+}
+
+.read-more-link {
+  color: #fafafa;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.read-more-link:hover {
+  color: var(--vg-accent);
+  text-decoration: underline;
 }
 
 .writing-section {
@@ -309,6 +344,10 @@ h3 {
   .article-bottom {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .article-actions {
+    align-items: flex-start;
   }
 }
 </style>

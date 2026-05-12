@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import ProjectsView from '../views/ProjectsView.vue'
 import BlogView from '../views/BlogView.vue'
+import BlogDetailView from '../views/BlogDetailView.vue'
 import LabView from '../views/LabView.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -26,6 +27,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/blog',
     name: 'blog',
     component: BlogView
+  },
+  {
+    path: '/blog/:slug',
+    name: 'blog-detail',
+    component: BlogDetailView
   },
   {
     path: '/lab',
