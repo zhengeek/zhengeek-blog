@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import InfoCard from '../components/common/InfoCard.vue'
+import SectionHeader from '../components/common/SectionHeader.vue'
+import StatusPill from '../components/common/StatusPill.vue'
+import TagList from '../components/common/TagList.vue'
 import { articles, categories, writingRules } from '../data/articles'
 </script>
 
@@ -14,36 +18,34 @@ import { articles, categories, writingRules } from '../data/articles'
             当前阶段先做文章列表和分类结构，等内容模型稳定后再接入后端文章详情。
           </p>
         </div>
-        <aside class="writing-panel">
+        <InfoCard class="writing-panel">
           <span>WRITING MODE</span>
           <strong>Build in public</strong>
           <p>用公开记录倒逼自己持续复盘，把学习过程变成可展示、可回顾、可迭代的作品。</p>
-        </aside>
+        </InfoCard>
       </div>
     </section>
 
     <section class="blog-shell categories-section">
-      <p class="eyebrow">CATEGORIES // CONTENT MAP</p>
-      <h2>先建立分类，再慢慢填充真实文章。</h2>
+      <SectionHeader eyebrow="CATEGORIES // CONTENT MAP" title="先建立分类，再慢慢填充真实文章。" />
       <div class="category-grid">
-        <article v-for="category in categories" :key="category.name" class="category-card">
+        <InfoCard v-for="category in categories" :key="category.name" class="category-card">
           <h3>{{ category.name }}</h3>
           <p>{{ category.desc }}</p>
-        </article>
+        </InfoCard>
       </div>
     </section>
 
     <section class="blog-shell articles-section">
       <div class="section-title-row">
         <div>
-          <p class="eyebrow">ARTICLES // FIRST CONTENT SEEDS</p>
-          <h2>第一批文章先服务于项目本身。</h2>
+          <SectionHeader eyebrow="ARTICLES // FIRST CONTENT SEEDS" title="第一批文章先服务于项目本身。" />
         </div>
-        <span class="status-pill">Static List Now</span>
+        <StatusPill text="Static List Now" />
       </div>
 
       <div class="article-list">
-        <article v-for="article in articles" :key="article.title" class="article-card">
+        <InfoCard v-for="article in articles" :key="article.title" class="article-card">
           <div class="article-meta">
             <span>{{ article.category }}</span>
             <span>{{ article.date }}</span>
@@ -51,30 +53,27 @@ import { articles, categories, writingRules } from '../data/articles'
           <h3>{{ article.title }}</h3>
           <p>{{ article.summary }}</p>
           <div class="article-bottom">
-            <div class="tag-row">
-              <span v-for="tag in article.tags" :key="tag">{{ tag }}</span>
-            </div>
+            <TagList class="tag-row" :tags="article.tags" />
             <strong>{{ article.status }}</strong>
           </div>
-        </article>
+        </InfoCard>
       </div>
     </section>
 
     <section class="blog-shell writing-section">
       <div class="writing-copy">
-        <p class="eyebrow">RULES // HOW I WILL WRITE</p>
-        <h2>写博客的目的，是把模糊经验变成清晰表达。</h2>
+        <SectionHeader eyebrow="RULES // HOW I WILL WRITE" title="写博客的目的，是把模糊经验变成清晰表达。" />
         <p>
           现在暂时不做文章详情页，是因为内容还在打磨。等文章标题、分类、摘要和数据字段稳定后，
           再把静态数组迁移到后端 API，正式支持文章详情、Markdown 渲染和后台管理。
         </p>
       </div>
-      <div class="rules-card">
+      <InfoCard class="rules-card">
         <div v-for="(rule, index) in writingRules" :key="rule" class="rule-item">
           <span>{{ String(index + 1).padStart(2, '0') }}</span>
           <p>{{ rule }}</p>
         </div>
-      </div>
+      </InfoCard>
     </section>
   </main>
 </template>
@@ -257,15 +256,6 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.tag-row span {
-  padding: 0.38rem 0.65rem;
-  border: 1px solid rgba(250, 250, 250, 0.22);
-  border-radius: 999px;
-  color: #f4f4f5;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
 }
 
 .article-bottom strong {

@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import InfoCard from '../components/common/InfoCard.vue'
+import SectionHeader from '../components/common/SectionHeader.vue'
+import StatusPill from '../components/common/StatusPill.vue'
+import TagList from '../components/common/TagList.vue'
 import { backendPlan, mainProject, sideProjects } from '../data/projects'
 </script>
 
@@ -14,81 +18,71 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
             每个项目都不是孤立练习，而是服务于“成为全栈工程师”的长期路线。
           </p>
         </div>
-        <aside class="status-panel">
+        <InfoCard class="status-panel">
           <span>V1 STATUS</span>
           <strong>Frontend Static Prototype</strong>
           <p>当前重点：先把内容、页面结构和作品集表达打磨清楚，再进入后端阶段。</p>
-        </aside>
+        </InfoCard>
       </div>
     </section>
 
     <section class="project-shell featured-project">
       <div class="featured-header">
-        <div>
-          <p class="eyebrow">FEATURED PROJECT // 01</p>
-          <h2>{{ mainProject.name }}</h2>
-          <p>{{ mainProject.summary }}</p>
-        </div>
-        <div class="project-badge">{{ mainProject.status }}</div>
+        <SectionHeader eyebrow="FEATURED PROJECT // 01" :title="mainProject.name" :description="mainProject.summary" />
+        <StatusPill :text="mainProject.status" />
       </div>
 
-      <div class="stack-row">
-        <span v-for="tech in mainProject.stack" :key="tech">{{ tech }}</span>
-      </div>
+      <TagList class="stack-row main-stack" :tags="mainProject.stack" />
 
       <div class="progress-grid">
-        <article class="progress-card">
+        <InfoCard class="progress-card">
           <h3>[ DONE ]</h3>
           <ul>
             <li v-for="item in mainProject.done" :key="item">{{ item }}</li>
           </ul>
-        </article>
-        <article class="progress-card accent-card">
+        </InfoCard>
+        <InfoCard class="progress-card accent-card">
           <h3>[ NEXT ]</h3>
           <ul>
             <li v-for="item in mainProject.next" :key="item">{{ item }}</li>
           </ul>
-        </article>
+        </InfoCard>
       </div>
     </section>
 
     <section class="project-shell roadmap-section">
       <div class="section-title-row">
         <div>
-          <p class="eyebrow">FUTURE MODULES // PROJECT MAP</p>
-          <h2>接下来会围绕 ZhenGeek 拓展三个方向。</h2>
+          <SectionHeader eyebrow="FUTURE MODULES // PROJECT MAP" title="接下来会围绕 ZhenGeek 拓展三个方向。" />
         </div>
       </div>
 
       <div class="side-project-grid">
-        <article v-for="project in sideProjects" :key="project.title" class="side-project-card">
+        <InfoCard v-for="project in sideProjects" :key="project.title" class="side-project-card">
           <div class="card-topline">
             <span>{{ project.status }}</span>
           </div>
           <h3>{{ project.title }}</h3>
           <p>{{ project.desc }}</p>
-          <div class="mini-stack">
-            <span v-for="tech in project.stack" :key="tech">{{ tech }}</span>
-          </div>
+          <TagList class="mini-stack" :tags="project.stack" />
           <strong>{{ project.goal }}</strong>
-        </article>
+        </InfoCard>
       </div>
     </section>
 
     <section class="project-shell backend-section">
       <div class="backend-copy">
-        <p class="eyebrow">BACKEND PLAN // NOT NOW, BUT SOON</p>
-        <h2>后端不会现在硬接，而是在内容模型稳定后接入。</h2>
+        <SectionHeader eyebrow="BACKEND PLAN // NOT NOW, BUT SOON" title="后端不会现在硬接，而是在内容模型稳定后接入。" />
         <p>
           当前阶段先用静态数据模拟真实内容。等 About、Projects、Blog 页面稳定后，
           再把这些静态数据迁移到后端 API 和数据库里。这样不会为了写后端而写后端，
           而是让后端真正服务于内容管理和网站扩展。
         </p>
       </div>
-      <div class="api-panel">
+      <InfoCard class="api-panel">
         <span class="panel-label">API DRAFT</span>
         <code v-for="item in backendPlan" :key="item">{{ item }}</code>
-      </div>
+      </InfoCard>
     </section>
   </main>
 </template>
@@ -228,23 +222,12 @@ h3 {
 
 .stack-row,
 .mini-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  --tag-padding: 0.42rem 0.72rem;
+  --tag-font-size: 0.75rem;
 }
 
 .stack-row {
   margin: 2rem 0;
-}
-
-.stack-row span,
-.mini-stack span {
-  padding: 0.42rem 0.72rem;
-  border: 1px solid rgba(250, 250, 250, 0.22);
-  border-radius: 999px;
-  color: #f4f4f5;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
 }
 
 .progress-grid,

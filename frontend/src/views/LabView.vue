@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import InfoCard from '../components/common/InfoCard.vue'
+import SectionHeader from '../components/common/SectionHeader.vue'
+import StatusPill from '../components/common/StatusPill.vue'
+import TagList from '../components/common/TagList.vue'
 import { buildOrder, experiments, labRules } from '../data/lab'
 </script>
 
@@ -14,63 +18,58 @@ import { buildOrder, experiments, labRules } from '../data/lab'
             它暂时不追求完整产品，而是用小实验探索技术边界，最后把成熟想法升级成项目或文章。
           </p>
         </div>
-        <aside class="lab-panel">
+        <InfoCard class="lab-panel">
           <span>LAB STATUS</span>
           <strong>Experiment Queue</strong>
           <p>当前任务：先建立实验规划页，后续逐个实现小 demo，并记录过程。</p>
-        </aside>
+        </InfoCard>
       </div>
     </section>
 
     <section class="lab-shell experiments-section">
       <div class="section-title-row">
         <div>
-          <p class="eyebrow">EXPERIMENTS // IDEA MAP</p>
-          <h2>实验从小开始，但每一个都要服务于长期路线。</h2>
+          <SectionHeader eyebrow="EXPERIMENTS // IDEA MAP" title="实验从小开始，但每一个都要服务于长期路线。" />
         </div>
-        <span class="status-pill">Step by Step</span>
+        <StatusPill text="Step by Step" />
       </div>
 
       <div class="experiment-grid">
-        <article v-for="item in experiments" :key="item.title" class="experiment-card">
+        <InfoCard v-for="item in experiments" :key="item.title" class="experiment-card">
           <div class="card-topline">
             <span>{{ item.status }}</span>
           </div>
           <h3>{{ item.title }}</h3>
           <p>{{ item.desc }}</p>
-          <div class="stack-row">
-            <span v-for="tech in item.stack" :key="tech">{{ tech }}</span>
-          </div>
+          <TagList class="stack-row" :tags="item.stack" />
           <strong>{{ item.value }}</strong>
-        </article>
+        </InfoCard>
       </div>
     </section>
 
     <section class="lab-shell method-section">
       <div class="method-copy">
-        <p class="eyebrow">METHOD // HOW LAB WORKS</p>
-        <h2>Lab 的重点不是“酷”，而是把探索变成可复用资产。</h2>
+        <SectionHeader eyebrow="METHOD // HOW LAB WORKS" title="Lab 的重点不是“酷”，而是把探索变成可复用资产。" />
         <p>
           一个实验如果只是好看，很快就会被遗忘。真正有价值的实验应该能变成首页交互、博客文章、项目亮点，
           或者帮助我理解算法、图形、事件、性能和硬件数据表达。
         </p>
       </div>
-      <div class="rules-card">
+      <InfoCard class="rules-card">
         <div v-for="(rule, index) in labRules" :key="rule" class="rule-item">
           <span>{{ String(index + 1).padStart(2, '0') }}</span>
           <p>{{ rule }}</p>
         </div>
-      </div>
+      </InfoCard>
     </section>
 
     <section class="lab-shell build-section">
-      <p class="eyebrow">BUILD ORDER // NEXT ACTIONS</p>
-      <h2>下一步不做大而全，先做第一个能运行的小实验。</h2>
+      <SectionHeader eyebrow="BUILD ORDER // NEXT ACTIONS" title="下一步不做大而全，先做第一个能运行的小实验。" />
       <div class="build-grid">
-        <article v-for="(item, index) in buildOrder" :key="item" class="build-card">
+        <InfoCard v-for="(item, index) in buildOrder" :key="item" class="build-card">
           <span>{{ String(index + 1).padStart(2, '0') }}</span>
           <p>{{ item }}</p>
-        </article>
+        </InfoCard>
       </div>
     </section>
   </main>
@@ -235,15 +234,6 @@ h3 {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 1.2rem 0;
-}
-
-.stack-row span {
-  padding: 0.38rem 0.65rem;
-  border: 1px solid rgba(250, 250, 250, 0.22);
-  border-radius: 999px;
-  color: #f4f4f5;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
 }
 
 .method-section {
