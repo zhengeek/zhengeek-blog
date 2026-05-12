@@ -1,335 +1,364 @@
-<template>
-  <div class="lab-container">
-    <!-- 页面头部：夸张的标题与标语 -->
-    <header class="page-header">
-      <h1 class="main-title">CREATIVE LAB</h1>
-      <h2 class="sub-title">// 创意实验室</h2>
-      <div class="header-desc-box">
-        <p>这里会收集视觉实验、交互设计、算法 demo、创意编码和未来硬件可视化想法。</p>
-      </div>
-    </header>
-
-    <!-- 实验卡片网格 -->
-    <div class="lab-grid">
-      
-      <!-- 实验 1 -->
-      <article class="brutalist-card lab-card">
-        <div class="card-header bg-magenta text-white">
-          <div class="header-top">
-            <h3>Orbit of Growth</h3>
-            <span class="status-badge bg-white text-black border-black">Idea</span>
-          </div>
-        </div>
-        <div class="card-content">
-          <p class="experiment-desc">A future interactive hero scene with birds flying around a central sphere.</p>
-          <div class="tech-stack">
-            <span class="tech-tag">Three.js</span>
-            <span class="tech-tag">Canvas</span>
-            <span class="tech-tag">Mouse Interaction</span>
-          </div>
-          <div class="card-footer">
-            <button class="launch-btn" disabled>[ BOOT_SEQ ]</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- 实验 2 -->
-      <article class="brutalist-card lab-card">
-        <div class="card-header bg-cyan text-black">
-          <div class="header-top">
-            <h3>Mouse Ripple Effect</h3>
-            <span class="status-badge bg-yellow text-black border-black">Planned</span>
-          </div>
-        </div>
-        <div class="card-content">
-          <p class="experiment-desc">A mouse movement effect that creates soft neon ripples on the page.</p>
-          <div class="tech-stack">
-            <span class="tech-tag">CSS</span>
-            <span class="tech-tag">Canvas</span>
-            <span class="tech-tag">JavaScript</span>
-          </div>
-          <div class="card-footer">
-            <button class="launch-btn" disabled>[ BOOT_SEQ ]</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- 实验 3 -->
-      <article class="brutalist-card lab-card">
-        <div class="card-header bg-yellow text-black">
-          <div class="header-top">
-            <h3>Algorithm Visualizer</h3>
-            <span class="status-badge bg-white text-black border-black">Planned</span>
-          </div>
-        </div>
-        <div class="card-content">
-          <p class="experiment-desc">Interactive visualization for sorting, searching and graph algorithms.</p>
-          <div class="tech-stack">
-            <span class="tech-tag">Vue3</span>
-            <span class="tech-tag">Canvas</span>
-            <span class="tech-tag">Algorithms</span>
-          </div>
-          <div class="card-footer">
-            <button class="launch-btn" disabled>[ BOOT_SEQ ]</button>
-          </div>
-        </div>
-      </article>
-
-      <!-- 实验 4 -->
-      <article class="brutalist-card lab-card">
-        <div class="card-header bg-black text-white">
-          <div class="header-top">
-            <h3>FPGA / Hardware Visualization</h3>
-            <span class="status-badge bg-magenta text-white border-white">Future</span>
-          </div>
-        </div>
-        <div class="card-content">
-          <p class="experiment-desc">A future idea for visualizing hardware signals or embedded system data.</p>
-          <div class="tech-stack">
-            <span class="tech-tag tag-outline">FPGA</span>
-            <span class="tech-tag tag-outline">Embedded</span>
-            <span class="tech-tag tag-outline">Web Visualization</span>
-          </div>
-          <div class="card-footer">
-            <button class="launch-btn btn-white" disabled>[ BOOT_SEQ ]</button>
-          </div>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- 底部滚动警告条 -->
-    <div class="dev-status-banner">
-      <div class="marquee-content">
-        <span>⚠️ [SYSTEM_NOTICE]: EXPERIMENTS WILL BE ADDED STEP BY STEP // 实验逐步添加中 // ZHENGEEK V1.0 ⚠️</span>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-// 静态的 Lab 展示组件。未来的迭代将会在这里引入真正的 Canvas 和 WebGL 组件。
+const experiments = [
+  {
+    title: 'Algorithm Visualizer',
+    status: 'Planned',
+    desc: '用动画展示排序、搜索、图遍历等算法过程，让抽象逻辑变成可观察的运行轨迹。',
+    stack: ['Vue3', 'Canvas', 'Algorithms'],
+    value: '训练算法理解、交互设计和技术讲解能力。'
+  },
+  {
+    title: 'Mouse Interaction System',
+    status: 'Prototype',
+    desc: '围绕自定义光标、悬停反馈、轨迹残影和页面微交互，形成 ZhenGeek 的专属操作手感。',
+    stack: ['CSS', 'Pointer Events', 'Animation'],
+    value: '提升网站记忆点，同时学习浏览器事件和动效性能。'
+  },
+  {
+    title: 'Creative Canvas Playground',
+    status: 'Idea Pool',
+    desc: '收集粒子、波纹、噪声、几何图形和数据图案等 Canvas 小实验。',
+    stack: ['Canvas', 'JavaScript', 'Math'],
+    value: '把数学、视觉和代码连接起来，形成创意工程能力。'
+  },
+  {
+    title: 'Data Visualization Notes',
+    status: 'Later',
+    desc: '把学习数据、项目进度和生活记录转化成可视化图表，服务于长期复盘。',
+    stack: ['Charts', 'Data', 'Frontend'],
+    value: '让个人网站不仅展示结果，也展示成长趋势。'
+  },
+  {
+    title: 'FPGA / Embedded Web Monitor',
+    status: 'Future',
+    desc: '未来尝试把硬件信号、传感器数据或嵌入式系统状态用网页方式可视化。',
+    stack: ['FPGA', 'Embedded', 'Web UI'],
+    value: '连接软件与硬件方向，为后续工程路线埋点。'
+  }
+]
+
+const labRules = [
+  '每个实验都必须能解释：它练了什么能力。',
+  '先做小 demo，不一开始追求大型复杂系统。',
+  '实验结果可以失败，但必须留下记录和复盘。',
+  '优秀实验会被升级为首页效果、博客素材或独立项目。'
+]
+
+const buildOrder = [
+  '先整理实验列表和目标',
+  '实现一个最小 Canvas / CSS 动效 demo',
+  '为实验补充说明、截图和源码入口',
+  '把成熟实验沉淀到 Projects 或 Blog 页面'
+]
 </script>
 
+<template>
+  <main class="lab-page">
+    <section class="lab-hero lab-shell">
+      <p class="eyebrow">LAB // CREATIVE ENGINEERING</p>
+      <div class="hero-grid">
+        <div>
+          <h1>这里不是玩具箱，而是我训练创造力和工程能力的实验场。</h1>
+          <p class="hero-lead">
+            Lab 会收集算法可视化、鼠标交互、Canvas 小实验、数据可视化和未来硬件可视化想法。
+            它暂时不追求完整产品，而是用小实验探索技术边界，最后把成熟想法升级成项目或文章。
+          </p>
+        </div>
+        <aside class="lab-panel">
+          <span>LAB STATUS</span>
+          <strong>Experiment Queue</strong>
+          <p>当前任务：先建立实验规划页，后续逐个实现小 demo，并记录过程。</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="lab-shell experiments-section">
+      <div class="section-title-row">
+        <div>
+          <p class="eyebrow">EXPERIMENTS // IDEA MAP</p>
+          <h2>实验从小开始，但每一个都要服务于长期路线。</h2>
+        </div>
+        <span class="status-pill">Step by Step</span>
+      </div>
+
+      <div class="experiment-grid">
+        <article v-for="item in experiments" :key="item.title" class="experiment-card">
+          <div class="card-topline">
+            <span>{{ item.status }}</span>
+          </div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.desc }}</p>
+          <div class="stack-row">
+            <span v-for="tech in item.stack" :key="tech">{{ tech }}</span>
+          </div>
+          <strong>{{ item.value }}</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="lab-shell method-section">
+      <div class="method-copy">
+        <p class="eyebrow">METHOD // HOW LAB WORKS</p>
+        <h2>Lab 的重点不是“酷”，而是把探索变成可复用资产。</h2>
+        <p>
+          一个实验如果只是好看，很快就会被遗忘。真正有价值的实验应该能变成首页交互、博客文章、项目亮点，
+          或者帮助我理解算法、图形、事件、性能和硬件数据表达。
+        </p>
+      </div>
+      <div class="rules-card">
+        <div v-for="(rule, index) in labRules" :key="rule" class="rule-item">
+          <span>{{ String(index + 1).padStart(2, '0') }}</span>
+          <p>{{ rule }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-shell build-section">
+      <p class="eyebrow">BUILD ORDER // NEXT ACTIONS</p>
+      <h2>下一步不做大而全，先做第一个能运行的小实验。</h2>
+      <div class="build-grid">
+        <article v-for="(item, index) in buildOrder" :key="item" class="build-card">
+          <span>{{ String(index + 1).padStart(2, '0') }}</span>
+          <p>{{ item }}</p>
+        </article>
+      </div>
+    </section>
+  </main>
+</template>
+
 <style scoped>
-/* 基础布局与背景纹理 */
-.lab-container {
-  min-height: 100vh;
-  padding: 4rem 2rem;
-  background-color: #f4f4f0; /* 米白底色 */
-  background-image: 
-    linear-gradient(#e5e5df 1px, transparent 1px),
-    linear-gradient(90deg, #e5e5df 1px, transparent 1px);
-  background-size: 40px 40px;
-  font-family: 'Inter', system-ui, sans-serif;
-  color: #000;
-  display: flex;
-  flex-direction: column;
+.lab-page {
+  padding-bottom: 5rem;
+}
+
+.lab-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: var(--vg-accent);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.055em;
+}
+
+h1 {
+  max-width: 840px;
+  margin-bottom: 1.4rem;
+  font-size: clamp(3rem, 8vw, 7.2rem);
+  line-height: 0.92;
+}
+
+h2 {
+  max-width: 820px;
+  margin-bottom: 1.5rem;
+  font-size: clamp(2.2rem, 5vw, 4.7rem);
+  line-height: 1;
+}
+
+h3 {
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+  line-height: 1.08;
+}
+
+.hero-lead,
+.lab-panel p,
+.experiment-card p,
+.experiment-card strong,
+.method-copy p,
+.rule-item p,
+.build-card p {
+  color: #d4d4d8;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.lab-hero {
+  min-height: calc(100vh - 76px);
+  display: grid;
   align-items: center;
 }
 
-/* 头部排版 */
-.page-header {
-  text-align: center;
-  margin-bottom: 4rem;
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-}
-
-.main-title {
-  font-size: 5rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.05em;
-  margin: 0;
-  line-height: 1;
-  text-shadow: 6px 6px 0px #00ffff; /* 电离蓝阴影 */
-}
-
-.sub-title {
-  font-family: 'Fira Code', monospace;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  background-color: #000;
-  color: #fff;
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border: 3px solid #000;
-  transform: rotate(-1deg);
-}
-
-.header-desc-box {
-  margin-top: 2rem;
-  padding: 1.5rem;
-  background-color: #fff;
-  border: 4px solid #000;
-  box-shadow: 8px 8px 0px 0px #000;
-  font-size: 1.2rem;
-  font-weight: bold;
-  transform: rotate(1deg); /* 轻微倾斜增加拼贴感 */
-}
-
-/* 实验卡片网格布局 */
-.lab-grid {
+.hero-grid,
+.method-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 3rem;
-  max-width: 1200px;
-  width: 100%;
-  margin-bottom: 5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
+  gap: 1.5rem;
+  align-items: end;
 }
 
-/* 新粗野主义卡片基座 */
-.brutalist-card {
-  background-color: #fff;
-  border: 4px solid #000;
-  box-shadow: 12px 12px 0px 0px #000;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
+.lab-panel,
+.experiment-card,
+.rules-card,
+.build-card {
+  border: 2px solid rgba(250, 250, 250, 0.9);
+  background: rgba(24, 24, 27, 0.74);
+  box-shadow: 10px 10px 0 rgba(250, 250, 250, 0.12);
+  backdrop-filter: blur(16px);
 }
 
-.brutalist-card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 16px 16px 0px 0px #000;
-}
-
-.card-header {
+.lab-panel {
+  border-radius: 32px;
   padding: 1.5rem;
-  border-bottom: 4px solid #000;
+  transform: rotate(1.5deg);
 }
 
-.header-top {
+.lab-panel span,
+.status-pill,
+.card-topline span,
+.rule-item span,
+.build-card span {
+  color: var(--vg-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.lab-panel strong {
+  display: block;
+  margin: 1rem 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.section-title-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+
+.status-pill {
+  flex: 0 0 auto;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(204, 255, 0, 0.55);
+  border-radius: 999px;
+  background: rgba(204, 255, 0, 0.08);
+}
+
+.experiment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
 }
 
-.card-header h3 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 900;
-  line-height: 1.2;
-}
-
-.status-badge {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
-  font-weight: bold;
-  padding: 0.3rem 0.6rem;
-  border: 2px solid;
-}
-
-.card-content {
-  padding: 2rem 1.5rem;
-  flex-grow: 1;
+.experiment-card {
   display: flex;
+  min-height: 360px;
   flex-direction: column;
+  border-radius: 30px;
+  padding: 1.35rem;
 }
 
-.experiment-desc {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  font-weight: 500;
+.experiment-card h3 {
+  margin: 2.4rem 0 1rem;
 }
 
-.tech-stack {
+.experiment-card strong {
+  display: block;
+  margin-top: auto;
+  color: #fafafa;
+}
+
+.stack-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-bottom: 2rem;
+  gap: 0.5rem;
+  margin: 1.2rem 0;
 }
 
-.tech-tag {
-  font-family: 'Fira Code', monospace;
-  font-size: 0.85rem;
-  font-weight: bold;
-  padding: 0.3rem 0.6rem;
-  border: 2px solid #000;
-  background-color: #eee;
-  color: #000;
+.stack-row span {
+  padding: 0.38rem 0.65rem;
+  border: 1px solid rgba(250, 250, 250, 0.22);
+  border-radius: 999px;
+  color: #f4f4f5;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
 }
 
-.tech-tag.tag-outline {
-  background-color: transparent;
-  border-style: dashed;
+.method-section {
+  align-items: start;
 }
 
-/* 操作按钮 */
-.card-footer {
-  margin-top: auto;
+.rules-card {
+  border-radius: 32px;
+  padding: 1.2rem;
 }
 
-.launch-btn {
-  width: 100%;
-  font-family: 'Fira Code', monospace;
-  font-weight: bold;
-  font-size: 1rem;
-  padding: 0.8rem;
-  border: 3px solid #000;
-  background-color: #000;
-  color: #fff;
-  cursor: not-allowed;
-  transition: all 0.2s ease;
-  box-shadow: 4px 4px 0px 0px #000;
+.rule-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.12);
 }
 
-.launch-btn.btn-white {
-  background-color: #fff;
-  color: #000;
+.rule-item:last-child {
+  border-bottom: 0;
 }
 
-.launch-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px 0px #000;
+.rule-item p {
+  margin-bottom: 0;
 }
 
-/* 颜色工具类 */
-.bg-cyan { background-color: #00ffff; }
-.bg-magenta { background-color: #ff00ff; }
-.bg-yellow { background-color: #fffa00; }
-.bg-black { background-color: #000; }
-.bg-white { background-color: #fff; }
-.text-white { color: #fff; }
-.text-black { color: #000; }
-.border-black { border-color: #000; }
-.border-white { border-color: #fff; }
-
-/* 底部滚动状态条 (Marquee) */
-.dev-status-banner {
-  width: 100%;
-  background-color: #00ffff; /* 青色代表实验室 */
-  color: #000;
-  border-top: 4px solid #000;
-  border-bottom: 4px solid #000;
-  padding: 0.8rem 0;
-  overflow: hidden;
-  position: relative;
-  margin-top: auto;
+.build-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
-.marquee-content {
-  display: inline-block;
-  white-space: nowrap;
-  animation: marquee 15s linear infinite;
-  font-family: 'Fira Code', monospace;
-  font-weight: 900;
-  font-size: 1.2rem;
+.build-card {
+  min-height: 180px;
+  border-radius: 28px;
+  padding: 1.2rem;
 }
 
-@keyframes marquee {
-  0% { transform: translateX(100vw); }
-  100% { transform: translateX(-100%); }
+.build-card p {
+  margin: 2.5rem 0 0;
+  color: #fafafa;
+  font-weight: 800;
 }
 
-/* 响应式调整 */
-@media (max-width: 768px) {
-  .main-title {
-    font-size: 3.5rem;
+@media (max-width: 980px) {
+  .hero-grid,
+  .method-section,
+  .experiment-grid,
+  .build-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-panel {
+    transform: none;
+  }
+
+  .lab-hero {
+    min-height: auto;
+  }
+
+  .section-title-row {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 </style>
