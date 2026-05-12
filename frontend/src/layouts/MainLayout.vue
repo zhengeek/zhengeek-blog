@@ -1,3 +1,54 @@
+<script setup lang="ts">
+import { onBeforeUnmount, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import PageTransitionOverlay from '../components/common/PageTransitionOverlay.vue'
+
+type TransitionPhase = 'idle' | 'leaving' | 'entering'
+
+const router = useRouter()
+const transitionPhase = ref<TransitionPhase>('idle')
+const isTransitioning = ref(false)
+
+const wait = (duration: number) => new Promise((resolve) => setTimeout(resolve, duration))
+
+const isSamePageHashNavigation = (to: { path: string; query: unknown; hash: string }, from: { path: string; query: unknown; hash: string }) => {
+  return to.path === from.path && JSON.stringify(to.query) === JSON.stringify(from.query) && to.hash !== from.hash
+}
+
+const shouldSkipCurtain = (to: { path: string; query: unknown; hash: string }, from: { path: string; query: unknown; hash: string }) => {
+  return isSamePageHashNavigation(to, from)
+}
+
+const getRouteViewKey = (fullPath: string) => fullPath.split('#')[0]
+
+const removeBeforeGuard = router.beforeEach(async (to, from) => {
+  if (!from.name || shouldSkipCurtain(to, from)) {
+    return true
+  }
+
+  isTransitioning.value = true
+  transitionPhase.value = 'leaving'
+  await wait(680)
+  return true
+})
+
+const removeAfterHook = router.afterEach(async (to, from) => {
+  if (!from.name || shouldSkipCurtain(to, from)) {
+    return
+  }
+
+  transitionPhase.value = 'entering'
+  await wait(720)
+  transitionPhase.value = 'idle'
+  isTransitioning.value = false
+})
+
+onBeforeUnmount(() => {
+  removeBeforeGuard()
+  removeAfterHook()
+})
+</script>
+
 <template>
   <div class="main-layout">
     <header class="site-header">
@@ -14,13 +65,18 @@
         <RouterLink to="/#projects">Projects</RouterLink>
         <RouterLink to="/#blog">Blog</RouterLink>
         <RouterLink to="/#lab">Lab</RouterLink>
-        <RouterLink class="nav-detail" to="/about">Detail</RouterLink>
       </nav>
     </header>
 
     <main>
-      <RouterView />
+      <RouterView v-slot="{ Component, route }">
+        <Transition name="page-fade" mode="out-in">
+          <component :is="Component" :key="getRouteViewKey(route.fullPath)" />
+        </Transition>
+      </RouterView>
     </main>
+
+    <PageTransitionOverlay :active="isTransitioning" :phase="transitionPhase" />
   </div>
 </template>
 
@@ -45,8 +101,16 @@
   min-height: 76px;
   padding: 0.85rem clamp(1rem, 4vw, 4rem);
   border-bottom: 1px solid rgba(250, 250, 250, 0.12);
-  background: rgba(9, 9, 11, 0.78);
+  background: rgba(9, 9, 11, 0.68);
   backdrop-filter: blur(18px);
+  opacity: 0.86;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.site-header:hover,
+.site-header:focus-within {
+  background: rgba(9, 9, 11, 0.82);
+  opacity: 1;
 }
 
 .brand-lockup {
@@ -101,30 +165,34 @@
 
 .site-nav a {
   padding: 0.55rem 0.85rem;
-  border: 1px solid transparent;
+  border: 1px solid rgba(250, 250, 250, 0.1);
   border-radius: 999px;
-  color: #fafafa;
+  background: rgba(250, 250, 250, 0.035);
+  color: rgba(250, 250, 250, 0.76);
   font-size: 0.9rem;
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
 }
 
 .site-nav a:hover,
 .site-nav a.router-link-active {
-  border-color: rgba(250, 250, 250, 0.2);
-  background: rgba(250, 250, 250, 0.08);
+  border-color: rgba(250, 250, 250, 0.28);
+  background: rgba(250, 250, 250, 0.09);
   color: #ccff00;
-}
-
-.site-nav .nav-detail {
-  border-color: #fafafa;
-  background: #fafafa;
-  color: #09090b;
-  font-weight: 800;
 }
 
 main {
   min-height: calc(100vh - 76px);
+}
+
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 0.18s ease;
+}
+
+.page-fade-enter-from,
+.page-fade-leave-to {
+  opacity: 0;
 }
 
 @media (max-width: 760px) {

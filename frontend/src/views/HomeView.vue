@@ -55,8 +55,8 @@ const blogSeeds = [
           也见证我从零走向真正工程师的全过程。
         </p>
         <div class="hero-actions">
-          <RouterLink class="primary-action" to="/#projects">Explore Projects</RouterLink>
-          <RouterLink class="secondary-action" to="/about">Read Details</RouterLink>
+          <RouterLink class="primary-action" to="/projects">Explore Projects</RouterLink>
+          <RouterLink class="secondary-action" to="/about">Read About</RouterLink>
         </div>
       </div>
 
@@ -193,6 +193,10 @@ const blogSeeds = [
   min-height: calc(100vh - 76px);
 }
 
+.hero-copy {
+  min-width: 0;
+}
+
 .eyebrow,
 .section-kicker {
   margin: 0 0 1rem;
@@ -212,9 +216,10 @@ p {
 }
 
 h1 {
+  max-width: 100%;
   margin-bottom: 1.4rem;
   font-family: var(--font-display);
-  font-size: clamp(4.8rem, 13vw, 11rem);
+  font-size: clamp(4.8rem, 11vw, 10rem);
   line-height: 0.84;
   letter-spacing: -0.08em;
 }
@@ -280,8 +285,11 @@ h1 {
 }
 
 .hero-panel {
-  position: relative;
-  min-height: 520px;
+  display: grid;
+  gap: clamp(1.1rem, 3vw, 1.8rem);
+  align-items: center;
+  justify-items: end;
+  min-width: 0;
 }
 
 .terminal-card,
@@ -298,13 +306,10 @@ h1 {
 }
 
 .terminal-card {
-  position: absolute;
-  right: 0;
-  top: 1rem;
   width: min(100%, 500px);
   border-radius: 28px;
   overflow: hidden;
-  transform: rotate(2deg);
+  transform: rotate(1.5deg);
 }
 
 .terminal-bar {
@@ -333,17 +338,17 @@ pre {
 }
 
 .orbit-card {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  position: relative;
   display: grid;
   width: min(88vw, 320px);
   aspect-ratio: 1;
+  justify-self: start;
   place-items: center;
   border-radius: 50%;
   background:
     linear-gradient(135deg, rgba(204, 255, 0, 0.92), rgba(176, 0, 255, 0.72)),
     #18181b;
+  transform: translateX(1rem) rotate(-3deg);
 }
 
 .orbit-core {
@@ -533,10 +538,6 @@ h2 {
     grid-template-columns: 1fr;
   }
 
-  .hero-panel {
-    min-height: 620px;
-  }
-
   .section-heading-row {
     grid-template-columns: 1fr;
     align-items: start;
@@ -554,14 +555,12 @@ h2 {
 
   .terminal-card,
   .orbit-card {
-    position: relative;
-    inset: auto;
     transform: none;
     margin-bottom: 1rem;
   }
 
   .hero-panel {
-    min-height: auto;
+    justify-items: stretch;
   }
 
   .hero-actions {
