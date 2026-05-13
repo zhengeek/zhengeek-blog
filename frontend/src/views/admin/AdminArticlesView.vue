@@ -10,22 +10,22 @@ import { articles } from '../../data/articles'
     <section class="admin-shell">
       <div class="hero-row">
         <SectionHeader
-          eyebrow="后台 // 文章管理"
+          eyebrow="ADMIN // ARTICLES"
           title="管理文章"
           description="静态文章清单，用来预览后台列表、编辑入口和公开页面跳转流程。"
         />
-        <RouterLink class="primary-link" to="/admin/articles/new">新建文章</RouterLink>
+        <RouterLink class="primary-link" to="/admin/articles/new">New Article</RouterLink>
       </div>
 
       <InfoCard class="table-card">
         <div class="article-row table-head">
-          <span>标题</span>
-          <span>分类</span>
-          <span>状态</span>
-          <span>浏览量</span>
-          <span>置顶</span>
-          <span>更新</span>
-          <span>操作</span>
+          <span>Title</span>
+          <span>Category</span>
+          <span>Status</span>
+          <span>Views</span>
+          <span>Pinned</span>
+          <span>Updated</span>
+          <span>Actions</span>
         </div>
 
         <div v-for="article in articles" :key="article.slug" class="article-row">
@@ -33,11 +33,11 @@ import { articles } from '../../data/articles'
           <span>{{ article.category }}</span>
           <StatusPill :text="article.status" />
           <span>{{ article.viewCount }}</span>
-          <span>{{ article.isPinned ? '置顶' : '-' }}</span>
+          <span>{{ article.isPinned ? 'Pinned' : '-' }}</span>
           <span>{{ article.date }}</span>
           <div class="row-actions">
-            <RouterLink :to="`/admin/articles/${article.slug}/edit`">编辑</RouterLink>
-            <RouterLink :to="`/blog/${article.slug}`">预览</RouterLink>
+            <RouterLink :to="`/admin/articles/${article.slug}/edit`">Edit</RouterLink>
+            <RouterLink :to="`/blog/${article.slug}`">Preview</RouterLink>
           </div>
         </div>
       </InfoCard>

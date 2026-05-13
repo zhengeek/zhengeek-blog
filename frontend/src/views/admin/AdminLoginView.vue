@@ -12,15 +12,15 @@ const enterAdmin = () => {
 <template>
   <main class="admin-login-page">
     <InfoCard class="login-card">
-      <p class="eyebrow">后台 // 静态原型</p>
+      <p class="eyebrow">ADMIN // STATIC LOGIN</p>
       <h1>ZhenGeek 管理后台</h1>
       <form class="login-form" @submit.prevent="enterAdmin">
         <label>
-          <span>用户名</span>
+          <span>Username</span>
           <input type="text" autocomplete="username" placeholder="请输入用户名" />
         </label>
         <label>
-          <span>密码</span>
+          <span>Password</span>
           <input type="password" autocomplete="current-password" placeholder="请输入密码" />
         </label>
         <button type="submit">进入后台</button>

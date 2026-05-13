@@ -16,11 +16,11 @@ const stats = computed(() => {
   }).length
 
   return [
-    { label: '文章总数', value: articles.length },
-    { label: '已发布', value: publishedCount },
-    { label: '草稿', value: articles.length - publishedCount - archivedCount },
-    { label: '置顶文章', value: articles.filter((article) => article.isPinned).length },
-    { label: '总浏览量', value: articles.reduce((total, article) => total + article.viewCount, 0) }
+    { label: 'Total Articles', value: articles.length },
+    { label: 'Published', value: publishedCount },
+    { label: 'Drafts', value: articles.length - publishedCount - archivedCount },
+    { label: 'Pinned', value: articles.filter((article) => article.isPinned).length },
+    { label: 'Total Views', value: articles.reduce((total, article) => total + article.viewCount, 0) }
   ]
 })
 </script>
@@ -29,17 +29,17 @@ const stats = computed(() => {
   <main class="admin-page">
     <section class="admin-shell">
       <div class="admin-topbar">
-        <RouterLink class="admin-link" to="/admin/login">登录页</RouterLink>
-        <RouterLink class="admin-link" to="/blog">公开博客</RouterLink>
+        <RouterLink class="admin-link" to="/admin/login">Login</RouterLink>
+        <RouterLink class="admin-link" to="/blog">Public Blog</RouterLink>
       </div>
 
       <div class="hero-row">
         <SectionHeader
-          eyebrow="后台 // 数据看板"
+          eyebrow="ADMIN // CONTROL PANEL"
           title="ZhenGeek 内容控制台"
           description="用于梳理文章管理流程的静态后台原型，暂时不接入 API、数据库或真实登录。"
         />
-        <StatusPill text="v0.1 静态原型" />
+        <StatusPill text="v0.1 Static" />
       </div>
 
       <div class="stats-grid">
@@ -51,12 +51,12 @@ const stats = computed(() => {
 
       <InfoCard class="quick-card">
         <div>
-          <span class="quick-label">快捷入口</span>
+          <span class="quick-label">QUICK ACTIONS</span>
           <h2>文章工作流</h2>
         </div>
         <div class="quick-actions">
-          <RouterLink to="/admin/articles">管理文章</RouterLink>
-          <RouterLink to="/admin/articles/new">新建文章</RouterLink>
+          <RouterLink to="/admin/articles">Manage Articles</RouterLink>
+          <RouterLink to="/admin/articles/new">New Article</RouterLink>
         </div>
       </InfoCard>
     </section>

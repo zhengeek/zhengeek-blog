@@ -31,17 +31,17 @@ const learningTracks = [
 
 const timeline = [
   {
-    stage: '现在',
+    stage: 'Now',
     title: '前端静态 V1',
     detail: '完成首页、多页面路由、About / Projects / Blog / Lab 的内容骨架。'
   },
   {
-    stage: '下一步',
+    stage: 'Next',
     title: '内容与组件整理',
     detail: '把项目、文章、时间线整理成清晰的数据结构，为后端接口做准备。'
   },
   {
-    stage: '之后',
+    stage: 'Later',
     title: '全栈化升级',
     detail: '接入 Spring Boot、MySQL、文章 API、评论/留言和后台管理。'
   }
@@ -51,7 +51,7 @@ const timeline = [
 <template>
   <main class="about-page">
     <section class="about-hero about-shell">
-      <p class="eyebrow">关于 // ZHENGEEK 操作者</p>
+      <p class="eyebrow">ABOUT // ZHENGEEK OPERATOR</p>
       <div class="about-hero-grid">
         <div>
           <h1>我正在把自己，锻造成一个能独立完成真实项目的工程型创作者。</h1>
@@ -76,7 +76,7 @@ const timeline = [
 
     <section class="about-shell story-section">
       <div class="section-title-block">
-        <p class="eyebrow">原因 // 为什么做这个项目</p>
+        <p class="eyebrow">WHY // THIS PROJECT EXISTS</p>
         <h2>ZhenGeek 是我的长期成长容器。</h2>
       </div>
       <div class="story-grid">
@@ -100,7 +100,7 @@ const timeline = [
     </section>
 
     <section class="about-shell principles-section">
-      <p class="eyebrow">关键词 // ENFP</p>
+      <p class="eyebrow">CORE WORDS // ENFP</p>
       <h2>Envision. Nurture. Forge. Pioneer.</h2>
       <div class="principle-grid">
         <article v-for="item in principles" :key="item.word" class="principle-card">
@@ -113,7 +113,7 @@ const timeline = [
 
     <section class="about-shell route-section">
       <div class="route-copy">
-        <p class="eyebrow">路线 // 我正在构建什么</p>
+        <p class="eyebrow">ROUTE // WHAT I AM BUILDING</p>
         <h2>我选择项目驱动，而不是只堆零散知识点。</h2>
         <p>
           当前阶段，我会先用 ZhenGeek 训练前端工程能力：页面结构、组件拆分、路由组织、视觉设计和内容表达。
@@ -129,7 +129,7 @@ const timeline = [
     </section>
 
     <section class="about-shell timeline-section">
-      <p class="eyebrow">路线图 // 从静态到全栈</p>
+      <p class="eyebrow">ROADMAP // STATIC TO FULL-STACK</p>
       <div class="timeline-grid">
         <article v-for="item in timeline" :key="item.stage" class="timeline-card">
           <span>{{ item.stage }}</span>

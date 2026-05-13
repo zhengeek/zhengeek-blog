@@ -9,7 +9,7 @@ import { buildOrder, experiments, labRules } from '../data/lab'
 <template>
   <main class="lab-page">
     <section class="lab-hero lab-shell">
-      <p class="eyebrow">实验室 // 创意工程</p>
+      <p class="eyebrow">LAB // CREATIVE ENGINEERING</p>
       <div class="hero-grid">
         <div>
           <h1>这里不是玩具箱，而是我训练创造力和工程能力的实验场。</h1>
@@ -29,9 +29,9 @@ import { buildOrder, experiments, labRules } from '../data/lab'
     <section class="lab-shell experiments-section">
       <div class="section-title-row">
         <div>
-          <SectionHeader eyebrow="实验 // 想法地图" title="实验从小开始，但每一个都要服务于长期路线。" />
+          <SectionHeader eyebrow="EXPERIMENTS // IDEA MAP" title="实验从小开始，但每一个都要服务于长期路线。" />
         </div>
-        <StatusPill text="一步一步来" />
+        <StatusPill text="Step by Step" />
       </div>
 
       <div class="experiment-grid">
@@ -49,7 +49,7 @@ import { buildOrder, experiments, labRules } from '../data/lab'
 
     <section class="lab-shell method-section">
       <div class="method-copy">
-        <SectionHeader eyebrow="方法 // Lab 如何运转" title="Lab 的重点不是“酷”，而是把探索变成可复用资产。" />
+        <SectionHeader eyebrow="METHOD // HOW LAB WORKS" title="Lab 的重点不是“酷”，而是把探索变成可复用资产。" />
         <p>
           一个实验如果只是好看，很快就会被遗忘。真正有价值的实验应该能变成首页交互、博客文章、项目亮点，
           或者帮助我理解算法、图形、事件、性能和硬件数据表达。
@@ -64,7 +64,7 @@ import { buildOrder, experiments, labRules } from '../data/lab'
     </section>
 
     <section class="lab-shell build-section">
-      <SectionHeader eyebrow="构建顺序 // 下一步行动" title="下一步不做大而全，先做第一个能运行的小实验。" />
+      <SectionHeader eyebrow="BUILD ORDER // NEXT ACTIONS" title="下一步不做大而全，先做第一个能运行的小实验。" />
       <div class="build-grid">
         <InfoCard v-for="(item, index) in buildOrder" :key="item" class="build-card">
           <span>{{ String(index + 1).padStart(2, '0') }}</span>

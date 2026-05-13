@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="status-rotate">状态：全速运行 // 在线率：99.99%</div>
+    <div class="status-rotate">STATUS: OVERCLOCKED // UPTIME: 99.99%</div>
   </header>
 </template>
 

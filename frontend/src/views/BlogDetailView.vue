@@ -19,11 +19,11 @@ const article = computed(() => articles.find((item) => item.slug === slug.value)
 <template>
   <main class="blog-detail-page">
     <section v-if="article" class="detail-shell">
-      <RouterLink class="back-link" to="/blog">&lt;- 返回博客</RouterLink>
+      <RouterLink class="back-link" to="/blog">&lt;- 返回 Blog</RouterLink>
 
       <header class="article-hero">
         <div class="article-meta">
-          <span v-if="article.isPinned" class="pinned-badge">置顶</span>
+          <span v-if="article.isPinned" class="pinned-badge">Pinned</span>
           <span>{{ article.category }}</span>
           <span>{{ article.viewCount }} 次浏览</span>
           <span>{{ article.date }}</span>
@@ -43,10 +43,10 @@ const article = computed(() => articles.find((item) => item.slug === slug.value)
 
     <section v-else class="detail-shell not-found-section">
       <InfoCard class="not-found-card">
-        <span class="not-found-label">404 // 未找到文章</span>
+        <span class="not-found-label">404 // ARTICLE NOT FOUND</span>
         <h1>这篇文章还没有进入 ZhenGeek 的记录系统。</h1>
         <p>可能是链接写错了，也可能是这篇文章还在草稿阶段。先回到 Blog 页面看看已有内容。</p>
-        <RouterLink class="back-link inline-link" to="/blog">返回博客</RouterLink>
+        <RouterLink class="back-link inline-link" to="/blog">返回 Blog</RouterLink>
       </InfoCard>
     </section>
   </main>

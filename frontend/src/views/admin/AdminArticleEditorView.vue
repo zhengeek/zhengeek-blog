@@ -52,12 +52,12 @@ const initialValue = computed(() => {
   <main class="admin-page">
     <section class="admin-shell">
       <div class="admin-topbar">
-        <RouterLink class="back-link" to="/admin/articles">&lt;- 返回文章管理</RouterLink>
+        <RouterLink class="back-link" to="/admin/articles">&lt;- 返回 Articles</RouterLink>
       </div>
 
       <template v-if="isNewArticle || article">
         <SectionHeader
-          eyebrow="后台 // 文章编辑器"
+          eyebrow="ADMIN // EDITOR"
           :title="isNewArticle ? '新建文章' : '编辑文章'"
           description="当前只是前端原型，保存草稿和发布按钮会把表单数据打印到控制台。"
         />
@@ -68,10 +68,10 @@ const initialValue = computed(() => {
       </template>
 
       <InfoCard v-else class="not-found-card">
-        <span>404 // 未找到文章</span>
+        <span>404 // ARTICLE NOT FOUND</span>
         <h1>文章不存在</h1>
         <p>当前 slug 没有匹配到静态文章数据，请返回文章管理页重新选择。</p>
-        <RouterLink class="back-link inline-link" to="/admin/articles">返回文章管理</RouterLink>
+        <RouterLink class="back-link inline-link" to="/admin/articles">返回 Articles</RouterLink>
       </InfoCard>
     </section>
   </main>

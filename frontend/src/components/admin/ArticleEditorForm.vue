@@ -44,11 +44,11 @@ const getPayload = (action: 'save-draft' | 'publish') => ({
 })
 
 const saveDraft = () => {
-  console.log('保存草稿', getPayload('save-draft'))
+  console.log('Save Draft', getPayload('save-draft'))
 }
 
 const publish = () => {
-  console.log('发布文章', getPayload('publish'))
+  console.log('Publish', getPayload('publish'))
 }
 </script>
 
@@ -56,53 +56,53 @@ const publish = () => {
   <form class="editor-form" @submit.prevent="saveDraft">
     <div class="form-grid">
       <label>
-        <span>标题</span>
+        <span>Title</span>
         <input v-model="form.title" type="text" placeholder="请输入文章标题" />
       </label>
 
       <label>
-        <span>链接标识</span>
+        <span>Slug</span>
         <input v-model="form.slug" type="text" placeholder="article-slug" :disabled="mode === 'edit'" />
       </label>
 
       <label>
-        <span>分类</span>
+        <span>Category</span>
         <input v-model="form.category" type="text" placeholder="例如：开发日志" />
       </label>
 
       <label>
-        <span>状态</span>
+        <span>Status</span>
         <select v-model="form.status">
-          <option value="draft">草稿</option>
-          <option value="published">已发布</option>
-          <option value="archived">已归档</option>
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+          <option value="archived">Archived</option>
         </select>
       </label>
     </div>
 
     <label>
-      <span>文章简介</span>
+      <span>Summary</span>
       <textarea v-model="form.summary" rows="3" placeholder="请输入一段简短的文章简介" />
     </label>
 
     <label>
-      <span>标签</span>
+      <span>Tags</span>
       <input v-model="form.tags" type="text" placeholder="Vue3, Vite, 开发日志" />
     </label>
 
     <label class="pin-toggle">
       <input v-model="form.isPinned" type="checkbox" />
-      <span>置顶这篇文章</span>
+      <span>Pinned / 置顶这篇文章</span>
     </label>
 
     <label>
-      <span>正文内容</span>
+      <span>Content</span>
       <textarea v-model="form.content" class="content-input" rows="14" placeholder="在这里编写文章正文..." />
     </label>
 
     <div class="form-actions">
-      <button type="submit">保存草稿</button>
-      <button type="button" class="primary-action" @click="publish">发布文章</button>
+      <button type="submit">Save Draft</button>
+      <button type="button" class="primary-action" @click="publish">Publish</button>
     </div>
   </form>
 </template>
