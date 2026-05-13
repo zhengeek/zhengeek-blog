@@ -1,0 +1,138 @@
+<script setup lang="ts">
+import InfoCard from '../../components/common/InfoCard.vue'
+import SectionHeader from '../../components/common/SectionHeader.vue'
+import StatusPill from '../../components/common/StatusPill.vue'
+import { articles } from '../../data/articles'
+</script>
+
+<template>
+  <main class="admin-page">
+    <section class="admin-shell">
+      <div class="hero-row">
+        <SectionHeader
+          eyebrow="后台 // 文章管理"
+          title="管理文章"
+          description="静态文章清单，用来预览后台列表、编辑入口和公开页面跳转流程。"
+        />
+        <RouterLink class="primary-link" to="/admin/articles/new">新建文章</RouterLink>
+      </div>
+
+      <InfoCard class="table-card">
+        <div class="article-row table-head">
+          <span>标题</span>
+          <span>分类</span>
+          <span>状态</span>
+          <span>浏览量</span>
+          <span>置顶</span>
+          <span>更新</span>
+          <span>操作</span>
+        </div>
+
+        <div v-for="article in articles" :key="article.slug" class="article-row">
+          <strong>{{ article.title }}</strong>
+          <span>{{ article.category }}</span>
+          <StatusPill :text="article.status" />
+          <span>{{ article.viewCount }}</span>
+          <span>{{ article.isPinned ? '置顶' : '-' }}</span>
+          <span>{{ article.date }}</span>
+          <div class="row-actions">
+            <RouterLink :to="`/admin/articles/${article.slug}/edit`">编辑</RouterLink>
+            <RouterLink :to="`/blog/${article.slug}`">预览</RouterLink>
+          </div>
+        </div>
+      </InfoCard>
+    </section>
+  </main>
+</template>
+
+<style scoped>
+.admin-page {
+  padding-bottom: 5rem;
+}
+
+.admin-shell {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) 0;
+}
+
+.hero-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.primary-link,
+.row-actions a {
+  color: var(--vg-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.primary-link {
+  flex: 0 0 auto;
+  border: 1px solid rgba(204, 255, 0, 0.5);
+  border-radius: 999px;
+  background: rgba(204, 255, 0, 0.08);
+  padding: 0.75rem 0.9rem;
+}
+
+.table-card {
+  overflow-x: auto;
+  border-radius: 24px;
+  padding: 1rem;
+}
+
+.article-row {
+  display: grid;
+  grid-template-columns: minmax(280px, 1.8fr) minmax(110px, 0.8fr) minmax(150px, 0.9fr) minmax(70px, 0.45fr) minmax(80px, 0.5fr) minmax(90px, 0.55fr) minmax(130px, 0.65fr);
+  gap: 1rem;
+  align-items: center;
+  min-width: 980px;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(250, 250, 250, 0.1);
+}
+
+.article-row:last-child {
+  border-bottom: 0;
+}
+
+.table-head {
+  color: var(--vg-accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.article-row strong {
+  color: #fafafa;
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
+.article-row span {
+  color: #d4d4d8;
+  font-size: 0.9rem;
+}
+
+.row-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.row-actions a:hover,
+.primary-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 780px) {
+  .hero-row {
+    flex-direction: column;
+  }
+}
+</style>

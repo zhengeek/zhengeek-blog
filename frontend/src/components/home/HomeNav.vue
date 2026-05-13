@@ -1,6 +1,6 @@
 <template>
   <nav class="home-nav">
-    <a href="#" class="brand hoverable" aria-label="Back to top">
+    <a href="#" class="brand hoverable" aria-label="返回顶部">
       root@ZhenGeek:~$<span class="blink-cursor cursor-block"></span>
     </a>
 

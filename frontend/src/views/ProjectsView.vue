@@ -9,7 +9,7 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
 <template>
   <main class="projects-page">
     <section class="projects-hero project-shell">
-      <p class="eyebrow">PROJECTS // ENGINEERING PORTFOLIO</p>
+      <p class="eyebrow">项目 // 工程作品集</p>
       <div class="hero-grid">
         <div>
           <h1>我不只是在做网页，我在积累一个长期可展示的工程作品集。</h1>
@@ -20,7 +20,7 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
         </div>
         <InfoCard class="status-panel">
           <span>V1 STATUS</span>
-          <strong>Frontend Static Prototype</strong>
+          <strong>前端静态原型</strong>
           <p>当前重点：先把内容、页面结构和作品集表达打磨清楚，再进入后端阶段。</p>
         </InfoCard>
       </div>
@@ -28,7 +28,7 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
 
     <section class="project-shell featured-project">
       <div class="featured-header">
-        <SectionHeader eyebrow="FEATURED PROJECT // 01" :title="mainProject.name" :description="mainProject.summary" />
+        <SectionHeader eyebrow="重点项目 // 01" :title="mainProject.name" :description="mainProject.summary" />
         <StatusPill :text="mainProject.status" />
       </div>
 
@@ -53,7 +53,7 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
     <section class="project-shell roadmap-section">
       <div class="section-title-row">
         <div>
-          <SectionHeader eyebrow="FUTURE MODULES // PROJECT MAP" title="接下来会围绕 ZhenGeek 拓展三个方向。" />
+          <SectionHeader eyebrow="未来模块 // 项目地图" title="接下来会围绕 ZhenGeek 拓展三个方向。" />
         </div>
       </div>
 
@@ -72,7 +72,7 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
 
     <section class="project-shell backend-section">
       <div class="backend-copy">
-        <SectionHeader eyebrow="BACKEND PLAN // NOT NOW, BUT SOON" title="后端不会现在硬接，而是在内容模型稳定后接入。" />
+        <SectionHeader eyebrow="后端计划 // 不急，但会做" title="后端不会现在硬接，而是在内容模型稳定后接入。" />
         <p>
           当前阶段先用静态数据模拟真实内容。等 About、Projects、Blog 页面稳定后，
           再把这些静态数据迁移到后端 API 和数据库里。这样不会为了写后端而写后端，

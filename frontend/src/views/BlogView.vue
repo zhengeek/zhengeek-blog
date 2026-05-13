@@ -14,7 +14,7 @@ const sortedArticles = computed(() => {
 <template>
   <main class="blog-page">
     <section class="blog-hero blog-shell">
-      <p class="eyebrow">BLOG // LEARNING RECORDS</p>
+      <p class="eyebrow">博客 // 学习记录</p>
       <div class="hero-grid">
         <div>
           <h1>博客不是装饰，是我的学习复盘系统。</h1>
@@ -24,15 +24,15 @@ const sortedArticles = computed(() => {
           </p>
         </div>
         <InfoCard class="writing-panel">
-          <span>WRITING MODE</span>
-          <strong>Build in public</strong>
+          <span>写作模式</span>
+          <strong>公开构建</strong>
           <p>用公开记录倒逼自己持续复盘，把学习过程变成可展示、可回顾、可迭代的作品。</p>
         </InfoCard>
       </div>
     </section>
 
     <section class="blog-shell categories-section">
-      <SectionHeader eyebrow="CATEGORIES // CONTENT MAP" title="先建立分类，再慢慢填充真实文章。" />
+      <SectionHeader eyebrow="分类 // 内容地图" title="先建立分类，再慢慢填充真实文章。" />
       <div class="category-grid">
         <InfoCard v-for="category in categories" :key="category.name" class="category-card">
           <h3>{{ category.name }}</h3>
@@ -44,20 +44,20 @@ const sortedArticles = computed(() => {
     <section class="blog-shell articles-section">
       <div class="section-title-row">
         <div>
-          <SectionHeader eyebrow="ARTICLES // FIRST CONTENT SEEDS" title="第一批文章先服务于项目本身。" />
+          <SectionHeader eyebrow="文章 // 第一批内容种子" title="第一批文章先服务于项目本身。" />
         </div>
-        <StatusPill text="Static List Now" />
+        <StatusPill text="当前为静态列表" />
       </div>
 
       <div class="article-list">
         <InfoCard v-for="article in sortedArticles" :key="article.slug" class="article-card">
           <div class="article-meta">
             <div class="article-meta-left">
-              <span v-if="article.isPinned" class="pinned-badge">PINNED</span>
+              <span v-if="article.isPinned" class="pinned-badge">置顶</span>
               <span>{{ article.category }}</span>
             </div>
             <div class="article-meta-right">
-              <span>{{ article.viewCount }} views</span>
+              <span>{{ article.viewCount }} 次浏览</span>
               <span>{{ article.date }}</span>
             </div>
           </div>
@@ -78,7 +78,7 @@ const sortedArticles = computed(() => {
 
     <section class="blog-shell writing-section">
       <div class="writing-copy">
-        <SectionHeader eyebrow="RULES // HOW I WILL WRITE" title="写博客的目的，是把模糊经验变成清晰表达。" />
+        <SectionHeader eyebrow="规则 // 我会怎样写" title="写博客的目的，是把模糊经验变成清晰表达。" />
         <p>
           现在暂时不做文章详情页，是因为内容还在打磨。等文章标题、分类、摘要和数据字段稳定后，
           再把静态数组迁移到后端 API，正式支持文章详情、Markdown 渲染和后台管理。

@@ -1,10 +1,10 @@
 export const categories = [
   {
-    name: 'Devlog',
+    name: '开发日志',
     desc: '记录 ZhenGeek 每一次重要迭代：为什么改、改了什么、下一步是什么。'
   },
   {
-    name: 'Frontend',
+    name: '前端',
     desc: '记录 Vue3、TypeScript、CSS、组件化、路由和页面工程实践。'
   },
   {
@@ -12,7 +12,7 @@ export const categories = [
     desc: '记录 Git、GitHub、提交、分支、冲突处理和工程协作基础。'
   },
   {
-    name: 'Learning Notes',
+    name: '学习笔记',
     desc: '整理计算机基础、算法、后端、数据库和长期学习复盘。'
   }
 ]
@@ -20,12 +20,12 @@ export const categories = [
 export const articles = [
   {
     slug: 'zhengeek-devlog-01',
-    category: 'Devlog',
+    category: '开发日志',
     date: '2026-05',
     title: 'ZhenGeek Devlog 01：为什么我把博客升级成个人网站',
     summary: '记录 ZhenGeek 从个人博客升级为个人数字平台的原因：它不只是展示页，而是长期成长系统。',
     tags: ['定位', '个人品牌', '项目路线'],
-    status: 'Draft Planned',
+    status: '草稿规划',
     viewCount: 128,
     isPinned: true,
     content: `
@@ -44,12 +44,12 @@ export const articles = [
   },
   {
     slug: 'vue3-vite-init-notes',
-    category: 'Frontend',
+    category: '前端',
     date: '2026-05',
     title: 'Vue3 + Vite 项目初始化踩坑记录',
     summary: '整理 Node.js、npm、Vite 初始化过程中的环境问题、安装卡顿、脚本权限和启动方式。',
     tags: ['Vue3', 'Vite', '环境配置'],
-    status: 'Outline Ready',
+    status: '大纲完成',
     viewCount: 96,
     isPinned: false,
     content: `
@@ -73,7 +73,7 @@ Vue3 + Vite 的初始化看起来很简单，但真正落到本地环境时，�
     title: '从 App.vue 到组件化首页：我现在到底在写什么',
     summary: '用初学者视角解释 .vue 单文件组件、template/script/style 的关系，以及页面如何被组织起来。',
     tags: ['SFC', '组件化', '路由'],
-    status: 'Draft Planned',
+    status: '草稿规划',
     viewCount: 74,
     isPinned: false,
     content: `
@@ -97,7 +97,7 @@ Vue3 + Vite 的初始化看起来很简单，但真正落到本地环境时，�
     title: 'Git add / commit / push 到底做了什么',
     summary: '把版本控制理解成工程存档系统：暂存、提交、推送、拉取和冲突分别解决什么问题。',
     tags: ['Git', 'GitHub', '工程习惯'],
-    status: 'Outline Ready',
+    status: '大纲完成',
     viewCount: 83,
     isPinned: false,
     content: `
@@ -116,12 +116,12 @@ add 是把工作区的改动放进暂存区，commit 是把暂存区保存成一
   },
   {
     slug: 'zhengeek-v1-static-frontend-checklist',
-    category: 'Project Notes',
+    category: '项目笔记',
     date: '2026-05',
     title: 'ZhenGeek V1 静态前端阶段验收标准',
     summary: '明确当前阶段不是上后端，而是先完成 About、Projects、Blog、Lab 的内容骨架与视觉统一。',
     tags: ['项目管理', '阶段验收', '路线图'],
-    status: 'New Idea',
+    status: '新想法',
     viewCount: 57,
     isPinned: false,
     content: `

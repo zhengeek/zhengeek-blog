@@ -6,6 +6,10 @@ import ProjectsView from '../views/ProjectsView.vue'
 import BlogView from '../views/BlogView.vue'
 import BlogDetailView from '../views/BlogDetailView.vue'
 import LabView from '../views/LabView.vue'
+import AdminLoginView from '../views/admin/AdminLoginView.vue'
+import AdminDashboardView from '../views/admin/AdminDashboardView.vue'
+import AdminArticlesView from '../views/admin/AdminArticlesView.vue'
+import AdminArticleEditorView from '../views/admin/AdminArticleEditorView.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -37,6 +41,31 @@ const routes: Array<RouteRecordRaw> = [
     path: '/lab',
     name: 'lab',
     component: LabView
+  },
+  {
+    path: '/admin/login',
+    name: 'admin-login',
+    component: AdminLoginView
+  },
+  {
+    path: '/admin',
+    name: 'admin-dashboard',
+    component: AdminDashboardView
+  },
+  {
+    path: '/admin/articles',
+    name: 'admin-articles',
+    component: AdminArticlesView
+  },
+  {
+    path: '/admin/articles/new',
+    name: 'admin-article-new',
+    component: AdminArticleEditorView
+  },
+  {
+    path: '/admin/articles/:slug/edit',
+    name: 'admin-article-edit',
+    component: AdminArticleEditorView
   }
 ]
 

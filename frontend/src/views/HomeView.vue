@@ -2,24 +2,24 @@
 const projectCards = [
   {
     index: '01',
-    title: 'ZhenGeek Personal Website',
-    status: 'In Progress',
+    title: 'ZhenGeek 个人网站',
+    status: '进行中',
     description: '从个人博客升级为长期作品集平台：展示学习记录、项目成长、生活思考与个人品牌。',
     tags: ['Vue3', 'TypeScript', 'Vite', 'Vue Router'],
     to: '/projects'
   },
   {
     index: '02',
-    title: 'Full-stack Blog System',
-    status: 'Planned',
+    title: '全栈博客系统',
+    status: '计划中',
     description: '未来接入后端 API、数据库、文章管理、Markdown 写作与留言讨论系统。',
     tags: ['Spring Boot', 'MySQL', 'REST API', 'Markdown'],
     to: '/blog'
   },
   {
     index: '03',
-    title: 'Creative Engineering Lab',
-    status: 'Idea Pool',
+    title: '创意工程实验室',
+    status: '想法池',
     description: '用可视化、算法动画和交互实验，把抽象的技术知识变成看得见的作品。',
     tags: ['Canvas', 'Algorithms', 'Creative Coding'],
     to: '/lab'
@@ -45,7 +45,7 @@ const blogSeeds = [
   <div class="home-page">
     <section id="top" class="hero-section section-shell">
       <div class="hero-copy">
-        <p class="eyebrow">ZHENGEEK.OS // PERSONAL DIGITAL PLATFORM</p>
+        <p class="eyebrow">ZHENGEEK.OS // 个人数字平台</p>
         <h1>
           <span class="glitch-text" data-text="ZhenGeek">ZhenGeek</span>
           <span class="hero-outline">is loading.</span>
@@ -81,7 +81,7 @@ const blogSeeds = [
     </section>
 
     <section id="about" class="about-section section-shell">
-      <div class="section-kicker">ABOUT // WHO AM I</div>
+      <div class="section-kicker">关于 // 我是谁</div>
       <div class="split-grid">
         <div>
           <h2>不是只做一个博客，而是建立一个可持续成长的个人系统。</h2>
@@ -102,7 +102,7 @@ const blogSeeds = [
     <section id="projects" class="projects-section section-shell">
       <div class="section-heading-row">
         <div>
-          <div class="section-kicker">PROJECTS // VISIBLE OUTPUT</div>
+          <div class="section-kicker">项目 // 可见输出</div>
           <h2>项目驱动学习，把每一步成长做成看得见的作品。</h2>
         </div>
         <RouterLink class="small-action" to="/projects">View All Projects</RouterLink>
@@ -125,7 +125,7 @@ const blogSeeds = [
     </section>
 
     <section id="blog" class="blog-section section-shell">
-      <div class="section-kicker">BLOG // LEARNING LOGS</div>
+      <div class="section-kicker">博客 // 学习记录</div>
       <div class="split-grid reverse">
         <div class="blog-list-panel">
           <article v-for="seed in blogSeeds" :key="seed" class="blog-seed">
@@ -146,7 +146,7 @@ const blogSeeds = [
     <section id="lab" class="lab-section section-shell">
       <div class="section-heading-row">
         <div>
-          <div class="section-kicker">LAB // CREATIVE ENGINEERING</div>
+          <div class="section-kicker">实验室 // 创意工程</div>
           <h2>实验室用于探索算法可视化、交互效果和未来硬件方向。</h2>
         </div>
         <RouterLink class="small-action" to="/lab">Enter Lab</RouterLink>
