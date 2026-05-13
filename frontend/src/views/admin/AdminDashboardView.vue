@@ -6,14 +6,8 @@ import StatusPill from '../../components/common/StatusPill.vue'
 import { articles } from '../../data/articles'
 
 const stats = computed(() => {
-  const publishedCount = articles.filter((article) => {
-    const status = article.status.toLowerCase()
-    return status.includes('published') || article.status.includes('已发布')
-  }).length
-  const archivedCount = articles.filter((article) => {
-    const status = article.status.toLowerCase()
-    return status.includes('archived') || article.status.includes('已归档')
-  }).length
+  const publishedCount = articles.filter((article) => article.status === 'published').length
+  const archivedCount = articles.filter((article) => article.status === 'archived').length
 
   return [
     { label: 'Total Articles', value: articles.length },

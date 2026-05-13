@@ -1,3 +1,28 @@
+export type ArticleStatus = 'draft' | 'published' | 'archived'
+
+export type Article = {
+  slug: string
+  category: string
+  date: string
+  title: string
+  summary: string
+  tags: string[]
+  status: ArticleStatus
+  viewCount: number
+  isPinned: boolean
+  content: string
+}
+
+export const getArticleStatusLabel = (status: ArticleStatus | string) => {
+  const labels: Record<ArticleStatus, string> = {
+    draft: 'Draft',
+    published: 'Published',
+    archived: 'Archived'
+  }
+
+  return labels[status as ArticleStatus] ?? labels.draft
+}
+
 export const categories = [
   {
     name: '开发日志',
@@ -17,7 +42,7 @@ export const categories = [
   }
 ]
 
-export const articles = [
+export const articles: Article[] = [
   {
     slug: 'zhengeek-devlog-01',
     category: '开发日志',
@@ -25,7 +50,7 @@ export const articles = [
     title: 'ZhenGeek Devlog 01：为什么我把博客升级成个人网站',
     summary: '记录 ZhenGeek 从个人博客升级为个人数字平台的原因：它不只是展示页，而是长期成长系统。',
     tags: ['定位', '个人品牌', '项目路线'],
-    status: 'Draft',
+    status: 'published',
     viewCount: 128,
     isPinned: true,
     content: `
@@ -49,7 +74,7 @@ export const articles = [
     title: 'Vue3 + Vite 项目初始化踩坑记录',
     summary: '整理 Node.js、npm、Vite 初始化过程中的环境问题、安装卡顿、脚本权限和启动方式。',
     tags: ['Vue3', 'Vite', '环境配置'],
-    status: 'Outline Ready',
+    status: 'draft',
     viewCount: 96,
     isPinned: false,
     content: `
@@ -73,7 +98,7 @@ Vue3 + Vite 的初始化看起来很简单，但真正落到本地环境时，�
     title: '从 App.vue 到组件化首页：我现在到底在写什么',
     summary: '用初学者视角解释 .vue 单文件组件、template/script/style 的关系，以及页面如何被组织起来。',
     tags: ['SFC', '组件化', '路由'],
-    status: 'Draft',
+    status: 'draft',
     viewCount: 74,
     isPinned: false,
     content: `
@@ -97,7 +122,7 @@ Vue3 + Vite 的初始化看起来很简单，但真正落到本地环境时，�
     title: 'Git add / commit / push 到底做了什么',
     summary: '把版本控制理解成工程存档系统：暂存、提交、推送、拉取和冲突分别解决什么问题。',
     tags: ['Git', 'GitHub', '工程习惯'],
-    status: 'Outline Ready',
+    status: 'published',
     viewCount: 83,
     isPinned: false,
     content: `
@@ -121,7 +146,7 @@ add 是把工作区的改动放进暂存区，commit 是把暂存区保存成一
     title: 'ZhenGeek V1 静态前端阶段验收标准',
     summary: '明确当前阶段不是上后端，而是先完成 About、Projects、Blog、Lab 的内容骨架与视觉统一。',
     tags: ['项目管理', '阶段验收', '路线图'],
-    status: 'Idea Pool',
+    status: 'archived',
     viewCount: 57,
     isPinned: false,
     content: `

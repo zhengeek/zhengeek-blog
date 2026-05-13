@@ -4,7 +4,7 @@ import InfoCard from '../components/common/InfoCard.vue'
 import SectionHeader from '../components/common/SectionHeader.vue'
 import StatusPill from '../components/common/StatusPill.vue'
 import TagList from '../components/common/TagList.vue'
-import { articles, categories, writingRules } from '../data/articles'
+import { articles, categories, getArticleStatusLabel, writingRules } from '../data/articles'
 
 const sortedArticles = computed(() => {
   return [...articles].sort((a, b) => Number(b.isPinned) - Number(a.isPinned))
@@ -68,7 +68,7 @@ const sortedArticles = computed(() => {
           <div class="article-bottom">
             <TagList class="tag-row" :tags="article.tags" />
             <div class="article-actions">
-              <strong>{{ article.status }}</strong>
+              <strong>{{ getArticleStatusLabel(article.status) }}</strong>
               <RouterLink class="read-more-link" :to="`/blog/${article.slug}`">阅读详情</RouterLink>
             </div>
           </div>

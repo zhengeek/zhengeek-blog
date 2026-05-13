@@ -2,7 +2,7 @@
 import InfoCard from '../../components/common/InfoCard.vue'
 import SectionHeader from '../../components/common/SectionHeader.vue'
 import StatusPill from '../../components/common/StatusPill.vue'
-import { articles } from '../../data/articles'
+import { articles, getArticleStatusLabel } from '../../data/articles'
 </script>
 
 <template>
@@ -31,7 +31,7 @@ import { articles } from '../../data/articles'
         <div v-for="article in articles" :key="article.slug" class="article-row">
           <strong>{{ article.title }}</strong>
           <span>{{ article.category }}</span>
-          <StatusPill :text="article.status" />
+          <StatusPill :text="getArticleStatusLabel(article.status)" />
           <span>{{ article.viewCount }}</span>
           <span>{{ article.isPinned ? 'Pinned' : '-' }}</span>
           <span>{{ article.date }}</span>

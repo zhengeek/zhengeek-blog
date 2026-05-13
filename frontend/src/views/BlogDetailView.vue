@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import InfoCard from '../components/common/InfoCard.vue'
 import StatusPill from '../components/common/StatusPill.vue'
 import TagList from '../components/common/TagList.vue'
-import { articles } from '../data/articles'
+import { articles, getArticleStatusLabel } from '../data/articles'
 
 const route = useRoute()
 
@@ -32,7 +32,7 @@ const article = computed(() => articles.find((item) => item.slug === slug.value)
         <p class="summary">{{ article.summary }}</p>
         <div class="article-tools">
           <TagList class="tag-list" :tags="article.tags" />
-          <StatusPill :text="article.status" />
+          <StatusPill :text="getArticleStatusLabel(article.status)" />
         </div>
       </header>
 

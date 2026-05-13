@@ -16,20 +16,6 @@ const slug = computed(() => {
 const isNewArticle = computed(() => route.path.endsWith('/new'))
 const article = computed(() => articles.find((item) => item.slug === slug.value))
 
-const toFormStatus = (status: string) => {
-  const normalized = status.toLowerCase()
-
-  if (normalized.includes('published') || status.includes('已发布')) {
-    return 'published'
-  }
-
-  if (normalized.includes('archived') || status.includes('已归档')) {
-    return 'archived'
-  }
-
-  return 'draft'
-}
-
 const initialValue = computed(() => {
   if (!article.value) {
     return undefined
@@ -41,7 +27,7 @@ const initialValue = computed(() => {
     summary: article.value.summary,
     category: article.value.category,
     tags: article.value.tags.join(', '),
-    status: toFormStatus(article.value.status),
+    status: article.value.status,
     isPinned: article.value.isPinned,
     content: article.value.content.trim()
   }

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { getArticleStatusLabel } from '../../data/articles'
+import type { ArticleStatus } from '../../data/articles'
 
 type ArticleFormValue = {
   title: string
@@ -7,7 +9,7 @@ type ArticleFormValue = {
   summary: string
   category: string
   tags: string
-  status: string
+  status: ArticleStatus
   isPinned: boolean
   content: string
 }
@@ -33,6 +35,8 @@ const form = reactive<ArticleFormValue>({
   isPinned: props.initialValue.isPinned ?? false,
   content: props.initialValue.content ?? ''
 })
+
+const statusOptions: ArticleStatus[] = ['draft', 'published', 'archived']
 
 const getPayload = (action: 'save-draft' | 'publish') => ({
   ...form,
@@ -73,9 +77,9 @@ const publish = () => {
       <label>
         <span>Status</span>
         <select v-model="form.status">
-          <option value="draft">Draft</option>
-          <option value="published">Published</option>
-          <option value="archived">Archived</option>
+          <option v-for="status in statusOptions" :key="status" :value="status">
+            {{ getArticleStatusLabel(status) }}
+          </option>
         </select>
       </label>
     </div>
