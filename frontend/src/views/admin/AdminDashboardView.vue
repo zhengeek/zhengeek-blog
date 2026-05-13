@@ -1,21 +1,35 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import InfoCard from '../../components/common/InfoCard.vue'
 import SectionHeader from '../../components/common/SectionHeader.vue'
 import StatusPill from '../../components/common/StatusPill.vue'
-import { articles } from '../../data/articles'
+import { type Article, fetchAdminArticles } from '../../services/articleApi'
+
+const articles = ref<Article[]>([])
+const isLoading = ref(true)
+const errorMessage = ref('')
 
 const stats = computed(() => {
-  const publishedCount = articles.filter((article) => article.status === 'published').length
-  const archivedCount = articles.filter((article) => article.status === 'archived').length
+  const publishedCount = articles.value.filter((article) => article.status === 'published').length
+  const archivedCount = articles.value.filter((article) => article.status === 'archived').length
 
   return [
-    { label: 'Total Articles', value: articles.length },
+    { label: 'Total Articles', value: articles.value.length },
     { label: 'Published', value: publishedCount },
-    { label: 'Drafts', value: articles.length - publishedCount - archivedCount },
-    { label: 'Pinned', value: articles.filter((article) => article.isPinned).length },
-    { label: 'Total Views', value: articles.reduce((total, article) => total + article.viewCount, 0) }
+    { label: 'Drafts', value: articles.value.length - publishedCount - archivedCount },
+    { label: 'Pinned', value: articles.value.filter((article) => article.isPinned).length },
+    { label: 'Total Views', value: articles.value.reduce((total, article) => total + article.viewCount, 0) }
   ]
+})
+
+onMounted(async () => {
+  try {
+    articles.value = await fetchAdminArticles()
+  } catch {
+    errorMessage.value = '后台文章数据加载失败，请确认后端服务是否已启动。'
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>
 
@@ -33,10 +47,18 @@ const stats = computed(() => {
           title="ZhenGeek 内容控制台"
           description="用于梳理文章管理流程的静态后台原型，暂时不接入 API、数据库或真实登录。"
         />
-        <StatusPill text="v0.1 Static" />
+        <StatusPill text="API Read" />
       </div>
 
-      <div class="stats-grid">
+      <InfoCard v-if="isLoading" class="admin-state-card">
+        <p>Loading admin stats...</p>
+      </InfoCard>
+
+      <InfoCard v-else-if="errorMessage" class="admin-state-card error-card">
+        <p>{{ errorMessage }}</p>
+      </InfoCard>
+
+      <div v-else class="stats-grid">
         <InfoCard v-for="item in stats" :key="item.label" class="stat-card">
           <span>{{ item.label }}</span>
           <strong>{{ item.value }}</strong>
@@ -105,9 +127,26 @@ const stats = computed(() => {
 }
 
 .stat-card,
+.admin-state-card,
 .quick-card {
   border-radius: 24px;
   padding: 1.25rem;
+}
+
+.admin-state-card {
+  margin: 2rem 0;
+}
+
+.admin-state-card p {
+  margin: 0;
+  color: #d4d4d8;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.error-card p {
+  color: var(--vg-accent);
 }
 
 .stat-card span,

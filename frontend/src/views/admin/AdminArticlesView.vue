@@ -1,8 +1,27 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import InfoCard from '../../components/common/InfoCard.vue'
 import SectionHeader from '../../components/common/SectionHeader.vue'
 import StatusPill from '../../components/common/StatusPill.vue'
-import { articles, getArticleStatusLabel } from '../../data/articles'
+import {
+  type Article,
+  fetchAdminArticles,
+  getArticleStatusLabel
+} from '../../services/articleApi'
+
+const articles = ref<Article[]>([])
+const isLoading = ref(true)
+const errorMessage = ref('')
+
+onMounted(async () => {
+  try {
+    articles.value = await fetchAdminArticles()
+  } catch {
+    errorMessage.value = '文章管理列表加载失败，请确认后端服务是否已启动。'
+  } finally {
+    isLoading.value = false
+  }
+})
 </script>
 
 <template>
@@ -17,7 +36,15 @@ import { articles, getArticleStatusLabel } from '../../data/articles'
         <RouterLink class="primary-link" to="/admin/articles/new">New Article</RouterLink>
       </div>
 
-      <InfoCard class="table-card">
+      <InfoCard v-if="isLoading" class="table-card state-card">
+        <p>Loading articles...</p>
+      </InfoCard>
+
+      <InfoCard v-else-if="errorMessage" class="table-card state-card error-card">
+        <p>{{ errorMessage }}</p>
+      </InfoCard>
+
+      <InfoCard v-else class="table-card">
         <div class="article-row table-head">
           <span>Title</span>
           <span>Category</span>
@@ -85,6 +112,23 @@ import { articles, getArticleStatusLabel } from '../../data/articles'
   overflow-x: auto;
   border-radius: 24px;
   padding: 1rem;
+}
+
+.state-card {
+  overflow-x: visible;
+  padding: 1.25rem;
+}
+
+.state-card p {
+  margin: 0;
+  color: #d4d4d8;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.error-card p {
+  color: var(--vg-accent);
 }
 
 .article-row {

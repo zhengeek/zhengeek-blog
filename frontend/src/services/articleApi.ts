@@ -36,6 +36,16 @@ export const fetchPublishedArticleBySlug = async (slug: string): Promise<Article
   return response.json()
 }
 
+export const fetchAdminArticles = async (): Promise<Article[]> => {
+  const response = await fetch(`${API_BASE_URL}/admin/articles`)
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch admin articles')
+  }
+
+  return response.json()
+}
+
 export const getArticleStatusLabel = (status: ArticleStatus | string) => {
   const labels: Record<ArticleStatus, string> = {
     draft: 'Draft',
