@@ -1,13 +1,32 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import InfoCard from '../components/common/InfoCard.vue'
 import SectionHeader from '../components/common/SectionHeader.vue'
 import StatusPill from '../components/common/StatusPill.vue'
 import TagList from '../components/common/TagList.vue'
-import { articles, categories, getArticleStatusLabel, writingRules } from '../data/articles'
+import { categories, writingRules } from '../data/articles'
+import {
+  type Article,
+  fetchPublishedArticles,
+  getArticleStatusLabel
+} from '../services/articleApi'
+
+const articles = ref<Article[]>([])
+const isLoading = ref(true)
+const errorMessage = ref('')
 
 const sortedArticles = computed(() => {
-  return [...articles].sort((a, b) => Number(b.isPinned) - Number(a.isPinned))
+  return [...articles.value].sort((a, b) => Number(b.isPinned) - Number(a.isPinned))
+})
+
+onMounted(async () => {
+  try {
+    articles.value = await fetchPublishedArticles()
+  } catch {
+    errorMessage.value = '文章加载失败，请确认后端服务是否已启动。'
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>
 
@@ -46,10 +65,18 @@ const sortedArticles = computed(() => {
         <div>
           <SectionHeader eyebrow="ARTICLES // FIRST SEEDS" title="第一批文章先服务于项目本身。" />
         </div>
-        <StatusPill text="Static List" />
+        <StatusPill text="API Feed" />
       </div>
 
-      <div class="article-list">
+      <InfoCard v-if="isLoading" class="article-state-card">
+        <p>Loading articles...</p>
+      </InfoCard>
+
+      <InfoCard v-else-if="errorMessage" class="article-state-card error-card">
+        <p>{{ errorMessage }}</p>
+      </InfoCard>
+
+      <div v-else class="article-list">
         <InfoCard v-for="article in sortedArticles" :key="article.slug" class="article-card">
           <div class="article-meta">
             <div class="article-meta-left">
@@ -151,6 +178,7 @@ h3 {
 .writing-panel p,
 .category-card p,
 .article-card p,
+.article-state-card p,
 .writing-copy p,
 .rule-item p {
   color: #d4d4d8;
@@ -175,6 +203,7 @@ h3 {
 .writing-panel,
 .category-card,
 .article-card,
+.article-state-card,
 .rules-card {
   border: 2px solid rgba(250, 250, 250, 0.9);
   background: rgba(24, 24, 27, 0.74);
@@ -247,6 +276,22 @@ h3 {
 .article-card {
   border-radius: 30px;
   padding: clamp(1.25rem, 3vw, 1.8rem);
+}
+
+.article-state-card {
+  border-radius: 30px;
+  padding: clamp(1.25rem, 3vw, 1.8rem);
+}
+
+.article-state-card p {
+  margin-bottom: 0;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.error-card p {
+  color: var(--vg-accent);
 }
 
 .article-meta {

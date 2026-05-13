@@ -1,24 +1,52 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import InfoCard from '../components/common/InfoCard.vue'
 import StatusPill from '../components/common/StatusPill.vue'
 import TagList from '../components/common/TagList.vue'
-import { articles, getArticleStatusLabel } from '../data/articles'
+import {
+  type Article,
+  fetchPublishedArticleBySlug,
+  getArticleStatusLabel
+} from '../services/articleApi'
 
 const route = useRoute()
+const article = ref<Article | null>(null)
+const isLoading = ref(true)
+const errorMessage = ref('')
 
 const slug = computed(() => {
   const value = route.params.slug
   return Array.isArray(value) ? value[0] : value
 })
 
-const article = computed(() => articles.find((item) => item.slug === slug.value))
+onMounted(async () => {
+  if (!slug.value) {
+    errorMessage.value = 'Article not found.'
+    isLoading.value = false
+    return
+  }
+
+  try {
+    article.value = await fetchPublishedArticleBySlug(slug.value)
+  } catch {
+    errorMessage.value = 'Article not found.'
+  } finally {
+    isLoading.value = false
+  }
+})
 </script>
 
 <template>
   <main class="blog-detail-page">
-    <section v-if="article" class="detail-shell">
+    <section v-if="isLoading" class="detail-shell loading-section">
+      <InfoCard class="not-found-card">
+        <span class="not-found-label">LOADING // ARTICLE</span>
+        <p>Loading article...</p>
+      </InfoCard>
+    </section>
+
+    <section v-else-if="article" class="detail-shell">
       <RouterLink class="back-link" to="/blog">&lt;- 返回 Blog</RouterLink>
 
       <header class="article-hero">
@@ -44,6 +72,7 @@ const article = computed(() => articles.find((item) => item.slug === slug.value)
     <section v-else class="detail-shell not-found-section">
       <InfoCard class="not-found-card">
         <span class="not-found-label">404 // ARTICLE NOT FOUND</span>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         <h1>这篇文章还没有进入 ZhenGeek 的记录系统。</h1>
         <p>可能是链接写错了，也可能是这篇文章还在草稿阶段。先回到 Blog 页面看看已有内容。</p>
         <RouterLink class="back-link inline-link" to="/blog">返回 Blog</RouterLink>
@@ -151,8 +180,22 @@ h1 {
   align-items: center;
 }
 
+.loading-section {
+  min-height: calc(100vh - 76px);
+  display: grid;
+  align-items: center;
+}
+
 .not-found-card {
   max-width: 760px;
+}
+
+.error-message {
+  margin-top: 1rem;
+  color: var(--vg-accent);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 800;
 }
 
 .inline-link {
