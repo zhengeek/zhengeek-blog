@@ -23,7 +23,9 @@ const article = computed(() => articles.find((item) => item.slug === slug.value)
 
       <header class="article-hero">
         <div class="article-meta">
+          <span v-if="article.isPinned" class="pinned-badge">PINNED</span>
           <span>{{ article.category }}</span>
+          <span>{{ article.viewCount }} views</span>
           <span>{{ article.date }}</span>
         </div>
         <h1>{{ article.title }}</h1>
@@ -92,6 +94,13 @@ const article = computed(() => articles.find((item) => item.slug === slug.value)
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 800;
+}
+
+.pinned-badge {
+  padding: 0.28rem 0.48rem;
+  border: 1px solid rgba(204, 255, 0, 0.55);
+  border-radius: 999px;
+  background: rgba(204, 255, 0, 0.08);
 }
 
 h1,

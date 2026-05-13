@@ -26,6 +26,8 @@ export const articles = [
     summary: '记录 ZhenGeek 从个人博客升级为个人数字平台的原因：它不只是展示页，而是长期成长系统。',
     tags: ['定位', '个人品牌', '项目路线'],
     status: 'Draft Planned',
+    viewCount: 128,
+    isPinned: true,
     content: `
 ## 背景
 
@@ -48,6 +50,8 @@ export const articles = [
     summary: '整理 Node.js、npm、Vite 初始化过程中的环境问题、安装卡顿、脚本权限和启动方式。',
     tags: ['Vue3', 'Vite', '环境配置'],
     status: 'Outline Ready',
+    viewCount: 96,
+    isPinned: false,
     content: `
 ## 背景
 
@@ -70,6 +74,8 @@ Vue3 + Vite 的初始化看起来很简单，但真正落到本地环境时，�
     summary: '用初学者视角解释 .vue 单文件组件、template/script/style 的关系，以及页面如何被组织起来。',
     tags: ['SFC', '组件化', '路由'],
     status: 'Draft Planned',
+    viewCount: 74,
+    isPinned: false,
     content: `
 ## 背景
 
@@ -92,6 +98,8 @@ Vue3 + Vite 的初始化看起来很简单，但真正落到本地环境时，�
     summary: '把版本控制理解成工程存档系统：暂存、提交、推送、拉取和冲突分别解决什么问题。',
     tags: ['Git', 'GitHub', '工程习惯'],
     status: 'Outline Ready',
+    viewCount: 83,
+    isPinned: false,
     content: `
 ## 背景
 
@@ -114,6 +122,8 @@ add 是把工作区的改动放进暂存区，commit 是把暂存区保存成一
     summary: '明确当前阶段不是上后端，而是先完成 About、Projects、Blog、Lab 的内容骨架与视觉统一。',
     tags: ['项目管理', '阶段验收', '路线图'],
     status: 'New Idea',
+    viewCount: 57,
+    isPinned: false,
     content: `
 ## 背景
 

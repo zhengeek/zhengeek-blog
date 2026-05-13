@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import InfoCard from '../components/common/InfoCard.vue'
 import SectionHeader from '../components/common/SectionHeader.vue'
 import StatusPill from '../components/common/StatusPill.vue'
 import TagList from '../components/common/TagList.vue'
 import { articles, categories, writingRules } from '../data/articles'
+
+const sortedArticles = computed(() => {
+  return [...articles].sort((a, b) => Number(b.isPinned) - Number(a.isPinned))
+})
 </script>
 
 <template>
@@ -45,10 +50,16 @@ import { articles, categories, writingRules } from '../data/articles'
       </div>
 
       <div class="article-list">
-        <InfoCard v-for="article in articles" :key="article.slug" class="article-card">
+        <InfoCard v-for="article in sortedArticles" :key="article.slug" class="article-card">
           <div class="article-meta">
-            <span>{{ article.category }}</span>
-            <span>{{ article.date }}</span>
+            <div class="article-meta-left">
+              <span v-if="article.isPinned" class="pinned-badge">PINNED</span>
+              <span>{{ article.category }}</span>
+            </div>
+            <div class="article-meta-right">
+              <span>{{ article.viewCount }} views</span>
+              <span>{{ article.date }}</span>
+            </div>
           </div>
           <h3>
             <RouterLink class="article-title-link" :to="`/blog/${article.slug}`">{{ article.title }}</RouterLink>
@@ -245,8 +256,23 @@ h3 {
   margin-bottom: 1.3rem;
 }
 
+.article-meta-left,
+.article-meta-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
 .article-card h3 {
   max-width: 780px;
+}
+
+.pinned-badge {
+  padding: 0.28rem 0.48rem;
+  border: 1px solid rgba(204, 255, 0, 0.55);
+  border-radius: 999px;
+  background: rgba(204, 255, 0, 0.08);
 }
 
 .article-title-link {
