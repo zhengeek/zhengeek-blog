@@ -1,3 +1,7 @@
 com\zhengeek\blog\controller\HealthController.class
-com\zhengeek\blog\config\CorsConfig.class
+com\zhengeek\blog\controller\ArticleController.class
+com\zhengeek\blog\controller\AdminArticleController.class
+com\zhengeek\blog\model\Article.class
 com\zhengeek\blog\ZhenGeekBlogApplication.class
+com\zhengeek\blog\service\ArticleService.class
+com\zhengeek\blog\config\CorsConfig.class
