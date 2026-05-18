@@ -6,9 +6,9 @@ spring:
     name: zhengeek-backend
 
   datasource:
-    url: jdbc:mysql://localhost:3306/zhengeek_blog?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
-    username: root
-    password: Qp89ngAR3cjvVU4M6Fk72ZGs
+    url: ${DB_URL:jdbc:mysql://localhost:3306/zhengeek_blog?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
 
   jpa:
     hibernate:
