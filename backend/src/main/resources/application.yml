@@ -4,3 +4,16 @@ server:
 spring:
   application:
     name: zhengeek-backend
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/zhengeek_blog?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: Qp89ngAR3cjvVU4M6Fk72ZGs
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

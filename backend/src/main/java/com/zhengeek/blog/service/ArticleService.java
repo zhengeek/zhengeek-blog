@@ -1,13 +1,15 @@
 package com.zhengeek.blog.service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.zhengeek.blog.entity.ArticleEntity;
 import com.zhengeek.blog.model.Article;
+import com.zhengeek.blog.repository.ArticleRepository;
 
 @Service
 public class ArticleService {
@@ -16,173 +18,173 @@ public class ArticleService {
   private static final String STATUS_DRAFT = "draft";
   private static final String STATUS_ARCHIVED = "archived";
 
-  private final List<Article> articles;
+  private final ArticleRepository articleRepository;
 
-  public ArticleService() {
-    this.articles = new ArrayList<>();
-    this.articles.add(new Article(
-      1L,
-      "zhengeek-devlog-01",
-      "开发日志",
-      "2026-05",
-      "ZhenGeek Devlog 01：为什么我把博客升级成个人网站",
-      "从静态博客到个人网站，把内容、项目和长期身份放到一个可持续演进的地方。",
-      List.of("定位", "个人品牌", "项目路线"),
-      STATUS_PUBLISHED,
-      128,
-      true,
-      "这是一篇关于 ZhenGeek 升级路线的开发日志。先把文章 API 跑通，再逐步接入后台管理、数据库和真实内容流。"
-    ));
-    this.articles.add(new Article(
-      2L,
-      "vue3-vite-init-notes",
-      "前端工程",
-      "2026-05",
-      "Vue 3 + Vite 初始化笔记",
-      "记录 ZhenGeek 前端从项目结构、路由到基础样式的初始化过程。",
-      List.of("Vue3", "Vite", "TypeScript"),
-      STATUS_PUBLISHED,
-      64,
-      false,
-      "Vue 3 和 Vite 很适合快速搭建个人网站前端。这个阶段关注结构清晰、页面可扩展，以及后端 API 能够稳定对接。"
-    ));
-    this.articles.add(new Article(
-      3L,
-      "git-add-commit-push",
-      "工程习惯",
-      "2026-04",
-      "Git add / commit / push 工作流备忘",
-      "一篇准备完善后再发布的 Git 日常工作流笔记。",
-      List.of("Git", "工作流"),
-      "draft",
-      0,
-      false,
-      "草稿内容：整理常用 Git 命令、提交信息习惯，以及如何把小步提交变成可回溯的项目记录。"
-    ));
-    this.articles.add(new Article(
-      4L,
-      "zhengeek-v1-static-frontend-checklist",
-      "项目归档",
-      "2026-03",
-      "ZhenGeek v1 静态前端检查清单",
-      "早期静态前端阶段的检查清单，当前已经归档。",
-      List.of("Checklist", "归档"),
-      "archived",
-      36,
-      false,
-      "归档内容：v1 静态页面阶段完成了基础展示，但后续会迁移到后端 API 驱动的内容结构。"
-    ));
+  public ArticleService(ArticleRepository articleRepository) {
+    this.articleRepository = articleRepository;
   }
 
   public List<Article> getPublishedArticles() {
-    return articles.stream()
-      .filter(article -> STATUS_PUBLISHED.equals(article.getStatus()))
+    return articleRepository.findByStatus(STATUS_PUBLISHED).stream()
       .sorted(ArticleService::comparePinnedFirst)
+      .map(this::toModel)
       .toList();
   }
 
   public Optional<Article> getPublishedArticleBySlug(String slug) {
-    Optional<Article> article = articles.stream()
-      .filter(item -> STATUS_PUBLISHED.equals(item.getStatus()))
-      .filter(item -> item.getSlug().equals(slug))
-      .findFirst();
+    Optional<ArticleEntity> article = articleRepository.findBySlug(slug)
+      .filter(item -> STATUS_PUBLISHED.equals(item.getStatus()));
 
-    article.ifPresent(item -> item.setViewCount(item.getViewCount() + 1));
-    return article;
+    article.ifPresent(item -> {
+      item.setViewCount((item.getViewCount() == null ? 0 : item.getViewCount()) + 1);
+      articleRepository.save(item);
+    });
+
+    return article.map(this::toModel);
   }
 
   public List<Article> getAdminArticles() {
-    return articles.stream()
+    return articleRepository.findAll().stream()
       .sorted(ArticleService::comparePinnedFirst)
+      .map(this::toModel)
       .toList();
   }
 
   public Optional<Article> getAdminArticleBySlug(String slug) {
-    return articles.stream()
-      .filter(item -> item.getSlug().equals(slug))
-      .findFirst();
+    return articleRepository.findBySlug(slug).map(this::toModel);
   }
 
   public Article createArticle(Article article) {
     validateSlug(article.getSlug());
 
-    if (articles.stream().anyMatch(item -> item.getSlug().equals(article.getSlug()))) {
+    if (articleRepository.existsBySlug(article.getSlug())) {
       throw new IllegalArgumentException("Article slug already exists");
     }
 
-    article.setId(getNextId());
-    article.setViewCount(article.getViewCount() == null ? 0 : article.getViewCount());
-    article.setIsPinned(article.getIsPinned() == null ? false : article.getIsPinned());
-    article.setStatus(article.getStatus() == null ? STATUS_DRAFT : article.getStatus());
-    validateStatus(article.getStatus());
+    ArticleEntity entity = toEntity(article);
+    entity.setId(null);
+    entity.setStatus(isBlank(entity.getStatus()) ? STATUS_DRAFT : entity.getStatus());
+    entity.setViewCount(entity.getViewCount() == null ? 0 : entity.getViewCount());
+    entity.setIsPinned(entity.getIsPinned() == null ? false : entity.getIsPinned());
+    validateStatus(entity.getStatus());
 
-    articles.add(article);
-    return article;
+    return toModel(articleRepository.save(entity));
   }
 
   public Optional<Article> updateArticle(Long id, Article article) {
-    Optional<Article> existingArticle = findById(id);
+    return articleRepository.findById(id)
+      .map(existing -> {
+        validateSlug(article.getSlug());
+        validateStatus(article.getStatus());
+        ensureSlugIsAvailableForUpdate(id, article.getSlug());
 
-    existingArticle.ifPresent(existing -> {
-      validateSlug(article.getSlug());
-      validateStatus(article.getStatus());
-
-      existing.setSlug(article.getSlug());
-      existing.setTitle(article.getTitle());
-      existing.setSummary(article.getSummary());
-      existing.setContent(article.getContent());
-      existing.setCategory(article.getCategory());
-      existing.setDate(article.getDate());
-      existing.setTags(article.getTags());
-      existing.setStatus(article.getStatus());
-      existing.setIsPinned(article.getIsPinned());
-    });
-
-    return existingArticle;
+        updateEntityFromArticle(existing, article);
+        return toModel(articleRepository.save(existing));
+      });
   }
 
   public Optional<Article> updateArticleStatus(Long id, String status) {
     validateStatus(status);
 
-    Optional<Article> existingArticle = findById(id);
-    existingArticle.ifPresent(article -> article.setStatus(status));
-    return existingArticle;
+    return articleRepository.findById(id)
+      .map(article -> {
+        article.setStatus(status);
+        return toModel(articleRepository.save(article));
+      });
   }
 
   public Optional<Article> updateArticlePinned(Long id, Boolean isPinned) {
-    Optional<Article> existingArticle = findById(id);
-    existingArticle.ifPresent(article -> article.setIsPinned(Boolean.TRUE.equals(isPinned)));
-    return existingArticle;
+    return articleRepository.findById(id)
+      .map(article -> {
+        article.setIsPinned(Boolean.TRUE.equals(isPinned));
+        return toModel(articleRepository.save(article));
+      });
   }
 
-  private static boolean isNotPinned(Article article) {
-    return !Boolean.TRUE.equals(article.getIsPinned());
+  private Article toModel(ArticleEntity entity) {
+    Article article = new Article();
+    article.setId(entity.getId());
+    article.setSlug(entity.getSlug());
+    article.setCategory(entity.getCategory());
+    article.setDate(entity.getDate());
+    article.setTitle(entity.getTitle());
+    article.setSummary(entity.getSummary());
+    article.setTags(toTagList(entity.getTags()));
+    article.setStatus(entity.getStatus());
+    article.setViewCount(entity.getViewCount());
+    article.setIsPinned(entity.getIsPinned());
+    article.setContent(entity.getContent());
+    return article;
   }
 
-  private static int comparePinnedFirst(Article left, Article right) {
+  private ArticleEntity toEntity(Article article) {
+    ArticleEntity entity = new ArticleEntity();
+    entity.setId(article.getId());
+    updateEntityFromArticle(entity, article);
+    entity.setViewCount(article.getViewCount());
+    return entity;
+  }
+
+  private void updateEntityFromArticle(ArticleEntity entity, Article article) {
+    entity.setSlug(article.getSlug());
+    entity.setTitle(article.getTitle());
+    entity.setSummary(article.getSummary());
+    entity.setContent(article.getContent());
+    entity.setCategory(article.getCategory());
+    entity.setDate(article.getDate());
+    entity.setTags(toTagString(article.getTags()));
+    entity.setStatus(article.getStatus());
+    entity.setIsPinned(article.getIsPinned());
+  }
+
+  private void ensureSlugIsAvailableForUpdate(Long id, String slug) {
+    articleRepository.findBySlug(slug)
+      .filter(article -> !article.getId().equals(id))
+      .ifPresent(article -> {
+        throw new IllegalArgumentException("Article slug already exists");
+      });
+  }
+
+  private static List<String> toTagList(String tags) {
+    if (tags == null || tags.isBlank()) {
+      return List.of();
+    }
+
+    return Arrays.stream(tags.split(","))
+      .map(String::trim)
+      .filter(tag -> !tag.isBlank())
+      .toList();
+  }
+
+  private static String toTagString(List<String> tags) {
+    if (tags == null || tags.isEmpty()) {
+      return "";
+    }
+
+    return String.join(",", tags.stream()
+      .map(String::trim)
+      .filter(tag -> !tag.isBlank())
+      .toList());
+  }
+
+  private static int comparePinnedFirst(ArticleEntity left, ArticleEntity right) {
     return Comparator.comparing(ArticleService::isNotPinned)
-      .thenComparing(Article::getId, Comparator.nullsLast(Comparator.naturalOrder()))
+      .thenComparing(ArticleEntity::getId, Comparator.nullsLast(Comparator.naturalOrder()))
       .compare(left, right);
   }
 
-  private Long getNextId() {
-    return articles.stream()
-      .map(Article::getId)
-      .filter(id -> id != null)
-      .max(Long::compareTo)
-      .orElse(0L) + 1;
-  }
-
-  private Optional<Article> findById(Long id) {
-    return articles.stream()
-      .filter(article -> article.getId().equals(id))
-      .findFirst();
+  private static boolean isNotPinned(ArticleEntity article) {
+    return !Boolean.TRUE.equals(article.getIsPinned());
   }
 
   private static void validateSlug(String slug) {
-    if (slug == null || slug.isBlank()) {
+    if (isBlank(slug)) {
       throw new IllegalArgumentException("Article slug is required");
     }
+  }
+
+  private static boolean isBlank(String value) {
+    return value == null || value.isBlank();
   }
 
   private static void validateStatus(String status) {

@@ -1,6 +1,9 @@
 com\zhengeek\blog\controller\HealthController.class
+com\zhengeek\blog\entity\ArticleEntity.class
 com\zhengeek\blog\controller\ArticleController.class
+com\zhengeek\blog\config\DataInitializer.class
 com\zhengeek\blog\controller\AdminArticleController.class
+com\zhengeek\blog\repository\ArticleRepository.class
 com\zhengeek\blog\model\Article.class
 com\zhengeek\blog\ZhenGeekBlogApplication.class
 com\zhengeek\blog\service\ArticleService.class
