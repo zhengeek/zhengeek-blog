@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import InfoCard from '../../components/common/InfoCard.vue'
 import SectionHeader from '../../components/common/SectionHeader.vue'
 import StatusPill from '../../components/common/StatusPill.vue'
@@ -12,6 +12,10 @@ import {
 const articles = ref<Article[]>([])
 const isLoading = ref(true)
 const errorMessage = ref('')
+
+const sortedArticles = computed(() => {
+  return [...articles.value].sort((a, b) => Number(b.isPinned) - Number(a.isPinned))
+})
 
 onMounted(async () => {
   try {
@@ -55,7 +59,7 @@ onMounted(async () => {
           <span>Actions</span>
         </div>
 
-        <div v-for="article in articles" :key="article.slug" class="article-row">
+        <div v-for="article in sortedArticles" :key="article.slug" class="article-row">
           <strong>{{ article.title }}</strong>
           <span>{{ article.category }}</span>
           <StatusPill :text="getArticleStatusLabel(article.status)" />

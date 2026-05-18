@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import ArticleEditorForm from '../../components/admin/ArticleEditorForm.vue'
 import InfoCard from '../../components/common/InfoCard.vue'
 import SectionHeader from '../../components/common/SectionHeader.vue'
-import { articles } from '../../data/articles'
+import { type Article, fetchAdminArticleBySlug } from '../../services/articleApi'
 
 const route = useRoute()
 
@@ -14,23 +14,46 @@ const slug = computed(() => {
 })
 
 const isNewArticle = computed(() => route.path.endsWith('/new'))
-const article = computed(() => articles.find((item) => item.slug === slug.value))
+const article = ref<Article | null>(null)
+const isLoading = ref(false)
+const errorMessage = ref('')
 
-const initialValue = computed(() => {
-  if (!article.value) {
+watch(
+  [isNewArticle, slug],
+  async ([isNew, currentSlug]) => {
+    article.value = null
+    errorMessage.value = ''
+
+    if (isNew) {
+      isLoading.value = false
+      return
+    }
+
+    if (!currentSlug) {
+      errorMessage.value = 'Not Found'
+      isLoading.value = false
+      return
+    }
+
+    isLoading.value = true
+
+    try {
+      article.value = await fetchAdminArticleBySlug(currentSlug)
+    } catch {
+      errorMessage.value = 'Not Found. The article may not exist, or the backend service is unavailable.'
+    } finally {
+      isLoading.value = false
+    }
+  },
+  { immediate: true }
+)
+
+const initialValue = computed<Article | undefined>(() => {
+  if (isNewArticle.value) {
     return undefined
   }
 
-  return {
-    title: article.value.title,
-    slug: article.value.slug,
-    summary: article.value.summary,
-    category: article.value.category,
-    tags: article.value.tags.join(', '),
-    status: article.value.status,
-    isPinned: article.value.isPinned,
-    content: article.value.content.trim()
-  }
+  return article.value ?? undefined
 })
 </script>
 
@@ -38,26 +61,34 @@ const initialValue = computed(() => {
   <main class="admin-page">
     <section class="admin-shell">
       <div class="admin-topbar">
-        <RouterLink class="back-link" to="/admin/articles">&lt;- 返回 Articles</RouterLink>
+        <RouterLink class="back-link" to="/admin/articles">&lt;- Back to Articles</RouterLink>
       </div>
 
-      <template v-if="isNewArticle || article">
+      <InfoCard v-if="isLoading" class="editor-card state-card">
+        <p>Loading article...</p>
+      </InfoCard>
+
+      <template v-else-if="isNewArticle || article">
         <SectionHeader
           eyebrow="ADMIN // EDITOR"
-          :title="isNewArticle ? '新建文章' : '编辑文章'"
-          description="当前只是前端原型，保存草稿和发布按钮会把表单数据打印到控制台。"
+          :title="isNewArticle ? 'New Article' : 'Edit Article'"
+          description="Create or update articles through the in-memory admin API."
         />
 
         <InfoCard class="editor-card">
-          <ArticleEditorForm :mode="isNewArticle ? 'new' : 'edit'" :initial-value="initialValue" />
+          <ArticleEditorForm
+            :key="initialValue?.id ?? 'new'"
+            :mode="isNewArticle ? 'new' : 'edit'"
+            :initial-value="initialValue"
+          />
         </InfoCard>
       </template>
 
       <InfoCard v-else class="not-found-card">
         <span>404 // ARTICLE NOT FOUND</span>
-        <h1>文章不存在</h1>
-        <p>当前 slug 没有匹配到静态文章数据，请返回文章管理页重新选择。</p>
-        <RouterLink class="back-link inline-link" to="/admin/articles">返回 Articles</RouterLink>
+        <h1>Not Found</h1>
+        <p>{{ errorMessage || 'The article does not exist.' }}</p>
+        <RouterLink class="back-link inline-link" to="/admin/articles">Back to Articles</RouterLink>
       </InfoCard>
     </section>
   </main>
@@ -94,6 +125,14 @@ const initialValue = computed(() => {
 .not-found-card {
   border-radius: 28px;
   padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.state-card p {
+  margin: 0;
+  color: #d4d4d8;
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 800;
 }
 
 .not-found-card {

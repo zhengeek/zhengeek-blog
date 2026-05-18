@@ -13,6 +13,8 @@ import com.zhengeek.blog.model.Article;
 public class ArticleService {
 
   private static final String STATUS_PUBLISHED = "published";
+  private static final String STATUS_DRAFT = "draft";
+  private static final String STATUS_ARCHIVED = "archived";
 
   private final List<Article> articles;
 
@@ -75,7 +77,7 @@ public class ArticleService {
   public List<Article> getPublishedArticles() {
     return articles.stream()
       .filter(article -> STATUS_PUBLISHED.equals(article.getStatus()))
-      .sorted(Comparator.comparing(ArticleService::isNotPinned))
+      .sorted(ArticleService::comparePinnedFirst)
       .toList();
   }
 
@@ -90,10 +92,102 @@ public class ArticleService {
   }
 
   public List<Article> getAdminArticles() {
-    return List.copyOf(articles);
+    return articles.stream()
+      .sorted(ArticleService::comparePinnedFirst)
+      .toList();
+  }
+
+  public Optional<Article> getAdminArticleBySlug(String slug) {
+    return articles.stream()
+      .filter(item -> item.getSlug().equals(slug))
+      .findFirst();
+  }
+
+  public Article createArticle(Article article) {
+    validateSlug(article.getSlug());
+
+    if (articles.stream().anyMatch(item -> item.getSlug().equals(article.getSlug()))) {
+      throw new IllegalArgumentException("Article slug already exists");
+    }
+
+    article.setId(getNextId());
+    article.setViewCount(article.getViewCount() == null ? 0 : article.getViewCount());
+    article.setIsPinned(article.getIsPinned() == null ? false : article.getIsPinned());
+    article.setStatus(article.getStatus() == null ? STATUS_DRAFT : article.getStatus());
+    validateStatus(article.getStatus());
+
+    articles.add(article);
+    return article;
+  }
+
+  public Optional<Article> updateArticle(Long id, Article article) {
+    Optional<Article> existingArticle = findById(id);
+
+    existingArticle.ifPresent(existing -> {
+      validateSlug(article.getSlug());
+      validateStatus(article.getStatus());
+
+      existing.setSlug(article.getSlug());
+      existing.setTitle(article.getTitle());
+      existing.setSummary(article.getSummary());
+      existing.setContent(article.getContent());
+      existing.setCategory(article.getCategory());
+      existing.setDate(article.getDate());
+      existing.setTags(article.getTags());
+      existing.setStatus(article.getStatus());
+      existing.setIsPinned(article.getIsPinned());
+    });
+
+    return existingArticle;
+  }
+
+  public Optional<Article> updateArticleStatus(Long id, String status) {
+    validateStatus(status);
+
+    Optional<Article> existingArticle = findById(id);
+    existingArticle.ifPresent(article -> article.setStatus(status));
+    return existingArticle;
+  }
+
+  public Optional<Article> updateArticlePinned(Long id, Boolean isPinned) {
+    Optional<Article> existingArticle = findById(id);
+    existingArticle.ifPresent(article -> article.setIsPinned(Boolean.TRUE.equals(isPinned)));
+    return existingArticle;
   }
 
   private static boolean isNotPinned(Article article) {
     return !Boolean.TRUE.equals(article.getIsPinned());
+  }
+
+  private static int comparePinnedFirst(Article left, Article right) {
+    return Comparator.comparing(ArticleService::isNotPinned)
+      .thenComparing(Article::getId, Comparator.nullsLast(Comparator.naturalOrder()))
+      .compare(left, right);
+  }
+
+  private Long getNextId() {
+    return articles.stream()
+      .map(Article::getId)
+      .filter(id -> id != null)
+      .max(Long::compareTo)
+      .orElse(0L) + 1;
+  }
+
+  private Optional<Article> findById(Long id) {
+    return articles.stream()
+      .filter(article -> article.getId().equals(id))
+      .findFirst();
+  }
+
+  private static void validateSlug(String slug) {
+    if (slug == null || slug.isBlank()) {
+      throw new IllegalArgumentException("Article slug is required");
+    }
+  }
+
+  private static void validateStatus(String status) {
+    if (!STATUS_DRAFT.equals(status) && !STATUS_PUBLISHED.equals(status) && !STATUS_ARCHIVED.equals(status)) {
+      throw new IllegalArgumentException("Invalid article status");
+    }
   }
 }

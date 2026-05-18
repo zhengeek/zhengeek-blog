@@ -1,8 +1,16 @@
 package com.zhengeek.blog.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +30,50 @@ public class AdminArticleController {
   @GetMapping
   public List<Article> getAdminArticles() {
     return articleService.getAdminArticles();
+  }
+
+  @GetMapping("/slug/{slug}")
+  public ResponseEntity<Article> getAdminArticleBySlug(@PathVariable String slug) {
+    return articleService.getAdminArticleBySlug(slug)
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  @PostMapping
+  public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+    try {
+      return ResponseEntity.status(HttpStatus.CREATED).body(articleService.createArticle(article));
+    } catch (IllegalArgumentException exception) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article article) {
+    try {
+      return articleService.updateArticle(id, article)
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
+    } catch (IllegalArgumentException exception) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @PatchMapping("/{id}/status")
+  public ResponseEntity<Article> updateArticleStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
+    try {
+      return articleService.updateArticleStatus(id, body.get("status"))
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
+    } catch (IllegalArgumentException exception) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @PatchMapping("/{id}/pin")
+  public ResponseEntity<Article> updateArticlePinned(@PathVariable Long id, @RequestBody Map<String, Boolean> body) {
+    return articleService.updateArticlePinned(id, body.get("isPinned"))
+      .map(ResponseEntity::ok)
+      .orElseGet(() -> ResponseEntity.notFound().build());
   }
 }

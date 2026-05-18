@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { getArticleStatusLabel } from '../../data/articles'
-import type { ArticleStatus } from '../../data/articles'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import {
+  type Article,
+  type ArticleStatus,
+  createAdminArticle,
+  getArticleStatusLabel,
+  updateAdminArticle
+} from '../../services/articleApi'
 
 type ArticleFormValue = {
+  id?: number
   title: string
   slug: string
   summary: string
@@ -12,11 +19,13 @@ type ArticleFormValue = {
   status: ArticleStatus
   isPinned: boolean
   content: string
+  date: string
+  viewCount: number
 }
 
 const props = withDefaults(
   defineProps<{
-    initialValue?: Partial<ArticleFormValue>
+    initialValue?: Partial<Article>
     mode?: 'new' | 'edit'
   }>(),
   {
@@ -25,43 +34,87 @@ const props = withDefaults(
   }
 )
 
+const router = useRouter()
+const isSaving = ref(false)
+const errorMessage = ref('')
+
+const getCurrentMonth = () => new Date().toISOString().slice(0, 7)
+
 const form = reactive<ArticleFormValue>({
+  id: props.initialValue.id,
   title: props.initialValue.title ?? '',
   slug: props.initialValue.slug ?? '',
   summary: props.initialValue.summary ?? '',
   category: props.initialValue.category ?? '',
-  tags: props.initialValue.tags ?? '',
+  tags: props.initialValue.tags?.join(', ') ?? '',
   status: props.initialValue.status ?? 'draft',
   isPinned: props.initialValue.isPinned ?? false,
-  content: props.initialValue.content ?? ''
+  content: props.initialValue.content ?? '',
+  date: props.initialValue.date ?? getCurrentMonth(),
+  viewCount: props.initialValue.viewCount ?? 0
 })
 
 const statusOptions: ArticleStatus[] = ['draft', 'published', 'archived']
 
-const getPayload = (action: 'save-draft' | 'publish') => ({
-  ...form,
-  action,
+const getPayload = (status: ArticleStatus): Article => ({
+  id: form.id,
+  title: form.title.trim(),
+  slug: form.slug.trim(),
+  summary: form.summary.trim(),
+  category: form.category.trim(),
   tags: form.tags
     .split(',')
     .map((tag) => tag.trim())
-    .filter(Boolean)
+    .filter(Boolean),
+  status,
+  isPinned: form.isPinned,
+  content: form.content,
+  date: form.date || getCurrentMonth(),
+  viewCount: form.viewCount ?? 0
 })
 
-const saveDraft = () => {
-  console.log('Save Draft', getPayload('save-draft'))
+const submitArticle = async (status: ArticleStatus) => {
+  if (isSaving.value) {
+    return
+  }
+
+  isSaving.value = true
+  errorMessage.value = ''
+  form.status = status
+
+  try {
+    const payload = getPayload(status)
+
+    if (props.mode === 'edit') {
+      if (!payload.id) {
+        throw new Error('Missing article id')
+      }
+
+      await updateAdminArticle(payload.id, payload)
+    } else {
+      await createAdminArticle(payload)
+    }
+
+    await router.push('/admin/articles')
+  } catch {
+    errorMessage.value = 'Unable to save article. Please check the form and make sure the backend is running.'
+  } finally {
+    isSaving.value = false
+  }
 }
 
-const publish = () => {
-  console.log('Publish', getPayload('publish'))
-}
+const saveDraft = () => submitArticle('draft')
+const publish = () => submitArticle('published')
 </script>
 
 <template>
   <form class="editor-form" @submit.prevent="saveDraft">
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+
     <div class="form-grid">
       <label>
         <span>Title</span>
-        <input v-model="form.title" type="text" placeholder="请输入文章标题" />
+        <input v-model="form.title" type="text" placeholder="Article title" />
       </label>
 
       <label>
@@ -71,7 +124,12 @@ const publish = () => {
 
       <label>
         <span>Category</span>
-        <input v-model="form.category" type="text" placeholder="例如：开发日志" />
+        <input v-model="form.category" type="text" placeholder="Devlog" />
+      </label>
+
+      <label>
+        <span>Date</span>
+        <input v-model="form.date" type="month" />
       </label>
 
       <label>
@@ -86,27 +144,29 @@ const publish = () => {
 
     <label>
       <span>Summary</span>
-      <textarea v-model="form.summary" rows="3" placeholder="请输入一段简短的文章简介" />
+      <textarea v-model="form.summary" rows="3" placeholder="Short article summary" />
     </label>
 
     <label>
       <span>Tags</span>
-      <input v-model="form.tags" type="text" placeholder="Vue3, Vite, 开发日志" />
+      <input v-model="form.tags" type="text" placeholder="Vue3, Vite, Devlog" />
     </label>
 
     <label class="pin-toggle">
       <input v-model="form.isPinned" type="checkbox" />
-      <span>Pinned / 置顶这篇文章</span>
+      <span>Pinned</span>
     </label>
 
     <label>
       <span>Content</span>
-      <textarea v-model="form.content" class="content-input" rows="14" placeholder="在这里编写文章正文..." />
+      <textarea v-model="form.content" class="content-input" rows="14" placeholder="Write the article content..." />
     </label>
 
     <div class="form-actions">
-      <button type="submit">Save Draft</button>
-      <button type="button" class="primary-action" @click="publish">Publish</button>
+      <button type="submit" :disabled="isSaving">{{ isSaving ? 'Saving...' : 'Save Draft' }}</button>
+      <button type="button" class="primary-action" :disabled="isSaving" @click="publish">
+        {{ isSaving ? 'Saving...' : 'Publish' }}
+      </button>
     </div>
   </form>
 </template>
@@ -157,7 +217,8 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(204, 255, 0, 0.08);
 }
 
-input:disabled {
+input:disabled,
+button:disabled {
   color: #a1a1aa;
   cursor: not-allowed;
 }
@@ -187,6 +248,14 @@ textarea {
   accent-color: var(--vg-accent);
 }
 
+.error-message {
+  margin: 0;
+  color: var(--vg-accent);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
 .form-actions {
   display: flex;
   flex-wrap: wrap;
@@ -212,7 +281,7 @@ button {
   color: var(--vg-accent);
 }
 
-button:hover {
+button:hover:not(:disabled) {
   transform: translateY(-1px);
 }
 
