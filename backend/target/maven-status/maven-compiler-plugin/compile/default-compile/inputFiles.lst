@@ -4,6 +4,9 @@ D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\controller\AdminArticle
 D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\controller\ArticleController.java
 D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\controller\HealthController.java
 D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\entity\ArticleEntity.java
+D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\exception\BusinessException.java
+D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\exception\GlobalExceptionHandler.java
+D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\model\ApiErrorResponse.java
 D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\model\Article.java
 D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\repository\ArticleRepository.java
 D:\zhengeek-blog\backend\src\main\java\com\zhengeek\blog\service\ArticleService.java
