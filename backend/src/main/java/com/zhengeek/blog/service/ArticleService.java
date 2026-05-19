@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.zhengeek.blog.entity.ArticleEntity;
+import com.zhengeek.blog.exception.BusinessException;
 import com.zhengeek.blog.model.Article;
 import com.zhengeek.blog.repository.ArticleRepository;
 
@@ -58,7 +59,7 @@ public class ArticleService {
     validateSlug(article.getSlug());
 
     if (articleRepository.existsBySlug(article.getSlug())) {
-      throw new IllegalArgumentException("Article slug already exists");
+      throw new BusinessException(BusinessException.ARTICLE_SLUG_DUPLICATED, "Article slug already exists");
     }
 
     ArticleEntity entity = toEntity(article);
@@ -141,7 +142,7 @@ public class ArticleService {
     articleRepository.findBySlug(slug)
       .filter(article -> !article.getId().equals(id))
       .ifPresent(article -> {
-        throw new IllegalArgumentException("Article slug already exists");
+        throw new BusinessException(BusinessException.ARTICLE_SLUG_DUPLICATED, "Article slug already exists");
       });
   }
 
@@ -179,7 +180,7 @@ public class ArticleService {
 
   private static void validateSlug(String slug) {
     if (isBlank(slug)) {
-      throw new IllegalArgumentException("Article slug is required");
+      throw new BusinessException(BusinessException.REQUEST_INVALID, "Article slug is required");
     }
   }
 
@@ -189,7 +190,7 @@ public class ArticleService {
 
   private static void validateStatus(String status) {
     if (!STATUS_DRAFT.equals(status) && !STATUS_PUBLISHED.equals(status) && !STATUS_ARCHIVED.equals(status)) {
-      throw new IllegalArgumentException("Invalid article status");
+      throw new BusinessException(BusinessException.ARTICLE_STATUS_INVALID, "Invalid article status");
     }
   }
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhengeek.blog.exception.BusinessException;
 import com.zhengeek.blog.model.Article;
 import com.zhengeek.blog.service.ArticleService;
 
@@ -30,6 +31,6 @@ public class ArticleController {
   public ResponseEntity<Article> getArticleBySlug(@PathVariable String slug) {
     return articleService.getPublishedArticleBySlug(slug)
       .map(ResponseEntity::ok)
-      .orElseGet(() -> ResponseEntity.notFound().build());
+      .orElseThrow(() -> new BusinessException(BusinessException.ARTICLE_NOT_FOUND, "Article not found"));
   }
 }
