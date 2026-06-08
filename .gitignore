@@ -76,6 +76,9 @@ web_modules/
 backend/.env
 !.env.example
 
+# Local startup scripts with private credentials
+scripts/start-backend.local.ps1
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
