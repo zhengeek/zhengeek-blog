@@ -10,6 +10,7 @@ import AdminLoginView from '../views/admin/AdminLoginView.vue'
 import AdminDashboardView from '../views/admin/AdminDashboardView.vue'
 import AdminArticlesView from '../views/admin/AdminArticlesView.vue'
 import AdminArticleEditorView from '../views/admin/AdminArticleEditorView.vue'
+import { isAdminAuthenticated } from '../services/authApi'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -90,6 +91,17 @@ const router = createRouter({
       behavior: 'auto'
     }
   }
+})
+
+router.beforeEach((to) => {
+  if (to.path.startsWith('/admin') && to.path !== '/admin/login' && !isAdminAuthenticated()) {
+    return {
+      path: '/admin/login',
+      query: { redirect: to.fullPath }
+    }
+  }
+
+  return true
 })
 
 export default router

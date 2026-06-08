@@ -1,3 +1,5 @@
+import { getAdminAuthHeaders } from './authApi'
+
 export type ArticleStatus = 'draft' | 'published' | 'archived'
 
 export type Article = {
@@ -85,6 +87,9 @@ export const getArticleApiErrorMessage = (error: unknown) => {
       ARTICLE_SLUG_DUPLICATED: '该 slug 已存在，请换一个',
       ARTICLE_NOT_FOUND: '文章不存在，可能已被删除',
       ARTICLE_STATUS_INVALID: '文章状态非法',
+      AUTH_CONFIG_MISSING: '后台登录配置缺失，请检查后端环境变量',
+      AUTH_INVALID: '登录已过期，请重新登录',
+      AUTH_REQUIRED: '请先登录后台',
       REQUEST_INVALID: '请求参数有误，请检查表单内容',
       INTERNAL_ERROR: '服务器出错，请稍后再试'
     }
@@ -104,17 +109,22 @@ export const fetchPublishedArticleBySlug = async (slug: string): Promise<Article
 }
 
 export const fetchAdminArticles = async (): Promise<Article[]> => {
-  return requestJson(`${API_BASE_URL}/admin/articles`)
+  return requestJson(`${API_BASE_URL}/admin/articles`, {
+    headers: getAdminAuthHeaders()
+  })
 }
 
 export const fetchAdminArticleBySlug = async (slug: string): Promise<Article> => {
-  return requestJson(`${API_BASE_URL}/admin/articles/slug/${encodeURIComponent(slug)}`)
+  return requestJson(`${API_BASE_URL}/admin/articles/slug/${encodeURIComponent(slug)}`, {
+    headers: getAdminAuthHeaders()
+  })
 }
 
 export const createAdminArticle = async (article: Article): Promise<Article> => {
   return requestJson(`${API_BASE_URL}/admin/articles`, {
     method: 'POST',
     headers: {
+      ...getAdminAuthHeaders(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(article)
@@ -125,6 +135,7 @@ export const updateAdminArticle = async (id: number, article: Article): Promise<
   return requestJson(`${API_BASE_URL}/admin/articles/${id}`, {
     method: 'PUT',
     headers: {
+      ...getAdminAuthHeaders(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(article)
@@ -135,6 +146,7 @@ export const updateAdminArticleStatus = async (id: number, status: ArticleStatus
   return requestJson(`${API_BASE_URL}/admin/articles/${id}/status`, {
     method: 'PATCH',
     headers: {
+      ...getAdminAuthHeaders(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ status })
@@ -145,6 +157,7 @@ export const updateAdminArticlePinned = async (id: number, isPinned: boolean): P
   return requestJson(`${API_BASE_URL}/admin/articles/${id}/pin`, {
     method: 'PATCH',
     headers: {
+      ...getAdminAuthHeaders(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ isPinned })
@@ -153,7 +166,8 @@ export const updateAdminArticlePinned = async (id: number, isPinned: boolean): P
 
 export const deleteAdminArticle = async (id: number): Promise<void> => {
   return requestNoContent(`${API_BASE_URL}/admin/articles/${id}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: getAdminAuthHeaders()
   })
 }
 

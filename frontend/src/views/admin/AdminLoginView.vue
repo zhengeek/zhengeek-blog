@@ -1,11 +1,33 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import InfoCard from '../../components/common/InfoCard.vue'
+import { getAuthApiErrorMessage, loginAdmin } from '../../services/authApi'
 
 const router = useRouter()
+const route = useRoute()
+const username = ref('')
+const password = ref('')
+const errorMessage = ref('')
+const isSubmitting = ref(false)
 
-const enterAdmin = () => {
-  router.push('/admin')
+const enterAdmin = async () => {
+  if (isSubmitting.value) {
+    return
+  }
+
+  isSubmitting.value = true
+  errorMessage.value = ''
+
+  try {
+    await loginAdmin(username.value, password.value)
+    const redirect = route.query.redirect
+    await router.push(typeof redirect === 'string' ? redirect : '/admin')
+  } catch (error) {
+    errorMessage.value = getAuthApiErrorMessage(error)
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -15,15 +37,16 @@ const enterAdmin = () => {
       <p class="eyebrow">ADMIN // STATIC LOGIN</p>
       <h1>ZhenGeek 管理后台</h1>
       <form class="login-form" @submit.prevent="enterAdmin">
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
         <label>
           <span>Username</span>
-          <input type="text" autocomplete="username" placeholder="请输入用户名" />
+          <input v-model="username" type="text" autocomplete="username" placeholder="请输入用户名" />
         </label>
         <label>
           <span>Password</span>
-          <input type="password" autocomplete="current-password" placeholder="请输入密码" />
+          <input v-model="password" type="password" autocomplete="current-password" placeholder="请输入密码" />
         </label>
-        <button type="submit">进入后台</button>
+        <button type="submit" :disabled="isSubmitting">{{ isSubmitting ? '登录中...' : '进入后台' }}</button>
       </form>
     </InfoCard>
   </main>
@@ -100,5 +123,22 @@ button {
   font-size: 0.78rem;
   font-weight: 800;
   padding: 0.9rem 1rem;
+}
+
+button:disabled {
+  color: #a1a1aa;
+  cursor: not-allowed;
+}
+
+.error-message {
+  margin: 0;
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  border-radius: 14px;
+  background: rgba(127, 29, 29, 0.34);
+  color: #fecaca;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.85rem 1rem;
 }
 </style>

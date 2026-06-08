@@ -60,6 +60,11 @@ public class GlobalExceptionHandler {
       return HttpStatus.BAD_REQUEST;
     }
 
+    if (BusinessException.AUTH_INVALID.equals(code)
+        || BusinessException.AUTH_REQUIRED.equals(code)) {
+      return HttpStatus.UNAUTHORIZED;
+    }
+
     return HttpStatus.INTERNAL_SERVER_ERROR;
   }
 }
