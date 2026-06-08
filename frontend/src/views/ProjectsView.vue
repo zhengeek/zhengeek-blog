@@ -9,19 +9,19 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
 <template>
   <main class="projects-page">
     <section class="projects-hero project-shell">
-      <p class="eyebrow">PROJECTS // ENGINEERING PORTFOLIO</p>
+      <p class="eyebrow">PROJECTS // STUDIO CASES</p>
       <div class="hero-grid">
         <div>
-          <h1>我不只是在做网页，我在积累一个长期可展示的工程作品集。</h1>
+          <h1>这里展示的不是练习清单，而是我正在打磨的工作室案例。</h1>
           <p class="hero-lead">
-            这一页记录 ZhenGeek 的当前进度、技术栈、下一步计划，以及未来会逐渐加入的实验项目。
-            每个项目都不是孤立练习，而是服务于“成为全栈工程师”的长期路线。
+            每个案例都围绕真实目标组织：页面要能吸引人，系统要能维护内容，交互要能体现前端制作能力。
+            当前先放 3 个高质量方向，后续再补截图、文章和上线记录。
           </p>
         </div>
         <InfoCard class="status-panel">
-          <span>V1 STATUS</span>
-          <strong>前端静态原型</strong>
-          <p>当前重点：先把内容、页面结构和作品集表达打磨清楚，再进入后端阶段。</p>
+          <span>STUDIO STATUS</span>
+          <strong>可展示的 MVP</strong>
+          <p>当前重点：先稳定 Admin 文章管理，再把公开站内容升级成能吸引合作的作品集。</p>
         </InfoCard>
       </div>
     </section>
@@ -53,12 +53,17 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
     <section class="project-shell roadmap-section">
       <div class="section-title-row">
         <div>
-          <SectionHeader eyebrow="FUTURE MODULES // PROJECT MAP" title="接下来会围绕 ZhenGeek 拓展三个方向。" />
+          <SectionHeader eyebrow="CASE STUDIES // 03 DIRECTIONS" title="先准备 3 个能讲清楚能力的项目案例。" />
         </div>
       </div>
 
       <div class="side-project-grid">
         <InfoCard v-for="project in sideProjects" :key="project.title" class="side-project-card">
+          <div class="case-visual" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
           <div class="card-topline">
             <span>{{ project.status }}</span>
           </div>
@@ -72,11 +77,10 @@ import { backendPlan, mainProject, sideProjects } from '../data/projects'
 
     <section class="project-shell backend-section">
       <div class="backend-copy">
-        <SectionHeader eyebrow="BACKEND PLAN // NOT NOW, BUT SOON" title="后端不会现在硬接，而是在内容模型稳定后接入。" />
+        <SectionHeader eyebrow="ADMIN FLOW // V0.9 STABILIZATION" title="后台不是门面主角，但它决定内容能不能长期维护。" />
         <p>
-          当前阶段先用静态数据模拟真实内容。等 About、Projects、Blog 页面稳定后，
-          再把这些静态数据迁移到后端 API 和数据库里。这样不会为了写后端而写后端，
-          而是让后端真正服务于内容管理和网站扩展。
+          ZhenGeek 已经从静态页面推进到 Spring Boot + MySQL 的全栈雏形。
+          当前最重要的是稳定文章保存、发布、删除、错误提示和列表布局，让公开站的内容可以持续更新。
         </p>
       </div>
       <InfoCard class="api-panel">
@@ -281,8 +285,32 @@ h3 {
   padding: 1.35rem;
 }
 
+.case-visual {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 0.5rem;
+  min-height: 120px;
+  margin-bottom: 1.2rem;
+}
+
+.case-visual span {
+  border: 1px solid rgba(250, 250, 250, 0.2);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(204, 255, 0, 0.16), rgba(176, 0, 255, 0.18)),
+    rgba(9, 9, 11, 0.72);
+}
+
+.case-visual span:first-child {
+  grid-row: span 2;
+}
+
+.case-visual span:nth-child(2) {
+  background: rgba(204, 255, 0, 0.12);
+}
+
 .side-project-card h3 {
-  margin: 2.4rem 0 1rem;
+  margin: 1rem 0;
 }
 
 .side-project-card strong {

@@ -1,100 +1,108 @@
 ﻿<script setup lang="ts">
+import heroImage from '../assets/hero.png'
+
 const projectCards = [
   {
     index: '01',
-    title: 'ZhenGeek 个人网站',
-    status: 'In Progress',
-    description: '从个人博客升级为长期作品集平台：展示学习记录、项目成长、生活思考与个人品牌。',
-    tags: ['Vue3', 'TypeScript', 'Vite', 'Vue Router'],
+    title: '个人工作室门面',
+    status: 'Studio Site',
+    description: '用清晰首屏、项目案例、联系入口和稳定视觉系统，把个人能力包装成可合作的工作室入口。',
+    tags: ['Vue3', 'Responsive UI', 'Visual Design'],
     to: '/projects'
   },
   {
     index: '02',
-    title: '全栈博客系统',
-    status: 'Planned',
-    description: '未来接入后端 API、数据库、文章管理、Markdown 写作与留言讨论系统。',
-    tags: ['Spring Boot', 'MySQL', 'REST API', 'Markdown'],
+    title: '全栈内容系统',
+    status: 'Admin MVP',
+    description: 'Spring Boot + MySQL 支撑文章持久化，Admin 管理台负责新建、保存、发布和删除。',
+    tags: ['Spring Boot', 'MySQL', 'REST API'],
     to: '/blog'
   },
   {
     index: '03',
-    title: '创意工程实验室',
-    status: 'Idea Pool',
-    description: '用可视化、算法动画和交互实验，把抽象的技术知识变成看得见的作品。',
-    tags: ['Canvas', 'Algorithms', 'Creative Coding'],
+    title: '前端交互实验',
+    status: 'Visual Lab',
+    description: '沉淀自定义光标、幕布转场、动效卡片和可视化实验，展示前端制作能力。',
+    tags: ['CSS Motion', 'Creative Coding', 'UX'],
     to: '/lab'
   }
 ]
 
 const milestones = [
-  '完成单页面首页与多页面详情架构',
-  '沉淀 Vue / TypeScript / 工程化学习记录',
-  '逐步加入博客内容、项目文档和后端能力',
-  '把 ZhenGeek 打磨成长期作品集和个人品牌'
+  '先稳住 Admin 内容管理闭环',
+  '补齐 3 个高质量项目案例',
+  '把公开页改成合作型工作室叙事',
+  'v1.0 再进入登录鉴权和后台权限'
 ]
 
 const blogSeeds = [
-  'ZhenGeek Devlog 01：为什么我把博客升级成个人网站',
-  'Vue3 + Vite 项目初始化踩坑记录',
-  '从 App.vue 到组件化首页',
-  'Git add / commit / push 到底做了什么'
+  'ZhenGeek Devlog：从个人博客到工作室网站',
+  'Admin 文章管理：保存、发布、删除反馈如何稳定',
+  'Vue3 + TypeScript 页面结构复盘',
+  '如何把项目案例写得像真正的作品集'
 ]
+
+const serviceLines = ['前端页面制作', '个人品牌网站', '全栈内容系统', '交互原型与视觉实验']
 </script>
 
 <template>
   <div class="home-page">
     <section id="top" class="hero-section section-shell">
       <div class="hero-copy">
-        <p class="eyebrow">ZHENGEEK.OS // PERSONAL PLATFORM</p>
+        <p class="eyebrow">ZHENGEEK STUDIO // FRONTEND & FULL-STACK</p>
         <h1>
           <span class="glitch-text" data-text="ZhenGeek">ZhenGeek</span>
-          <span class="hero-outline">is loading.</span>
+          <span class="hero-outline">Studio.</span>
         </h1>
         <p class="hero-lead">
-          我正在把这个网站打造成自己的长期工程作品：记录学习、展示项目、沉淀表达，
-          也见证我从零走向真正工程师的全过程。
+          一个正在成长中的个人工作室网站。我用它展示前端制作能力、全栈项目进度、
+          技术复盘和可合作方向，让每一次迭代都变成能被看见的作品。
         </p>
+        <div class="service-strip" aria-label="Studio services">
+          <span v-for="item in serviceLines" :key="item">{{ item }}</span>
+        </div>
         <div class="hero-actions">
-          <RouterLink class="primary-action" to="/projects">Explore Projects</RouterLink>
-          <RouterLink class="secondary-action" to="/about">了解 About</RouterLink>
+          <RouterLink class="primary-action" to="/projects">查看项目案例</RouterLink>
+          <RouterLink class="secondary-action" to="/about">了解工作方式</RouterLink>
         </div>
       </div>
 
-      <div class="hero-panel" aria-label="ZhenGeek status panel">
+      <div class="hero-panel" aria-label="ZhenGeek studio status panel">
+        <div class="visual-card">
+          <img :src="heroImage" alt="ZhenGeek layered interface visual" />
+          <div>
+            <span>STUDIO SIGNAL</span>
+            <strong>Design the interface. Ship the system.</strong>
+          </div>
+        </div>
         <div class="terminal-card">
           <div class="terminal-bar">
             <span></span><span></span><span></span>
           </div>
-          <pre><code>&gt; boot zhengeek
-[OK] brand: Envision / Nurture / Forge / Pioneer
-[OK] stack: Vue3 + TypeScript + Vite
-[OK] mode: single-page home + detailed routes
-[RUN] mission: become a full-stack engineer</code></pre>
-        </div>
-        <div class="orbit-card">
-          <span class="orbit-core">蓁</span>
-          <span class="orbit-dot dot-a"></span>
-          <span class="orbit-dot dot-b"></span>
-          <span class="orbit-dot dot-c"></span>
+          <pre><code>&gt; boot studio
+[OK] focus: frontend craft + full-stack content
+[OK] current: Admin article workflow
+[OK] cases: studio site / blog system / visual lab
+[RUN] next: polish, document, attract</code></pre>
         </div>
       </div>
     </section>
 
     <section id="about" class="about-section section-shell">
-      <div class="section-kicker">ABOUT // WHO AM I</div>
+      <div class="section-kicker">ABOUT // STUDIO OPERATOR</div>
       <div class="split-grid">
         <div>
-          <h2>不是只做一个博客，而是建立一个可持续成长的个人系统。</h2>
+          <h2>我把 ZhenGeek 当成自己的第一个长期工作室产品来打磨。</h2>
         </div>
         <div class="story-card">
           <p>
-            ZhenGeek 来自“蓁”和“真极客”的双重含义。它会承载我的学习路线、技术文章、项目记录、
-            审美实验和未来的讨论社区。
+            这里不是简单的自我介绍页，而是一个持续进化的能力展示场：页面设计、组件组织、
+            后台内容管理、项目复盘和视觉实验都会在这里留下痕迹。
           </p>
           <p>
-            当前阶段我先用前端把网站的骨架和品牌感做出来，再逐步进入后端、数据库、内容管理和交互功能。
+            当前阶段我先把 Admin 文章管理稳定下来，再把公开页面升级成更适合合作、展示和吸引他人的工作室门面。
           </p>
-          <RouterLink class="text-link" to="/about">进入 About 详情页 →</RouterLink>
+          <RouterLink class="text-link" to="/about">查看可信度与工作方式 →</RouterLink>
         </div>
       </div>
     </section>
@@ -102,10 +110,10 @@ const blogSeeds = [
     <section id="projects" class="projects-section section-shell">
       <div class="section-heading-row">
         <div>
-          <div class="section-kicker">PROJECTS // VISIBLE OUTPUT</div>
-          <h2>项目驱动学习，把每一步成长做成看得见的作品。</h2>
+          <div class="section-kicker">PROJECTS // CASE STUDIES</div>
+          <h2>用 3 个高质量案例，展示前端制作能力和全栈推进能力。</h2>
         </div>
-        <RouterLink class="small-action" to="/projects">查看 Projects</RouterLink>
+        <RouterLink class="small-action" to="/projects">查看完整案例</RouterLink>
       </div>
 
       <div class="project-grid">
@@ -125,7 +133,7 @@ const blogSeeds = [
     </section>
 
     <section id="blog" class="blog-section section-shell">
-      <div class="section-kicker">BLOG // LEARNING RECORDS</div>
+      <div class="section-kicker">BLOG // BUILD IN PUBLIC</div>
       <div class="split-grid reverse">
         <div class="blog-list-panel">
           <article v-for="seed in blogSeeds" :key="seed" class="blog-seed">
@@ -134,11 +142,12 @@ const blogSeeds = [
           </article>
         </div>
         <div>
-          <h2>博客不是装饰，是我的复盘系统。</h2>
+          <h2>博客保留为长期内容沉淀，不抢走工作室门面的主线。</h2>
           <p class="section-text">
-            我会把踩坑、理解、阶段总结都写下来。未来这些内容会变成面试表达、项目文档和个人影响力的一部分。
+            项目案例负责吸引人，Blog 负责证明我真的在持续构建。这里会记录技术复盘、页面迭代、
+            后台稳定化过程和每个案例背后的工程判断。
           </p>
-          <RouterLink class="primary-action inline" to="/blog">进入 Blog 详情页</RouterLink>
+          <RouterLink class="primary-action inline" to="/blog">阅读构建记录</RouterLink>
         </div>
       </div>
     </section>
@@ -146,8 +155,8 @@ const blogSeeds = [
     <section id="lab" class="lab-section section-shell">
       <div class="section-heading-row">
         <div>
-          <div class="section-kicker">LAB // CREATIVE ENGINEERING</div>
-          <h2>实验室用于探索算法可视化、交互效果和未来硬件方向。</h2>
+          <div class="section-kicker">LAB // FRONTEND CRAFT</div>
+          <h2>实验室用于沉淀动效、交互、可视化和未来更有辨识度的前端作品。</h2>
         </div>
         <RouterLink class="small-action" to="/lab">进入 Lab</RouterLink>
       </div>
@@ -160,14 +169,15 @@ const blogSeeds = [
     </section>
 
     <section id="contact" class="contact-section section-shell">
-      <p class="eyebrow">NEXT STEP</p>
-      <h2>先把首页做漂亮，再让每个详情页逐渐变厚。</h2>
+      <p class="eyebrow">CONTACT // OPEN FOR COLLABORATION</p>
+      <h2>如果你想看一个人如何把想法做成网站，这里会持续更新。</h2>
       <p>
-        当前版本已经按照“单页面首页，多页面详细内容”的方向组织。后续每次迭代只需要继续填充文章、项目和实验即可。
+        我目前适合参与个人品牌页、作品集、前端交互原型、内容型网站和小型全栈系统的制作。
+        ZhenGeek 会持续展示我的作品、复盘和可合作能力。
       </p>
       <div class="hero-actions center-actions">
-        <RouterLink class="primary-action" to="/projects">检查项目页</RouterLink>
-        <RouterLink class="secondary-action" to="/#top">回到顶部</RouterLink>
+        <RouterLink class="primary-action" to="/projects">先看项目案例</RouterLink>
+        <a class="secondary-action" href="mailto:hello@zhengeek.local">hello@zhengeek.local</a>
       </div>
     </section>
   </div>
@@ -246,6 +256,24 @@ h1 {
   margin-top: 2rem;
 }
 
+.service-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.3rem;
+}
+
+.service-strip span {
+  border: 1px solid rgba(204, 255, 0, 0.34);
+  border-radius: 999px;
+  background: rgba(204, 255, 0, 0.08);
+  color: #f4ff9b;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  padding: 0.42rem 0.66rem;
+}
+
 .primary-action,
 .secondary-action,
 .small-action {
@@ -292,8 +320,8 @@ h1 {
   min-width: 0;
 }
 
+.visual-card,
 .terminal-card,
-.orbit-card,
 .story-card,
 .feature-card,
 .blog-list-panel,
@@ -303,6 +331,40 @@ h1 {
   background: rgba(24, 24, 27, 0.74);
   box-shadow: 10px 10px 0 rgba(250, 250, 250, 0.12);
   backdrop-filter: blur(16px);
+}
+
+.visual-card {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+  gap: 1rem;
+  width: min(100%, 520px);
+  align-items: center;
+  border-radius: 28px;
+  padding: 1rem;
+  background:
+    linear-gradient(135deg, rgba(204, 255, 0, 0.12), rgba(176, 0, 255, 0.16)),
+    rgba(24, 24, 27, 0.78);
+}
+
+.visual-card img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+}
+
+.visual-card span {
+  color: var(--vg-accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.visual-card strong {
+  display: block;
+  margin-top: 0.8rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1;
 }
 
 .terminal-card {
@@ -336,47 +398,6 @@ pre {
   font-size: 0.88rem;
   line-height: 1.8;
 }
-
-.orbit-card {
-  position: relative;
-  display: grid;
-  width: min(88vw, 320px);
-  aspect-ratio: 1;
-  justify-self: start;
-  place-items: center;
-  border-radius: 50%;
-  background:
-    linear-gradient(135deg, rgba(204, 255, 0, 0.92), rgba(176, 0, 255, 0.72)),
-    #18181b;
-  transform: translateX(1rem) rotate(-3deg);
-}
-
-.orbit-core {
-  display: grid;
-  width: 138px;
-  height: 138px;
-  place-items: center;
-  border: 3px solid #09090b;
-  border-radius: 50%;
-  background: #fafafa;
-  color: #09090b;
-  font-size: 4rem;
-  font-weight: 900;
-  box-shadow: 0 0 0 28px rgba(9, 9, 11, 0.12);
-}
-
-.orbit-dot {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #09090b;
-  border-radius: 50%;
-  background: #fafafa;
-}
-
-.dot-a { top: 18%; right: 20%; }
-.dot-b { bottom: 19%; right: 14%; background: var(--vg-accent); }
-.dot-c { left: 17%; top: 34%; background: #b000ff; }
 
 .split-grid,
 .section-heading-row {
@@ -550,13 +571,16 @@ h2 {
   }
 
   h1 {
-    font-size: clamp(4rem, 21vw, 6rem);
+    font-size: 4rem;
   }
 
-  .terminal-card,
-  .orbit-card {
+  .terminal-card {
     transform: none;
     margin-bottom: 1rem;
+  }
+
+  .visual-card {
+    grid-template-columns: 1fr;
   }
 
   .hero-panel {

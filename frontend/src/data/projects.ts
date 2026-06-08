@@ -1,52 +1,52 @@
 export const mainProject = {
-  name: 'ZhenGeek 个人数字平台',
-  status: 'Building V1',
+  name: 'ZhenGeek Studio Site',
+  status: 'Studio MVP',
   summary:
-    '一个长期全栈个人网站项目，用来承载作品集、技术博客、学习记录、生活思考、创意实验和未来社区互动。',
-  stack: ['Vue3', 'TypeScript', 'Vite', 'Vue Router', 'CSS', 'Git / GitHub'],
+    '一个面向合作与展示的个人工作室网站：用前端视觉、全栈能力和长期内容，把“我能做什么”讲清楚。',
+  stack: ['Vue3', 'TypeScript', 'Vite', 'Spring Boot', 'MySQL', 'Design System'],
   done: [
-    '完成 Vue3 + Vite + TypeScript 前端项目初始化',
-    '建立“单页面首页 + 多页面详细内容”的网站架构',
-    '完成首页 Hero、About、Projects、Blog、Lab、Contact 分区',
-    '完成统一导航栏、锚点滚动和基础视觉系统',
-    '开始完善 About / Projects / Blog / Lab 详情页内容'
+    '完成公开站首页、About、Projects、Blog、Lab 的路由与内容骨架',
+    '建立黑色科技风视觉系统、动效转场、响应式布局和可复用组件',
+    '接入 Spring Boot + MySQL 文章 API，公开 Blog 只展示 published 内容',
+    '完成 Admin 文章列表、编辑、新建、发布、删除和统一错误提示的基础闭环',
+    '把网站定位从学习记录升级为个人工作室与前端能力展示入口'
   ],
   next: [
-    '继续打磨 Projects / Blog / Lab 页面内容',
-    '拆分通用组件，减少页面重复代码',
-    '整理文章、项目、实验的数据结构',
-    '准备 Spring Boot + MySQL 后端接口接入'
+    '补齐 3 个高质量项目案例的真实截图、过程记录和结果说明',
+    '继续稳定 Admin 保存 / 发布 / 删除反馈与移动端布局',
+    '把 Blog 作为长期复盘系统，持续沉淀项目文章和技术笔记',
+    '在 v1.0 再进入管理员登录、JWT 与后台鉴权'
   ]
 }
 
 export const sideProjects = [
   {
-    title: '算法可视化实验室',
-    status: 'Planned',
-    desc: '用 Canvas 和交互动画展示排序、搜索、图遍历等算法，让抽象知识变得可视化。',
-    stack: ['Vue3', 'Canvas', 'Algorithms'],
-    goal: '训练算法理解、前端交互和技术表达能力。'
+    title: '个人工作室门面',
+    status: 'Live Case',
+    desc: '把 ZhenGeek 从普通个人网站调整为合作型工作室首页，首屏直接说明定位、能力和可合作方向。',
+    stack: ['Vue3', 'Responsive UI', 'Content Strategy'],
+    goal: '目标：让访客 5 秒内看懂我是谁、能做什么、为什么值得继续浏览。'
   },
   {
-    title: '全栈博客系统',
-    status: 'Next Stage',
-    desc: '把当前静态文章列表升级为真实后端驱动的博客系统，支持文章详情、分类和管理。',
-    stack: ['Spring Boot', 'MySQL', 'REST API'],
-    goal: '完成从前端页面到后端数据服务的全栈闭环。'
+    title: 'Admin 文章管理台',
+    status: 'Full-stack Case',
+    desc: '用 Spring Boot + MySQL 支撑文章持久化，前端 Admin 负责新建、编辑、发布、删除和状态反馈。',
+    stack: ['Spring Boot', 'MySQL', 'REST API', 'Vue Form'],
+    goal: '结果：博客内容从静态展示进入可维护的全栈管理流程。'
   },
   {
-    title: '创意交互练习场',
-    status: 'Idea Pool',
-    desc: '收集鼠标效果、页面动效、数据可视化、未来硬件信号可视化等创意实验。',
-    stack: ['CSS', 'JavaScript', 'Visualization'],
-    goal: '形成兼具技术和审美的个人工程风格。'
+    title: '创意交互实验室',
+    status: 'Visual Case',
+    desc: '沉淀自定义光标、幕布转场、视觉卡片、未来算法可视化等实验，展示前端表现力。',
+    stack: ['CSS Motion', 'Creative Coding', 'Interaction'],
+    goal: '结果：形成兼具工程结构和审美表达的个人前端风格。'
   }
 ]
 
 export const backendPlan = [
-  'GET /api/articles：获取文章列表',
-  'GET /api/articles/:id：获取文章详情',
-  'GET /api/projects：获取项目列表',
-  'POST /api/comments：提交留言或评论',
-  '后台管理模块：未来用于文章管理和内容维护'
+  'GET /api/articles：公开 Blog 只返回 published 文章',
+  'GET /api/admin/articles：Admin 查看 draft / published / archived',
+  'POST /api/admin/articles：创建文章并返回新记录',
+  'PUT /api/admin/articles/{id}：编辑已有文章，不重复跳转',
+  'DELETE /api/admin/articles/{id}：删除文章并触发前端成功提示'
 ]

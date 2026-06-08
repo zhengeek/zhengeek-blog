@@ -56,15 +56,16 @@ onBeforeUnmount(() => {
         <span class="brand-mark">Z</span>
         <span class="brand-text">
           <strong>ZhenGeek</strong>
-          <small>Envision · Nurture · Forge · Pioneer</small>
+          <small>Frontend Studio · Full-stack Lab</small>
         </span>
       </RouterLink>
 
       <nav class="site-nav" aria-label="Primary navigation">
-        <RouterLink to="/#about">About</RouterLink>
-        <RouterLink to="/#projects">Projects</RouterLink>
+        <RouterLink to="/#about">Studio</RouterLink>
+        <RouterLink to="/#projects">Cases</RouterLink>
         <RouterLink to="/#blog">Blog</RouterLink>
         <RouterLink to="/#lab">Lab</RouterLink>
+        <RouterLink to="/#contact">Contact</RouterLink>
       </nav>
     </header>
 

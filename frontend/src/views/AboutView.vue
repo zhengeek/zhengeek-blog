@@ -1,49 +1,49 @@
 <script setup lang="ts">
 const principles = [
   {
-    word: 'Envision',
-    cn: '梦想',
-    text: '先看见自己想成为怎样的人，再把模糊的热情变成可以执行的路线。'
+    word: 'Clarity',
+    cn: '清晰',
+    text: '先把目标、受众和内容结构讲清楚，再进入页面设计和工程实现。'
   },
   {
-    word: 'Nurture',
-    cn: '成长',
-    text: '承认自己仍在起步阶段，用长期记录、复盘和练习持续积累。'
+    word: 'Craft',
+    cn: '制作',
+    text: '重视界面完成度、响应式体验、组件拆分和真实可用的交互细节。'
   },
   {
-    word: 'Forge',
-    cn: '锻造',
-    text: '把知识放进真实项目里反复打磨，训练工程能力、表达能力和解决问题的耐心。'
+    word: 'System',
+    cn: '系统',
+    text: '不只做漂亮页面，也关注后台内容流、数据结构和长期维护方式。'
   },
   {
-    word: 'Pioneer',
-    cn: '开拓',
-    text: '不只满足于完成作业，而是探索软件、硬件、算法和创造力结合的可能性。'
+    word: 'Record',
+    cn: '复盘',
+    text: '用博客和项目文档记录过程，让能力不只停留在结果截图里。'
   }
 ]
 
 const learningTracks = [
-  '前端工程：Vue3、TypeScript、CSS、交互体验与组件化开发',
-  '后端基础：Java、Spring Boot、API 设计、数据库与权限系统',
-  '计算机基础：数据结构、算法、操作系统、网络与工程常识',
-  '创意工程：Canvas、可视化、算法动画和个人网站视觉实验'
+  '前端制作：Vue3、TypeScript、响应式布局、CSS 视觉系统与交互动效',
+  '内容型网站：个人品牌页、作品集、博客系统、项目案例与联系转化',
+  '全栈基础：Spring Boot、REST API、MySQL、后台文章管理与错误反馈',
+  '创意表达：页面转场、自定义光标、可视化实验和更有辨识度的界面语言'
 ]
 
 const timeline = [
   {
     stage: 'Now',
-    title: '前端静态 V1',
-    detail: '完成首页、多页面路由、About / Projects / Blog / Lab 的内容骨架。'
+    title: 'v0.9 稳定后台',
+    detail: '先把 Admin 保存、发布、删除、错误提示和列表布局打磨稳定。'
   },
   {
     stage: 'Next',
-    title: '内容与组件整理',
-    detail: '把项目、文章、时间线整理成清晰的数据结构，为后端接口做准备。'
+    title: '工作室门面升级',
+    detail: '把首页、About、Projects 改成更适合合作和展示的叙事结构。'
   },
   {
     stage: 'Later',
-    title: '全栈化升级',
-    detail: '接入 Spring Boot、MySQL、文章 API、评论/留言和后台管理。'
+    title: 'v1.0 登录鉴权',
+    detail: '在内容管理稳定后，再做管理员登录、JWT、路由守卫和接口鉴权。'
   }
 ]
 </script>
@@ -51,24 +51,24 @@ const timeline = [
 <template>
   <main class="about-page">
     <section class="about-hero about-shell">
-      <p class="eyebrow">ABOUT // ZHENGEEK OPERATOR</p>
+      <p class="eyebrow">ABOUT // STUDIO OPERATOR</p>
       <div class="about-hero-grid">
         <div>
-          <h1>我正在把自己，锻造成一个能独立完成真实项目的工程型创作者。</h1>
+          <h1>我是 ZhenGeek，一个正在成长的前端与全栈个人工作室。</h1>
           <p class="hero-lead">
-            我是小蓁，一名正在通过 <strong>ZhenGeek</strong> 长期项目训练自己的大一学生。
-            这个网站不是临时作业，而是我学习前端、后端、工程化、表达和个人品牌建设的主线项目。
+            我用 <strong>ZhenGeek</strong> 训练并展示真实项目能力：从页面视觉、交互体验、
+            内容结构，到 Spring Boot + MySQL 的后台文章管理。它既是作品集，也是我的长期工作台。
           </p>
         </div>
         <aside class="identity-card">
           <span class="card-label">CURRENT PROFILE</span>
-          <strong>Freshman / Big Data Major</strong>
-          <p>目标：成长为理解软件与硬件、能独立完成完整项目的全栈工程师。</p>
+          <strong>Frontend Maker / Full-stack Learner</strong>
+          <p>目标：做出能吸引人、能维护内容、能长期迭代的个人品牌与内容型网站。</p>
           <div class="identity-tags">
             <span>Vue3</span>
             <span>TypeScript</span>
-            <span>Full-stack</span>
-            <span>Engineering Portfolio</span>
+            <span>Studio Site</span>
+            <span>Admin System</span>
           </div>
         </aside>
       </div>
@@ -77,31 +77,31 @@ const timeline = [
     <section class="about-shell story-section">
       <div class="section-title-block">
         <p class="eyebrow">WHY // THIS PROJECT EXISTS</p>
-        <h2>ZhenGeek 是我的长期成长容器。</h2>
+        <h2>ZhenGeek 是我的第一个工作室产品。</h2>
       </div>
       <div class="story-grid">
         <article class="story-panel large-panel">
-          <h3>它不只是博客。</h3>
+          <h3>它不是只给自己看的博客。</h3>
           <p>
-            ZhenGeek 会记录我的技术学习、项目作品、生活思考、审美实验和未来的社区互动。
-            我希望它像一个公开的成长系统：别人能看到我做了什么，我自己也能通过复盘看见进步。
+            我希望访客打开网站时，能快速看见我的审美、前端完成度、项目推进能力和表达能力。
+            所以公开页面负责吸引人，Projects 负责展示案例，Blog 负责沉淀过程。
           </p>
           <p>
-            “ZhenGeek”来自名字里的“蓁”，也有“真极客”的意思。它提醒我：不要只停留在想象里，
-            要把想法变成页面、代码、文档和可以展示的结果。
+            “ZhenGeek”来自名字里的“蓁”，也有“真极客”的意思。它提醒我把想法变成页面、
+            代码、文档和可持续维护的系统，而不是只停留在灵感里。
           </p>
         </article>
         <article class="story-panel mission-panel">
           <span class="card-label">MISSION</span>
-          <h3>用一个长期项目，串起我的大学成长路线。</h3>
-          <p>先做出能看的前端，再逐步接入后端、数据库、文章系统、评论系统，最后形成完整作品集。</p>
+          <h3>把“会做网页”升级成“能交付一个完整网站体验”。</h3>
+          <p>先稳后台内容管理，再让公开站具备更清晰的定位、案例、联系方式和持续更新能力。</p>
         </article>
       </div>
     </section>
 
     <section class="about-shell principles-section">
-      <p class="eyebrow">CORE WORDS // ENFP</p>
-      <h2>Envision. Nurture. Forge. Pioneer.</h2>
+      <p class="eyebrow">WORK STYLE // HOW I BUILD</p>
+      <h2>Clarity. Craft. System. Record.</h2>
       <div class="principle-grid">
         <article v-for="item in principles" :key="item.word" class="principle-card">
           <span>{{ item.cn }}</span>
@@ -113,11 +113,11 @@ const timeline = [
 
     <section class="about-shell route-section">
       <div class="route-copy">
-        <p class="eyebrow">ROUTE // WHAT I AM BUILDING</p>
-        <h2>我选择项目驱动，而不是只堆零散知识点。</h2>
+        <p class="eyebrow">CAPABILITY // WHAT I CAN BUILD</p>
+        <h2>我优先做能被真实访问、真实维护、真实展示的东西。</h2>
         <p>
-          当前阶段，我会先用 ZhenGeek 训练前端工程能力：页面结构、组件拆分、路由组织、视觉设计和内容表达。
-          等静态内容稳定后，再接入后端 API 和数据库，把它升级成真正的全栈博客系统。
+          如果把 ZhenGeek 看成我的第一个客户项目，它的需求很清楚：展示个人能力、管理内容、
+          吸引合作、持续更新。我的学习路线也围绕这些真实需求展开。
         </p>
       </div>
       <div class="track-list">
@@ -129,7 +129,7 @@ const timeline = [
     </section>
 
     <section class="about-shell timeline-section">
-      <p class="eyebrow">ROADMAP // STATIC TO FULL-STACK</p>
+      <p class="eyebrow">ROADMAP // STABILIZE THEN EXPAND</p>
       <div class="timeline-grid">
         <article v-for="item in timeline" :key="item.stage" class="timeline-card">
           <span>{{ item.stage }}</span>
