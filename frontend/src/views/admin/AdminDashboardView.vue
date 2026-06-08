@@ -45,7 +45,7 @@ onMounted(async () => {
         <SectionHeader
           eyebrow="ADMIN // CONTROL PANEL"
           title="ZhenGeek 内容控制台"
-          description="用于梳理文章管理流程的静态后台原型，暂时不接入 API、数据库或真实登录。"
+          description="用于管理文章内容、查看发布状态和进入文章工作流的后台控制台。"
         />
         <StatusPill text="API Read" />
       </div>
@@ -204,8 +204,34 @@ h2 {
 }
 
 @media (max-width: 560px) {
+  .admin-shell {
+    width: min(100% - 1rem, 1120px);
+  }
+
+  .admin-topbar {
+    justify-content: flex-start;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .stat-card strong {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  .quick-actions,
+  .quick-actions a {
+    width: 100%;
+  }
+
+  .quick-actions a {
+    justify-content: center;
+    text-align: center;
   }
 }
 </style>

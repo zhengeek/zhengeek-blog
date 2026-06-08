@@ -367,4 +367,36 @@ h3 {
     flex-direction: column;
   }
 }
+
+@media (max-width: 640px) {
+  .project-shell {
+    width: min(100% - 1rem, 1120px);
+    padding: clamp(2.75rem, 12vw, 4rem) 0;
+  }
+
+  h1 {
+    font-size: 3.25rem;
+  }
+
+  h2 {
+    font-size: 2.45rem;
+  }
+
+  .status-panel,
+  .featured-project,
+  .progress-card,
+  .side-project-card,
+  .api-panel {
+    box-shadow: 6px 6px 0 rgba(250, 250, 250, 0.1);
+  }
+
+  .case-visual {
+    min-height: 96px;
+  }
+
+  .api-panel code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
 </style>

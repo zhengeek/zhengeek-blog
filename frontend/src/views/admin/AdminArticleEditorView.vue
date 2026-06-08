@@ -211,4 +211,21 @@ p {
   display: inline-flex;
   margin-top: 1rem;
 }
+
+@media (max-width: 640px) {
+  .admin-shell {
+    width: min(100% - 1rem, 980px);
+    padding: clamp(2.5rem, 12vw, 4rem) 0;
+  }
+
+  .editor-card,
+  .not-found-card {
+    border-radius: 22px;
+    padding: 1.1rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+}
 </style>

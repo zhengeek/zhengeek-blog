@@ -389,4 +389,31 @@ h3 {
     min-height: auto;
   }
 }
+
+@media (max-width: 640px) {
+  .about-shell {
+    width: min(100% - 1rem, 1120px);
+    padding: clamp(2.75rem, 12vw, 4rem) 0;
+  }
+
+  h1 {
+    font-size: 3.4rem;
+  }
+
+  h2 {
+    font-size: 2.55rem;
+  }
+
+  .identity-card,
+  .story-panel,
+  .principle-card,
+  .track-list,
+  .timeline-card {
+    box-shadow: 6px 6px 0 rgba(250, 250, 250, 0.1);
+  }
+
+  .identity-card strong {
+    font-size: 1.65rem;
+  }
+}
 </style>

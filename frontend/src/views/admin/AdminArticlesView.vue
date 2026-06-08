@@ -277,10 +277,28 @@ const deleteArticle = async (article: Article) => {
 
   .table-card {
     overflow-x: auto;
+    padding: 0.85rem;
   }
 
   .article-row {
     min-width: 900px;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-shell {
+    width: min(100% - 1rem, 1180px);
+    padding: clamp(2.5rem, 12vw, 4rem) 0;
+  }
+
+  .primary-link {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .notice-message {
+    font-size: 0.8rem;
   }
 }
 </style>

@@ -200,11 +200,18 @@ main {
   .site-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
   }
 
   .site-nav {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .site-nav a {
+    padding: 0.48rem 0.68rem;
+    font-size: 0.82rem;
   }
 
   .brand-text small {

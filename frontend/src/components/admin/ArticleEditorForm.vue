@@ -321,5 +321,13 @@ button:hover:not(:disabled) {
   .form-actions {
     justify-content: flex-start;
   }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .content-input {
+    min-height: 240px;
+  }
 }
 </style>

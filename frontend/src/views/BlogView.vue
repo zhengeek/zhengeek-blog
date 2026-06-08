@@ -421,4 +421,36 @@ h3 {
     align-items: flex-start;
   }
 }
+
+@media (max-width: 640px) {
+  .blog-shell {
+    width: min(100% - 1rem, 1120px);
+    padding: clamp(2.75rem, 12vw, 4rem) 0;
+  }
+
+  h1 {
+    font-size: 3.2rem;
+  }
+
+  h2 {
+    font-size: 2.45rem;
+  }
+
+  .writing-panel,
+  .category-card,
+  .article-card,
+  .article-state-card,
+  .rules-card {
+    box-shadow: 6px 6px 0 rgba(250, 250, 250, 0.1);
+  }
+
+  .article-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .article-meta-right {
+    gap: 0.5rem;
+  }
+}
 </style>

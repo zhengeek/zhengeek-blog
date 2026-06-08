@@ -141,4 +141,24 @@ button:disabled {
   font-weight: 800;
   padding: 0.85rem 1rem;
 }
+
+@media (max-width: 520px) {
+  .admin-login-page {
+    align-items: start;
+    padding: 2rem 0.75rem 4rem;
+  }
+
+  .login-card {
+    border-radius: 22px;
+    padding: 1.25rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}
 </style>
