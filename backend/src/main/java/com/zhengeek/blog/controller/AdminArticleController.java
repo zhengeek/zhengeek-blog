@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,5 +64,14 @@ public class AdminArticleController {
     return articleService.updateArticlePinned(id, body.get("isPinned"))
       .map(ResponseEntity::ok)
       .orElseThrow(() -> new BusinessException(BusinessException.ARTICLE_NOT_FOUND, "Article not found"));
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
+    if (!articleService.deleteArticle(id)) {
+      throw new BusinessException(BusinessException.ARTICLE_NOT_FOUND, "Article not found");
+    }
+
+    return ResponseEntity.noContent().build();
   }
 }

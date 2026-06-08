@@ -102,6 +102,15 @@ public class ArticleService {
       });
   }
 
+  public boolean deleteArticle(Long id) {
+    if (!articleRepository.existsById(id)) {
+      return false;
+    }
+
+    articleRepository.deleteById(id);
+    return true;
+  }
+
   private Article toModel(ArticleEntity entity) {
     Article article = new Article();
     article.setId(entity.getId());

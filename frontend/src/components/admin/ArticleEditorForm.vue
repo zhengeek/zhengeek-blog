@@ -5,6 +5,7 @@ import {
   type Article,
   type ArticleStatus,
   createAdminArticle,
+  getArticleApiErrorMessage,
   getArticleStatusLabel,
   updateAdminArticle
 } from '../../services/articleApi'
@@ -37,6 +38,7 @@ const props = withDefaults(
 const router = useRouter()
 const isSaving = ref(false)
 const errorMessage = ref('')
+const successMessage = ref('')
 
 const getCurrentMonth = () => new Date().toISOString().slice(0, 7)
 
@@ -80,24 +82,35 @@ const submitArticle = async (status: ArticleStatus) => {
 
   isSaving.value = true
   errorMessage.value = ''
+  successMessage.value = ''
   form.status = status
 
   try {
     const payload = getPayload(status)
+    const nextSuccessMessage = status === 'published' ? '文章已发布' : '文章已保存'
 
     if (props.mode === 'edit') {
       if (!payload.id) {
         throw new Error('Missing article id')
       }
 
-      await updateAdminArticle(payload.id, payload)
+      const savedArticle = await updateAdminArticle(payload.id, payload)
+      form.viewCount = savedArticle.viewCount ?? form.viewCount
+      form.status = savedArticle.status
+      successMessage.value = nextSuccessMessage
+      return
     } else {
-      await createAdminArticle(payload)
-    }
+      const savedArticle = await createAdminArticle(payload)
+      form.id = savedArticle.id
 
-    await router.push('/admin/articles')
-  } catch {
-    errorMessage.value = 'Unable to save article. Please check the form and make sure the backend is running.'
+      await router.replace({
+        name: 'admin-article-edit',
+        params: { slug: savedArticle.slug },
+        query: { notice: status === 'published' ? 'published' : 'saved' }
+      })
+    }
+  } catch (error) {
+    errorMessage.value = getArticleApiErrorMessage(error)
   } finally {
     isSaving.value = false
   }
@@ -109,6 +122,7 @@ const publish = () => submitArticle('published')
 
 <template>
   <form class="editor-form" @submit.prevent="saveDraft">
+    <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
     <div class="form-grid">
@@ -248,12 +262,26 @@ textarea {
   accent-color: var(--vg-accent);
 }
 
+.success-message,
 .error-message {
   margin: 0;
-  color: var(--vg-accent);
+  border-radius: 14px;
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 800;
+  padding: 0.85rem 1rem;
+}
+
+.success-message {
+  border: 1px solid rgba(204, 255, 0, 0.42);
+  background: rgba(204, 255, 0, 0.12);
+  color: #f4ff9b;
+}
+
+.error-message {
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  background: rgba(127, 29, 29, 0.34);
+  color: #fecaca;
 }
 
 .form-actions {

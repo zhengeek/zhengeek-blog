@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import ArticleEditorForm from '../../components/admin/ArticleEditorForm.vue'
 import InfoCard from '../../components/common/InfoCard.vue'
 import SectionHeader from '../../components/common/SectionHeader.vue'
 import { type Article, fetchAdminArticleBySlug } from '../../services/articleApi'
 
 const route = useRoute()
+const router = useRouter()
 
 const slug = computed(() => {
   const value = route.params.slug
@@ -14,9 +15,32 @@ const slug = computed(() => {
 })
 
 const isNewArticle = computed(() => route.path.endsWith('/new'))
+const noticeMessage = ref('')
 const article = ref<Article | null>(null)
 const isLoading = ref(false)
 const errorMessage = ref('')
+const lastRoutePath = ref(route.path)
+
+watch(
+  () => route.query.notice,
+  (notice) => {
+    if (notice !== 'saved' && notice !== 'published') {
+      return
+    }
+
+    noticeMessage.value = notice === 'published' ? '文章已发布' : '文章已保存'
+
+    const query = { ...route.query }
+    delete query.notice
+
+    void router.replace({
+      path: route.path,
+      query,
+      hash: route.hash
+    })
+  },
+  { immediate: true }
+)
 
 watch(
   [isNewArticle, slug],
@@ -24,13 +48,21 @@ watch(
     article.value = null
     errorMessage.value = ''
 
+    if (route.path !== lastRoutePath.value) {
+      lastRoutePath.value = route.path
+
+      if (route.query.notice !== 'saved' && route.query.notice !== 'published') {
+        noticeMessage.value = ''
+      }
+    }
+
     if (isNew) {
       isLoading.value = false
       return
     }
 
     if (!currentSlug) {
-      errorMessage.value = 'Not Found'
+      errorMessage.value = '文章不存在，可能已被删除'
       isLoading.value = false
       return
     }
@@ -40,7 +72,7 @@ watch(
     try {
       article.value = await fetchAdminArticleBySlug(currentSlug)
     } catch {
-      errorMessage.value = 'Not Found. The article may not exist, or the backend service is unavailable.'
+      errorMessage.value = '文章不存在，可能已被删除，或后端服务未启动。'
     } finally {
       isLoading.value = false
     }
@@ -76,6 +108,7 @@ const initialValue = computed<Article | undefined>(() => {
         />
 
         <InfoCard class="editor-card">
+          <p v-if="noticeMessage" class="notice-message success-message">{{ noticeMessage }}</p>
           <ArticleEditorForm
             :key="initialValue?.id ?? 'new'"
             :mode="isNewArticle ? 'new' : 'edit'"
@@ -86,9 +119,9 @@ const initialValue = computed<Article | undefined>(() => {
 
       <InfoCard v-else class="not-found-card">
         <span>404 // ARTICLE NOT FOUND</span>
-        <h1>Not Found</h1>
-        <p>{{ errorMessage || 'The article does not exist.' }}</p>
-        <RouterLink class="back-link inline-link" to="/admin/articles">Back to Articles</RouterLink>
+        <h1>文章不存在</h1>
+        <p>{{ errorMessage || '文章不存在，可能已被删除。' }}</p>
+        <RouterLink class="back-link inline-link" to="/admin/articles">返回文章列表</RouterLink>
       </InfoCard>
     </section>
   </main>
@@ -125,6 +158,21 @@ const initialValue = computed<Article | undefined>(() => {
 .not-found-card {
   border-radius: 28px;
   padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.notice-message {
+  margin: 0 0 1rem;
+  border-radius: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 0.85rem 1rem;
+}
+
+.success-message {
+  border: 1px solid rgba(204, 255, 0, 0.42);
+  background: rgba(204, 255, 0, 0.12);
+  color: #f4ff9b;
 }
 
 .state-card p {
