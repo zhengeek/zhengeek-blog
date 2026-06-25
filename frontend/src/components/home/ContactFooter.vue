@@ -57,7 +57,7 @@ import { RouterLink } from 'vue-router'
   margin-top: 80px;
   padding: 128px 24px 48px;
   overflow: hidden;
-  border-top: 1px solid #18181b;
+  border-top: 1px solid var(--vg-line);
   background: #000;
 }
 
@@ -221,7 +221,7 @@ li a:hover {
   max-width: 1280px;
   margin: 128px auto 0;
   padding-top: 32px;
-  border-top: 1px solid #18181b;
+  border-top: 1px solid var(--vg-line);
   display: flex;
   justify-content: space-between;
   align-items: center;

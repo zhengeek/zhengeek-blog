@@ -150,7 +150,7 @@ h3 {
 .status-panel p,
 .side-project-card p,
 .side-project-card strong {
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-size: 1rem;
   line-height: 1.85;
 }
@@ -174,9 +174,9 @@ h3 {
 .progress-card,
 .side-project-card,
 .api-panel {
-  border: 2px solid rgba(250, 250, 250, 0.9);
-  background: rgba(24, 24, 27, 0.74);
-  box-shadow: 10px 10px 0 rgba(250, 250, 250, 0.12);
+  border: 1px solid var(--vg-card-border);
+  background: var(--vg-panel);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -219,9 +219,9 @@ h3 {
 .project-badge {
   flex: 0 0 auto;
   padding: 0.65rem 0.9rem;
-  border: 1px solid rgba(204, 255, 0, 0.55);
+  border: 1px solid rgba(0, 210, 255, 0.44);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.08);
+  background: rgba(0, 210, 255, 0.08);
 }
 
 .stack-row,
@@ -250,7 +250,7 @@ h3 {
 }
 
 .accent-card {
-  background: linear-gradient(135deg, rgba(204, 255, 0, 0.12), rgba(24, 24, 27, 0.8));
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.12), rgba(176, 38, 255, 0.12), var(--vg-panel-strong));
 }
 
 .progress-card h3 {
@@ -265,7 +265,7 @@ h3 {
   gap: 0.85rem;
   margin: 1.2rem 0 0;
   padding-left: 1.2rem;
-  color: #e4e4e7;
+  color: #e7e9ff;
   line-height: 1.75;
 }
 
@@ -294,11 +294,11 @@ h3 {
 }
 
 .case-visual span {
-  border: 1px solid rgba(250, 250, 250, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   background:
-    linear-gradient(135deg, rgba(204, 255, 0, 0.16), rgba(176, 0, 255, 0.18)),
-    rgba(9, 9, 11, 0.72);
+    linear-gradient(135deg, rgba(0, 210, 255, 0.18), rgba(176, 38, 255, 0.2), rgba(255, 42, 133, 0.14)),
+    rgba(5, 5, 15, 0.72);
 }
 
 .case-visual span:first-child {
@@ -306,7 +306,7 @@ h3 {
 }
 
 .case-visual span:nth-child(2) {
-  background: rgba(204, 255, 0, 0.12);
+  background: rgba(0, 210, 255, 0.12);
 }
 
 .side-project-card h3 {
@@ -316,7 +316,7 @@ h3 {
 .side-project-card strong {
   display: block;
   margin-top: auto;
-  color: #fafafa;
+  color: #ffffff;
 }
 
 .mini-stack {
@@ -337,8 +337,8 @@ h3 {
 .api-panel code {
   display: block;
   padding: 0.8rem 0;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.12);
-  color: #e4e4e7;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e7e9ff;
   font-family: var(--font-mono);
   font-size: 0.85rem;
 }
@@ -387,7 +387,7 @@ h3 {
   .progress-card,
   .side-project-card,
   .api-panel {
-    box-shadow: 6px 6px 0 rgba(250, 250, 250, 0.1);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(0, 210, 255, 0.07);
   }
 
   .case-visual {

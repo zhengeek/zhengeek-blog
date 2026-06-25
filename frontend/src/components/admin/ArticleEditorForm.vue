@@ -215,10 +215,10 @@ input,
 select,
 textarea {
   width: 100%;
-  border: 1px solid rgba(250, 250, 250, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 12px;
-  background: rgba(9, 9, 11, 0.76);
-  color: #fafafa;
+  background: rgba(5, 5, 15, 0.76);
+  color: #ffffff;
   font: inherit;
   padding: 0.9rem 1rem;
   outline: none;
@@ -227,13 +227,13 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: rgba(204, 255, 0, 0.72);
-  box-shadow: 0 0 0 3px rgba(204, 255, 0, 0.08);
+  border-color: rgba(0, 210, 255, 0.72);
+  box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.08), 0 0 22px rgba(0, 210, 255, 0.14);
 }
 
 input:disabled,
 button:disabled {
-  color: #a1a1aa;
+  color: var(--vg-muted);
   cursor: not-allowed;
 }
 
@@ -273,9 +273,9 @@ textarea {
 }
 
 .success-message {
-  border: 1px solid rgba(204, 255, 0, 0.42);
-  background: rgba(204, 255, 0, 0.12);
-  color: #f4ff9b;
+  border: 1px solid rgba(0, 210, 255, 0.42);
+  background: rgba(0, 210, 255, 0.1);
+  color: #b7f4ff;
 }
 
 .error-message {
@@ -292,10 +292,10 @@ textarea {
 }
 
 button {
-  border: 1px solid rgba(250, 250, 250, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
-  background: rgba(250, 250, 250, 0.08);
-  color: #fafafa;
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -304,8 +304,8 @@ button {
 }
 
 .primary-action {
-  border-color: rgba(204, 255, 0, 0.58);
-  background: rgba(204, 255, 0, 0.12);
+  border-color: rgba(0, 210, 255, 0.5);
+  background: rgba(0, 210, 255, 0.1);
   color: var(--vg-accent);
 }
 

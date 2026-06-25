@@ -181,7 +181,7 @@ h3 {
 .article-state-card p,
 .writing-copy p,
 .rule-item p {
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-size: 1rem;
   line-height: 1.85;
 }
@@ -205,9 +205,9 @@ h3 {
 .article-card,
 .article-state-card,
 .rules-card {
-  border: 2px solid rgba(250, 250, 250, 0.9);
-  background: rgba(24, 24, 27, 0.74);
-  box-shadow: 10px 10px 0 rgba(250, 250, 250, 0.12);
+  border: 1px solid var(--vg-card-border);
+  background: var(--vg-panel);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -263,9 +263,9 @@ h3 {
 .status-pill {
   flex: 0 0 auto;
   padding: 0.65rem 0.9rem;
-  border: 1px solid rgba(204, 255, 0, 0.55);
+  border: 1px solid rgba(0, 210, 255, 0.44);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.08);
+  background: rgba(0, 210, 255, 0.08);
 }
 
 .article-list {
@@ -315,9 +315,9 @@ h3 {
 
 .pinned-badge {
   padding: 0.28rem 0.48rem;
-  border: 1px solid rgba(204, 255, 0, 0.55);
+  border: 1px solid rgba(0, 210, 255, 0.44);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.08);
+  background: rgba(0, 210, 255, 0.08);
 }
 
 .article-title-link {
@@ -359,7 +359,7 @@ h3 {
 }
 
 .read-more-link {
-  color: #fafafa;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 800;
@@ -385,7 +385,7 @@ h3 {
   grid-template-columns: auto 1fr;
   gap: 0.85rem;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .rule-item:last-child {
@@ -441,7 +441,7 @@ h3 {
   .article-card,
   .article-state-card,
   .rules-card {
-    box-shadow: 6px 6px 0 rgba(250, 250, 250, 0.1);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(0, 210, 255, 0.07);
   }
 
   .article-meta {

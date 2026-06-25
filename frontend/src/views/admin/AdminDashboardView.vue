@@ -106,7 +106,7 @@ onMounted(async () => {
 
 .admin-link,
 .quick-actions a {
-  color: #fafafa;
+  color: #ffffff;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 800;
@@ -139,7 +139,7 @@ onMounted(async () => {
 
 .admin-state-card p {
   margin: 0;
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-family: var(--font-mono);
   font-size: 0.92rem;
   font-weight: 800;
@@ -181,9 +181,9 @@ h2 {
 }
 
 .quick-actions a {
-  border: 1px solid rgba(204, 255, 0, 0.5);
+  border: 1px solid rgba(0, 210, 255, 0.44);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.08);
+  background: rgba(0, 210, 255, 0.08);
   color: var(--vg-accent);
   padding: 0.75rem 0.9rem;
 }

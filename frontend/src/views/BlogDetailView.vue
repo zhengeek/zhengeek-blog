@@ -127,9 +127,9 @@ onMounted(async () => {
 
 .pinned-badge {
   padding: 0.28rem 0.48rem;
-  border: 1px solid rgba(204, 255, 0, 0.55);
+  border: 1px solid rgba(0, 210, 255, 0.44);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.08);
+  background: rgba(0, 210, 255, 0.08);
 }
 
 h1,
@@ -148,7 +148,7 @@ h1 {
 
 .summary,
 .not-found-card p {
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-size: 1.05rem;
   line-height: 1.85;
 }
@@ -168,7 +168,7 @@ h1 {
 }
 
 .article-content {
-  color: #e4e4e7;
+  color: #e7e9ff;
   font-size: 1rem;
   line-height: 1.85;
   white-space: pre-wrap;

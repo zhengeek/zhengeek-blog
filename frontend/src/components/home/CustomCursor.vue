@@ -85,13 +85,14 @@ onUnmounted(() => {
 .custom-cursor {
   width: 24px;
   height: 24px;
-  border: 2px solid var(--vg-accent);
+  border: 1px solid rgba(176, 38, 255, 0.58);
   border-radius: 50%;
   position: fixed;
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
+  box-shadow: 0 0 18px rgba(0, 210, 255, 0.38);
+  mix-blend-mode: screen;
   transition:
     width 0.2s,
     height 0.2s,
@@ -103,9 +104,9 @@ onUnmounted(() => {
 .custom-cursor.hover {
   width: 60px;
   height: 60px;
-  background-color: var(--vg-accent);
-  border-color: transparent;
-  opacity: 0.8;
+  background-color: rgba(255, 42, 133, 0.12);
+  border-color: var(--vg-pink);
+  opacity: 0.92;
 }
 
 @media (max-width: 768px) {

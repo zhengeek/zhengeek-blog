@@ -98,25 +98,25 @@ label {
 }
 
 input {
-  border: 1px solid rgba(250, 250, 250, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 12px;
-  background: rgba(9, 9, 11, 0.76);
-  color: #fafafa;
+  background: rgba(5, 5, 15, 0.76);
+  color: #ffffff;
   font: inherit;
   padding: 0.9rem 1rem;
   outline: none;
 }
 
 input:focus {
-  border-color: rgba(204, 255, 0, 0.72);
-  box-shadow: 0 0 0 3px rgba(204, 255, 0, 0.08);
+  border-color: rgba(0, 210, 255, 0.72);
+  box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.08), 0 0 22px rgba(0, 210, 255, 0.14);
 }
 
 button {
   margin-top: 0.6rem;
-  border: 1px solid rgba(204, 255, 0, 0.58);
+  border: 1px solid rgba(0, 210, 255, 0.5);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.12);
+  background: rgba(0, 210, 255, 0.1);
   color: var(--vg-accent);
   cursor: pointer;
   font-family: var(--font-mono);
@@ -126,7 +126,7 @@ button {
 }
 
 button:disabled {
-  color: #a1a1aa;
+  color: var(--vg-muted);
   cursor: not-allowed;
 }
 

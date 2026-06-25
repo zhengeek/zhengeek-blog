@@ -230,9 +230,9 @@ h3 {
 .principle-card,
 .track-list,
 .timeline-card {
-  border: 2px solid rgba(250, 250, 250, 0.9);
-  background: rgba(24, 24, 27, 0.74);
-  box-shadow: 10px 10px 0 rgba(250, 250, 250, 0.12);
+  border: 1px solid var(--vg-card-border);
+  background: var(--vg-panel);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -268,9 +268,10 @@ h3 {
 
 .identity-tags span {
   padding: 0.38rem 0.65rem;
-  border: 1px solid rgba(250, 250, 250, 0.22);
+  border: 1px solid rgba(176, 38, 255, 0.26);
   border-radius: 999px;
-  color: #f4f4f5;
+  background: rgba(176, 38, 255, 0.08);
+  color: #eef7ff;
   font-family: var(--font-mono);
   font-size: 0.72rem;
 }
@@ -290,12 +291,12 @@ h3 {
 
 .large-panel {
   background:
-    linear-gradient(135deg, rgba(204, 255, 0, 0.08), rgba(24, 24, 27, 0.78));
+    linear-gradient(135deg, rgba(0, 210, 255, 0.1), var(--vg-panel-strong));
 }
 
 .mission-panel {
   background:
-    linear-gradient(135deg, rgba(176, 0, 255, 0.2), rgba(24, 24, 27, 0.82));
+    linear-gradient(135deg, rgba(176, 38, 255, 0.18), rgba(255, 42, 133, 0.1), var(--vg-panel-strong));
 }
 
 .principle-grid {
@@ -336,7 +337,7 @@ h3 {
   grid-template-columns: auto 1fr;
   gap: 0.8rem;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .track-item:last-child {
@@ -409,7 +410,7 @@ h3 {
   .principle-card,
   .track-list,
   .timeline-card {
-    box-shadow: 6px 6px 0 rgba(250, 250, 250, 0.1);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(0, 210, 255, 0.07);
   }
 
   .identity-card strong {

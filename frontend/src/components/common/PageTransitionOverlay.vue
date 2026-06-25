@@ -48,7 +48,7 @@ withDefaults(
   place-items: center;
   overflow: hidden;
   pointer-events: none;
-  background: #050505;
+  background: #05050f;
   opacity: 0;
   transform: translateY(-100%);
   transition:
@@ -74,8 +74,9 @@ withDefaults(
   opacity: 0.34;
   background:
     linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    radial-gradient(circle at 50% 42%, rgba(204, 255, 0, 0.11), transparent 22rem),
-    radial-gradient(circle at 58% 52%, rgba(176, 0, 255, 0.12), transparent 18rem);
+    radial-gradient(circle at 50% 42%, rgba(0, 210, 255, 0.12), transparent 22rem),
+    radial-gradient(circle at 58% 52%, rgba(176, 38, 255, 0.13), transparent 18rem),
+    radial-gradient(circle at 45% 58%, rgba(255, 42, 133, 0.08), transparent 20rem);
   background-size: 100% 4px, auto, auto;
   animation: scanline-drift 1.1s linear infinite;
 }
@@ -125,24 +126,24 @@ withDefaults(
   width: clamp(34px, 8vw, 54px);
   height: 8px;
   border-radius: 999px;
-  background: rgba(250, 250, 250, 0.2);
+  background: rgba(255, 255, 255, 0.2);
   filter: blur(3px);
   animation: shadow-pulse 0.9s ease-in-out infinite;
 }
 
 .orb-one {
-  --orb-color: #ccff00;
-  --orb-glow: rgba(204, 255, 0, 0.58);
+  --orb-color: #00d2ff;
+  --orb-glow: rgba(0, 210, 255, 0.58);
 }
 
 .orb-two {
-  --orb-color: #b000ff;
-  --orb-glow: rgba(176, 0, 255, 0.58);
+  --orb-color: #b026ff;
+  --orb-glow: rgba(176, 38, 255, 0.58);
 }
 
 .orb-three {
-  --orb-color: #ffffff;
-  --orb-glow: rgba(255, 255, 255, 0.52);
+  --orb-color: #ff2a85;
+  --orb-glow: rgba(255, 42, 133, 0.52);
 }
 
 .orb-two .orb,
@@ -157,12 +158,12 @@ withDefaults(
 
 .loading-text {
   margin: 0;
-  color: #ccff00;
+  color: var(--vg-accent);
   font-family: var(--font-mono);
   font-size: clamp(0.82rem, 2.4vw, 1rem);
   font-weight: 800;
   letter-spacing: 0.08em;
-  text-shadow: 0 0 22px rgba(204, 255, 0, 0.36);
+  text-shadow: 0 0 22px rgba(0, 210, 255, 0.36);
 }
 
 @keyframes orb-bounce {

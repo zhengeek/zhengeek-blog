@@ -19,9 +19,10 @@ defineProps<{
 
 .tag-list span {
   padding: var(--tag-padding, 0.38rem 0.65rem);
-  border: 1px solid rgba(250, 250, 250, 0.22);
+  border: 1px solid rgba(176, 38, 255, 0.26);
   border-radius: 999px;
-  color: #f4f4f5;
+  background: rgba(176, 38, 255, 0.08);
+  color: #eef7ff;
   font-family: var(--font-mono);
   font-size: var(--tag-font-size, 0.72rem);
 }

@@ -170,14 +170,14 @@ const initialValue = computed<Article | undefined>(() => {
 }
 
 .success-message {
-  border: 1px solid rgba(204, 255, 0, 0.42);
-  background: rgba(204, 255, 0, 0.12);
-  color: #f4ff9b;
+  border: 1px solid rgba(0, 210, 255, 0.42);
+  background: rgba(0, 210, 255, 0.1);
+  color: #b7f4ff;
 }
 
 .state-card p {
   margin: 0;
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-family: var(--font-mono);
   font-size: 0.92rem;
   font-weight: 800;
@@ -203,7 +203,7 @@ h1 {
 }
 
 p {
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   line-height: 1.8;
 }
 

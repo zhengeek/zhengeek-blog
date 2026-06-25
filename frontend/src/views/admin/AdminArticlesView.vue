@@ -144,9 +144,9 @@ const deleteArticle = async (article: Article) => {
 
 .primary-link {
   flex: 0 0 auto;
-  border: 1px solid rgba(204, 255, 0, 0.5);
+  border: 1px solid rgba(0, 210, 255, 0.44);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.08);
+  background: rgba(0, 210, 255, 0.08);
   padding: 0.75rem 0.9rem;
 }
 
@@ -163,7 +163,7 @@ const deleteArticle = async (article: Article) => {
 
 .state-card p {
   margin: 0;
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-family: var(--font-mono);
   font-size: 0.92rem;
   font-weight: 800;
@@ -179,9 +179,9 @@ const deleteArticle = async (article: Article) => {
 }
 
 .success-message {
-  border: 1px solid rgba(204, 255, 0, 0.42);
-  background: rgba(204, 255, 0, 0.12);
-  color: #f4ff9b;
+  border: 1px solid rgba(0, 210, 255, 0.42);
+  background: rgba(0, 210, 255, 0.1);
+  color: #b7f4ff;
 }
 
 .error-message {
@@ -197,7 +197,7 @@ const deleteArticle = async (article: Article) => {
   align-items: center;
   min-width: 0;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .article-row:last-child {
@@ -213,7 +213,7 @@ const deleteArticle = async (article: Article) => {
 }
 
 .article-row strong {
-  color: #fafafa;
+  color: #ffffff;
   font-size: 0.96rem;
   line-height: 1.45;
   min-width: 0;
@@ -221,7 +221,7 @@ const deleteArticle = async (article: Article) => {
 }
 
 .article-row span {
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-size: 0.9rem;
   min-width: 0;
 }
@@ -240,9 +240,9 @@ const deleteArticle = async (article: Article) => {
   align-items: center;
   justify-content: center;
   min-height: 1.85rem;
-  border: 1px solid rgba(250, 250, 250, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 999px;
-  background: rgba(9, 9, 11, 0.72);
+  background: rgba(5, 5, 15, 0.72);
   padding: 0.36rem 0.6rem;
   white-space: nowrap;
 }
@@ -250,8 +250,8 @@ const deleteArticle = async (article: Article) => {
 .row-actions a:hover,
 .primary-link:hover,
 .delete-button:hover:not(:disabled) {
-  border-color: rgba(204, 255, 0, 0.42);
-  background: rgba(250, 250, 250, 0.1);
+  border-color: rgba(0, 210, 255, 0.42);
+  background: rgba(0, 210, 255, 0.08);
   text-decoration: none;
 }
 
@@ -266,7 +266,7 @@ const deleteArticle = async (article: Article) => {
 }
 
 .delete-button:disabled {
-  color: #a1a1aa;
+  color: var(--vg-muted);
   cursor: not-allowed;
 }
 

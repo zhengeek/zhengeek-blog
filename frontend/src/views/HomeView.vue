@@ -237,7 +237,7 @@ h1 {
 .hero-outline {
   display: block;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(250, 250, 250, 0.55);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.55);
 }
 
 .hero-lead,
@@ -264,10 +264,10 @@ h1 {
 }
 
 .service-strip span {
-  border: 1px solid rgba(204, 255, 0, 0.34);
+  border: 1px solid rgba(0, 210, 255, 0.34);
   border-radius: 999px;
-  background: rgba(204, 255, 0, 0.08);
-  color: #f4ff9b;
+  background: rgba(0, 210, 255, 0.08);
+  color: #b7f4ff;
   font-family: var(--font-mono);
   font-size: 0.74rem;
   font-weight: 800;
@@ -282,7 +282,7 @@ h1 {
   justify-content: center;
   min-height: 48px;
   padding: 0.85rem 1.2rem;
-  border: 2px solid #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 999px;
   text-decoration: none;
   font-weight: 900;
@@ -290,22 +290,22 @@ h1 {
 }
 
 .primary-action {
-  background: var(--vg-accent);
-  color: #09090b;
-  box-shadow: 5px 5px 0 #fafafa;
+  background: var(--vg-gradient);
+  color: #ffffff;
+  box-shadow: 0 0 24px rgba(0, 210, 255, 0.24), 0 0 36px rgba(176, 38, 255, 0.16);
 }
 
 .secondary-action,
 .small-action {
-  background: rgba(250, 250, 250, 0.04);
-  color: #fafafa;
+  background: rgba(255, 255, 255, 0.04);
+  color: #ffffff;
 }
 
 .primary-action:hover,
 .secondary-action:hover,
 .small-action:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0 rgba(204, 255, 0, 0.5);
+  box-shadow: 0 0 28px rgba(0, 210, 255, 0.28), 0 0 46px rgba(255, 42, 133, 0.16);
 }
 
 .primary-action.inline {
@@ -327,9 +327,9 @@ h1 {
 .blog-list-panel,
 .milestone-item,
 .contact-section {
-  border: 2px solid rgba(250, 250, 250, 0.9);
-  background: rgba(24, 24, 27, 0.74);
-  box-shadow: 10px 10px 0 rgba(250, 250, 250, 0.12);
+  border: 1px solid var(--vg-card-border);
+  background: var(--vg-panel);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -342,8 +342,8 @@ h1 {
   border-radius: 28px;
   padding: 1rem;
   background:
-    linear-gradient(135deg, rgba(204, 255, 0, 0.12), rgba(176, 0, 255, 0.16)),
-    rgba(24, 24, 27, 0.78);
+    linear-gradient(135deg, rgba(0, 210, 255, 0.14), rgba(176, 38, 255, 0.16), rgba(255, 42, 133, 0.12)),
+    var(--vg-panel-strong);
 }
 
 .visual-card img {
@@ -378,13 +378,13 @@ h1 {
   display: flex;
   gap: 0.45rem;
   padding: 1rem;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .terminal-bar span {
   width: 12px;
   height: 12px;
-  border: 1px solid #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.82);
   border-radius: 999px;
   background: var(--vg-accent);
 }
@@ -393,7 +393,7 @@ pre {
   margin: 0;
   padding: 1.25rem;
   white-space: pre-wrap;
-  color: #e4e4e7;
+  color: #e7e9ff;
   font-family: var(--font-mono);
   font-size: 0.88rem;
   line-height: 1.8;
@@ -469,7 +469,7 @@ h2 {
 }
 
 .feature-card p {
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   line-height: 1.75;
 }
 
@@ -482,9 +482,10 @@ h2 {
 
 .tag-row span {
   padding: 0.35rem 0.6rem;
-  border: 1px solid rgba(250, 250, 250, 0.2);
+  border: 1px solid rgba(176, 38, 255, 0.24);
   border-radius: 999px;
-  color: #f4f4f5;
+  background: rgba(176, 38, 255, 0.08);
+  color: #eef7ff;
   font-family: var(--font-mono);
   font-size: 0.72rem;
 }
@@ -493,7 +494,7 @@ h2 {
   display: grid;
   gap: 0.4rem;
   padding: 1rem 0;
-  border-bottom: 1px solid rgba(250, 250, 250, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .blog-seed:last-child {
@@ -526,7 +527,7 @@ h2 {
 
 .milestone-item p {
   margin-top: 2.5rem;
-  color: #f4f4f5;
+  color: #eef7ff;
   font-weight: 800;
   line-height: 1.6;
 }

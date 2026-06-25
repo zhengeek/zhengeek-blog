@@ -14,15 +14,15 @@ import CustomCursor from './components/home/CustomCursor.vue'
 }
 
 html {
-  background: #09090b;
+  background: #05050f;
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-width: 320px;
-  background: #09090b;
-  color: #fafafa;
+  background: #05050f;
+  color: #ffffff;
   font-family: 'Noto Sans SC', Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

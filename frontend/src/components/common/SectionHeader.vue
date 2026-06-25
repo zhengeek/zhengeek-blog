@@ -40,7 +40,7 @@ h2 {
 
 .description {
   max-width: 780px;
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-size: 1rem;
   line-height: 1.85;
 }

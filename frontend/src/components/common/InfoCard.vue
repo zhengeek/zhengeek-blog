@@ -17,9 +17,9 @@ defineProps<{
 
 <style scoped>
 .info-card {
-  border: 2px solid rgba(250, 250, 250, 0.9);
-  background: rgba(24, 24, 27, 0.74);
-  box-shadow: 10px 10px 0 rgba(250, 250, 250, 0.12);
+  border: 1px solid var(--vg-card-border);
+  background: var(--vg-panel);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -40,7 +40,7 @@ defineProps<{
 
 .description {
   margin-top: 0;
-  color: #d4d4d8;
+  color: var(--vg-text-soft);
   font-size: 1rem;
   line-height: 1.85;
 }

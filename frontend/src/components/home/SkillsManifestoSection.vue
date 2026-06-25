@@ -123,13 +123,13 @@
 .skill-code {
   padding: 4px 8px;
   color: var(--vg-accent);
-  background: rgba(204, 255, 0, 0.1);
+  background: rgba(0, 210, 255, 0.1);
   font-size: 14px;
 }
 
 .purple .skill-code {
   color: var(--vg-purple);
-  background: rgba(176, 0, 255, 0.1);
+  background: rgba(176, 38, 255, 0.1);
 }
 
 .blue .skill-code {
@@ -213,7 +213,7 @@
   margin: 32px 0 0;
   padding: 8px 0 8px 20px;
   border-left: 4px solid var(--vg-accent);
-  background: rgba(204, 255, 0, 0.05);
+  background: rgba(0, 210, 255, 0.06);
   color: var(--vg-accent);
   font-family: var(--font-mono);
   font-weight: 600;

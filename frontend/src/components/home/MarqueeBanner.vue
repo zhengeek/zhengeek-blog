@@ -25,7 +25,7 @@
   border-bottom: 4px solid var(--vg-dark);
   background: var(--vg-accent);
   transform: rotate(-2deg) scale(1.05);
-  box-shadow: 0 0 50px rgba(204, 255, 0, 0.2);
+  box-shadow: 0 0 50px rgba(0, 210, 255, 0.22), 0 0 80px rgba(176, 38, 255, 0.14);
 }
 
 .marquee-track {

@@ -87,7 +87,7 @@ useRevealOnScroll()
 .work-section {
   position: relative;
   padding: 128px 24px;
-  border-top: 1px solid #18181b;
+  border-top: 1px solid var(--vg-line);
   background: #050505;
 }
 
@@ -286,7 +286,7 @@ useRevealOnScroll()
   display: flex;
   align-items: flex-end;
   padding: clamp(32px, 6vw, 64px);
-  background: linear-gradient(to top, var(--vg-dark), rgba(9, 9, 11, 0.6), transparent);
+  background: linear-gradient(to top, var(--vg-dark), rgba(5, 5, 15, 0.6), transparent);
 }
 
 .wide-copy {

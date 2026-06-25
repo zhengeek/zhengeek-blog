@@ -1,15 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Noto+Sans+SC:wght@300;400;700;900&family=Syne:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Noto+Sans+SC:wght@300;400;700;900&family=Space+Grotesk:wght@400;700&display=swap');
 
 :root {
-  --vg-dark: #09090b;
-  --vg-light: #fafafa;
-  --vg-accent: #ccff00;
-  --vg-purple: #b000ff;
-  --vg-gray: #18181b;
-  --vg-line: #27272a;
-  --vg-muted: #a1a1aa;
+  --vg-dark: #05050f;
+  --vg-light: #ffffff;
+  --vg-accent: #00d2ff;
+  --vg-purple: #b026ff;
+  --vg-pink: #ff2a85;
+  --vg-gray: #0d0e1e;
+  --vg-line: rgba(255, 255, 255, 0.08);
+  --vg-muted: #a9adc4;
+  --vg-panel: rgba(255, 255, 255, 0.035);
+  --vg-panel-strong: rgba(13, 14, 30, 0.76);
+  --vg-card-border: rgba(255, 255, 255, 0.08);
+  --vg-gradient: linear-gradient(135deg, var(--vg-accent) 0%, var(--vg-purple) 50%, var(--vg-pink) 100%);
+  --vg-glow-blue: rgba(0, 210, 255, 0.32);
+  --vg-glow-purple: rgba(176, 38, 255, 0.34);
+  --vg-glow-pink: rgba(255, 42, 133, 0.26);
+  --vg-text-soft: #d8d9e8;
+  --vg-text: #f5f7ff;
   --font-sans: 'Noto Sans SC', system-ui, sans-serif;
-  --font-display: 'Syne', 'Noto Sans SC', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Noto Sans SC', system-ui, sans-serif;
   --font-mono: 'Fira Code', ui-monospace, monospace;
 }
 
@@ -21,8 +31,8 @@ body {
 }
 
 ::selection {
-  background: var(--vg-accent);
-  color: var(--vg-dark);
+  background: var(--vg-purple);
+  color: var(--vg-light);
 }
 
 ::-webkit-scrollbar {
@@ -34,7 +44,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--vg-line);
+  background: rgba(176, 38, 255, 0.32);
   border-radius: 3px;
 }
 
@@ -102,7 +112,7 @@ button {
 
 .glitch-text::after {
   left: -3px;
-  text-shadow: -2px 0 var(--vg-accent);
+  text-shadow: -2px 0 var(--vg-pink);
   clip: rect(85px, 550px, 140px, 0);
   animation: glitch-anim 2.5s infinite linear alternate-reverse;
 }
@@ -134,6 +144,13 @@ button {
 .text-outline:hover {
   color: var(--vg-accent);
   -webkit-text-stroke: 0 transparent;
+}
+
+.text-gradient {
+  background: var(--vg-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .reveal-image-container {

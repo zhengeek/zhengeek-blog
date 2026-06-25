@@ -85,10 +85,11 @@ onBeforeUnmount(() => {
 .main-layout {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 20% 0%, rgba(204, 255, 0, 0.12), transparent 26rem),
-    radial-gradient(circle at 85% 12%, rgba(176, 0, 255, 0.18), transparent 28rem),
-    #09090b;
-  color: #fafafa;
+    radial-gradient(circle at 18% 0%, rgba(0, 210, 255, 0.16), transparent 27rem),
+    radial-gradient(circle at 86% 10%, rgba(176, 38, 255, 0.2), transparent 30rem),
+    radial-gradient(circle at 60% 70%, rgba(255, 42, 133, 0.1), transparent 34rem),
+    #05050f;
+  color: #ffffff;
 }
 
 .site-header {
@@ -101,8 +102,8 @@ onBeforeUnmount(() => {
   gap: 1.25rem;
   min-height: 76px;
   padding: 0.85rem clamp(1rem, 4vw, 4rem);
-  border-bottom: 1px solid rgba(250, 250, 250, 0.12);
-  background: rgba(9, 9, 11, 0.68);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(5, 5, 15, 0.68);
   backdrop-filter: blur(18px);
   opacity: 0.86;
   transition: opacity 0.2s ease, background 0.2s ease;
@@ -110,7 +111,7 @@ onBeforeUnmount(() => {
 
 .site-header:hover,
 .site-header:focus-within {
-  background: rgba(9, 9, 11, 0.82);
+  background: rgba(5, 5, 15, 0.86);
   opacity: 1;
 }
 
@@ -127,14 +128,14 @@ onBeforeUnmount(() => {
   width: 42px;
   height: 42px;
   place-items: center;
-  border: 2px solid #fafafa;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 14px;
-  background: #ccff00;
-  color: #09090b;
+  background: var(--vg-gradient);
+  color: #ffffff;
   font-family: var(--font-display);
   font-size: 1.45rem;
   font-weight: 900;
-  box-shadow: 4px 4px 0 #fafafa;
+  box-shadow: 0 0 24px rgba(0, 210, 255, 0.32), 0 0 42px rgba(176, 38, 255, 0.18);
 }
 
 .brand-text {
@@ -166,20 +167,21 @@ onBeforeUnmount(() => {
 
 .site-nav a {
   padding: 0.55rem 0.85rem;
-  border: 1px solid rgba(250, 250, 250, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
-  background: rgba(250, 250, 250, 0.035);
-  color: rgba(250, 250, 250, 0.76);
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.76);
   font-size: 0.9rem;
   text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
 }
 
 .site-nav a:hover,
 .site-nav a.router-link-active {
-  border-color: rgba(250, 250, 250, 0.28);
-  background: rgba(250, 250, 250, 0.09);
-  color: #ccff00;
+  border-color: rgba(0, 210, 255, 0.36);
+  background: rgba(0, 210, 255, 0.08);
+  color: var(--vg-accent);
+  box-shadow: 0 0 22px rgba(0, 210, 255, 0.14);
 }
 
 main {
