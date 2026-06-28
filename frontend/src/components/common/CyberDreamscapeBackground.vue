@@ -268,14 +268,25 @@ function animate() {
   const startProgress = gameStarted
     ? Math.min((performance.now() - gameStartTime) / GAME_START_DURATION, 1)
     : 0
-  const cameraProgress = Math.min(startProgress / 0.78, 1)
-  const easedCameraProgress = cameraProgress < 0.5
-    ? 4 * Math.pow(cameraProgress, 3)
-    : 1 - Math.pow(-2 * cameraProgress + 2, 3) / 2
-  const coreProgress = Math.max(0, Math.min((startProgress - 0.32) / 0.68, 1))
-  const easedCoreProgress = 1 - Math.pow(1 - coreProgress, 3)
-  const tunnelPulse = Math.sin(Math.PI * Math.min(startProgress / 0.82, 1))
-  cameraZ = CAMERA_START_Z + (CAMERA_END_Z - CAMERA_START_Z) * easedCameraProgress
+  const rapidProgress = Math.min(startProgress / 0.16, 1)
+  const easedRapidProgress = 1 - Math.pow(1 - rapidProgress, 4)
+  const travelProgress = Math.max(0, Math.min((startProgress - 0.16) / 0.58, 1))
+  const easedTravelProgress = travelProgress < 0.5
+    ? 4 * Math.pow(travelProgress, 3)
+    : 1 - Math.pow(-2 * travelProgress + 2, 3) / 2
+  const settleProgress = Math.max(0, Math.min((startProgress - 0.74) / 0.26, 1))
+  const easedSettleProgress = 1 - Math.pow(1 - settleProgress, 3)
+  const particleRushProgress = Math.min(startProgress / 0.12, 1)
+  const particleRush = 1 - Math.pow(1 - particleRushProgress, 3)
+  const tunnelPulse = Math.sin(Math.PI * travelProgress)
+
+  if (startProgress < 0.16) {
+    cameraZ = CAMERA_START_Z + (34 - CAMERA_START_Z) * easedRapidProgress
+  } else if (startProgress < 0.74) {
+    cameraZ = 34 + (21 - 34) * easedTravelProgress
+  } else {
+    cameraZ = 21 + (CAMERA_END_Z - 21) * easedSettleProgress
+  }
 
   camera.position.x = pointerX * 6.6
   camera.position.y = -pointerY * 4.8
@@ -284,14 +295,15 @@ function animate() {
 
   particles.position.x = 0
   particles.position.y = 0
-  particles.scale.setScalar(1 + tunnelPulse * 0.2)
+  particles.position.z = gameStarted ? 54 * particleRush * (1 - easedSettleProgress) : 0
+  particles.scale.setScalar(1 + tunnelPulse * 0.34)
   particles.rotation.y = 0
   particles.rotation.x = 0
   particles.rotation.z = elapsed * 0.0015
 
   coreGroup.position.x = pointerX * -1.5
   coreGroup.position.y = Math.sin(elapsed * 0.82) * 0.7 + pointerY * 1.15
-  coreGroup.scale.setScalar(CORE_START_SCALE + (CORE_END_SCALE - CORE_START_SCALE) * easedCoreProgress)
+  coreGroup.scale.setScalar(CORE_START_SCALE + (CORE_END_SCALE - CORE_START_SCALE) * easedSettleProgress)
   coreGroup.rotation.y = elapsed * 0.2 + pointerX * 0.22
   coreGroup.rotation.x = Math.sin(elapsed * 0.48) * 0.18 + pointerY * 0.12
   coreMesh.rotation.z = -elapsed * 0.08

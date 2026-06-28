@@ -78,7 +78,6 @@ onBeforeUnmount(() => {
   overflow: hidden;
   background: rgba(7, 5, 20, 0.52);
   backdrop-filter: blur(3px);
-  transition: opacity 2.7s ease, visibility 2.7s ease, filter 2.7s ease;
 }
 
 .login-screen::before {
@@ -92,9 +91,20 @@ onBeforeUnmount(() => {
 }
 
 .login-screen.is-leaving {
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.login-screen.is-leaving::before {
+  opacity: 0;
+}
+
+.login-screen.is-leaving .login-content,
+.login-screen.is-leaving .login-corners,
+.login-screen.is-leaving .system-meta,
+.login-screen.is-leaving .key-hint {
   opacity: 0;
   visibility: hidden;
-  filter: brightness(2.2);
 }
 
 .login-content {
