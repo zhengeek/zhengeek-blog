@@ -5,9 +5,11 @@
     </div>
 
     <div class="login-content">
-      <p class="system-label">System Initialized</p>
-      <h1>CATTOCAKE</h1>
-      <p class="studio-label">GAME STUDIO</p>
+      <div class="title-lockup">
+        <p class="system-label">System Initialized</p>
+        <h1>CATTOCAKE</h1>
+        <p class="studio-label">GAME STUDIO</p>
+      </div>
 
       <button class="start-button hoverable" type="button" @click="startGame">
         <span class="button-bracket left"></span>
@@ -100,6 +102,10 @@ onBeforeUnmount(() => {
   z-index: 2;
   width: min(100% - 2rem, 1040px);
   text-align: center;
+}
+
+.title-lockup {
+  transform: translateY(-31vh);
 }
 
 .system-label,
@@ -238,6 +244,8 @@ h1 {
 }
 
 @media (max-width: 640px) {
+  .title-lockup { transform: translateY(-16vh); }
+
   h1 {
     font-size: 8.8vw;
     letter-spacing: 0.035em;
