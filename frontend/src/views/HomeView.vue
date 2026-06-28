@@ -62,13 +62,15 @@ function sendInvite() {
 <template>
   <div class="home-page">
     <section id="top" class="core-observation" aria-label="Nexus core observation area">
-      <div class="core-status left-status">
-        <span>ENERGY OUTPUT</span>
-        <strong>98.7%</strong>
-      </div>
-      <div class="core-status right-status">
-        <span>CATTO CORE</span>
-        <strong>STABLE</strong>
+      <div class="core-status-cluster">
+        <div class="core-status">
+          <span>ENERGY OUTPUT</span>
+          <strong>98.7%</strong>
+        </div>
+        <div class="core-status">
+          <span>CATTO CORE</span>
+          <strong>STABLE</strong>
+        </div>
       </div>
       <div class="scroll-cue">
         <span class="scroll-arrow">↓</span>
@@ -244,11 +246,17 @@ function sendInvite() {
 <style scoped>
 .home-page { position: relative; overflow: clip; }
 .section-shell { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; scroll-margin-top: 110px; }
-.core-observation { position: relative; min-height: 72vh; pointer-events: none; }
+.core-observation { position: relative; min-height: 100vh; min-height: 100svh; pointer-events: none; }
+
+.core-status-cluster {
+  position: absolute;
+  top: clamp(7rem, 12vh, 8.5rem);
+  left: clamp(1.25rem, 4vw, 4rem);
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
 
 .core-status {
-  position: absolute;
-  top: 46%;
   display: grid;
   gap: 0.2rem;
   color: rgba(0, 240, 255, 0.46);
@@ -257,8 +265,6 @@ function sendInvite() {
   letter-spacing: 0.18em;
 }
 .core-status strong { color: rgba(255, 255, 255, 0.7); font-size: 0.8rem; }
-.left-status { left: clamp(1rem, 8vw, 8rem); }
-.right-status { right: clamp(1rem, 8vw, 8rem); text-align: right; }
 
 .scroll-cue {
   position: absolute;
@@ -397,12 +403,12 @@ function sendInvite() {
   .realm-grid { grid-template-columns: 1fr 1fr; }
   .tech-tree { grid-template-columns: repeat(3, 130px); }
   .hex-node { width: 130px; }
-  .core-status { display: none; }
+  .core-status-cluster { display: none; }
 }
 
 @media (max-width: 680px) {
   .section-shell { width: min(100% - 1rem, 1180px); }
-  .core-observation { min-height: 70vh; }
+  .core-observation { min-height: 100vh; min-height: 100svh; }
   .scroll-cue { width: 100%; font-size: .58rem; }
   .section-title { align-items: flex-start; }
   .section-title.align-right { align-items: flex-end; }

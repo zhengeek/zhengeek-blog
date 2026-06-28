@@ -10,6 +10,11 @@ declare global {
 }
 
 const THREE_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js'
+const GAME_START_DURATION = 2800
+const CAMERA_START_Z = 48
+const CAMERA_END_Z = 19.5
+const CORE_START_SCALE = 0.28
+const CORE_END_SCALE = 0.9
 const containerRef = ref<HTMLDivElement | null>(null)
 
 let renderer: any
@@ -30,8 +35,9 @@ let pointerTargetX = 0
 let pointerTargetY = 0
 let pointerX = 0
 let pointerY = 0
-let cameraZ = 30
+let cameraZ = CAMERA_START_Z
 let gameStarted = false
+let gameStartTime = 0
 
 function loadThree() {
   if (window.THREE) return Promise.resolve(window.THREE)
@@ -54,7 +60,7 @@ function loadThree() {
 }
 
 function getParticleCount() {
-  return window.matchMedia('(max-width: 720px)').matches ? 1800 : 4600
+  return window.matchMedia('(max-width: 720px)').matches ? 1600 : 3600
 }
 
 function gaussianRandom() {
@@ -76,7 +82,7 @@ function createCore(THREE: any) {
     roughness: 0.18,
     metalness: 0.9,
     transparent: true,
-    opacity: 0.82
+    opacity: 1
   })
   coreMesh = new THREE.Mesh(coreGeometry, coreMaterial)
 
@@ -133,9 +139,6 @@ function createCore(THREE: any) {
   pointLight.position.set(0, 0, 2)
   coreGroup.add(pointLight)
 
-  const goldLight = new THREE.PointLight(0xffb300, 0.7, 42)
-  goldLight.position.set(-8, 5, 2)
-  scene.add(goldLight)
 }
 
 function createParticles(THREE: any) {
@@ -154,19 +157,18 @@ function createParticles(THREE: any) {
 
   for (let index = 0; index < particleCount; index += 1) {
     const point = index * 3
-    const belongsToNebula = Math.random() < 0.88
+    const belongsToNebula = Math.random() < 0.68
 
     if (belongsToNebula) {
-      const radius = Math.pow(Math.random(), 1.72) * 51
-      const arm = index % 3
-      const angle = Math.random() * Math.PI * 2 + radius * 0.087 + arm * (Math.PI * 2 / 3)
-      positions[point] = Math.cos(angle) * radius * 1.2 + gaussianRandom() * 5.2
-      positions[point + 1] = Math.sin(angle) * radius * 0.53 + gaussianRandom() * 4.2
-      positions[point + 2] = gaussianRandom() * 14 - radius * 0.3
+      const radius = 8 + Math.sqrt(Math.random()) * 62
+      const angle = Math.random() * Math.PI * 2 + radius * 0.025
+      positions[point] = Math.cos(angle) * radius * 1.35 + gaussianRandom() * 2.4
+      positions[point + 1] = Math.sin(angle) * radius * 0.68 + gaussianRandom() * 2.2
+      positions[point + 2] = -14 - radius * 0.62 - Math.abs(gaussianRandom()) * 7
     } else {
       positions[point] = (Math.random() - 0.5) * 138
       positions[point + 1] = (Math.random() - 0.5) * 80
-      positions[point + 2] = 15 - Math.random() * 94
+      positions[point + 2] = -12 - Math.random() * 94
     }
 
     const color = colorSet[Math.floor(Math.random() * colorSet.length)]
@@ -174,8 +176,10 @@ function createParticles(THREE: any) {
     colors[point + 1] = color.g
     colors[point + 2] = color.b
 
-    const rareLarge = Math.random() < 0.028 ? 2.5 : 0
-    sizes[index] = 0.58 + Math.pow(Math.random(), 2.05) * 2.85 + rareLarge
+    const sizeRoll = Math.random()
+    if (sizeRoll < 0.7) sizes[index] = 0.5 + Math.random() * 1.3
+    else if (sizeRoll < 0.95) sizes[index] = 1.8 + Math.random() * 2.1
+    else sizes[index] = 4.2 + Math.random() * 3
   }
 
   basePositions = positions.slice()
@@ -261,22 +265,33 @@ function animate() {
 
   pointerX += (pointerTargetX - pointerX) * 0.065
   pointerY += (pointerTargetY - pointerY) * 0.065
-  const targetZ = gameStarted ? 17.5 : 30
-  cameraZ += (targetZ - cameraZ) * (gameStarted ? 0.024 : 0.012)
+  const startProgress = gameStarted
+    ? Math.min((performance.now() - gameStartTime) / GAME_START_DURATION, 1)
+    : 0
+  const cameraProgress = Math.min(startProgress / 0.78, 1)
+  const easedCameraProgress = cameraProgress < 0.5
+    ? 4 * Math.pow(cameraProgress, 3)
+    : 1 - Math.pow(-2 * cameraProgress + 2, 3) / 2
+  const coreProgress = Math.max(0, Math.min((startProgress - 0.32) / 0.68, 1))
+  const easedCoreProgress = 1 - Math.pow(1 - coreProgress, 3)
+  const tunnelPulse = Math.sin(Math.PI * Math.min(startProgress / 0.82, 1))
+  cameraZ = CAMERA_START_Z + (CAMERA_END_Z - CAMERA_START_Z) * easedCameraProgress
 
   camera.position.x = pointerX * 6.6
   camera.position.y = -pointerY * 4.8
   camera.position.z = cameraZ + Math.abs(pointerX) * 1.15
   camera.lookAt(pointerX * -0.65, pointerY * 0.5, -3)
 
-  particles.position.x = -pointerX * 5.3
-  particles.position.y = pointerY * 4.25
-  particles.rotation.y = elapsed * 0.008 + pointerX * 0.072
-  particles.rotation.x = pointerY * 0.05
-  particles.rotation.z = elapsed * 0.003
+  particles.position.x = 0
+  particles.position.y = 0
+  particles.scale.setScalar(1 + tunnelPulse * 0.2)
+  particles.rotation.y = 0
+  particles.rotation.x = 0
+  particles.rotation.z = elapsed * 0.0015
 
   coreGroup.position.x = pointerX * -1.5
   coreGroup.position.y = Math.sin(elapsed * 0.82) * 0.7 + pointerY * 1.15
+  coreGroup.scale.setScalar(CORE_START_SCALE + (CORE_END_SCALE - CORE_START_SCALE) * easedCoreProgress)
   coreGroup.rotation.y = elapsed * 0.2 + pointerX * 0.22
   coreGroup.rotation.x = Math.sin(elapsed * 0.48) * 0.18 + pointerY * 0.12
   coreMesh.rotation.z = -elapsed * 0.08
@@ -297,7 +312,11 @@ function handlePointerMove(event: PointerEvent) {
   pointerTargetY = (event.clientY / window.innerHeight - 0.5) * 2
 }
 
-function handleGameStart() { gameStarted = true }
+function handleGameStart() {
+  if (gameStarted) return
+  gameStarted = true
+  gameStartTime = performance.now()
+}
 
 function handleResize() {
   if (!renderer || !camera) return
@@ -307,12 +326,13 @@ function handleResize() {
 }
 
 onMounted(async () => {
+  window.addEventListener('catto-game-start', handleGameStart)
+
   try {
     const THREE = await loadThree()
     initScene(THREE)
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     window.addEventListener('resize', handleResize)
-    window.addEventListener('catto-game-start', handleGameStart)
   } catch {
     containerRef.value?.classList.add('is-fallback')
   }
