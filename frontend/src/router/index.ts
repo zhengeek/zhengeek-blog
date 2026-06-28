@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import CoreLobbyView from '../views/CoreLobbyView.vue'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import ProjectsView from '../views/ProjectsView.vue'
@@ -16,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
+    component: CoreLobbyView
+  },
+  {
+    path: '/nexus',
+    name: 'nexus',
     component: HomeView
   },
   {
@@ -81,7 +87,7 @@ const router = createRouter({
     if (to.hash) {
       return {
         el: to.hash,
-        top: 88,
+        top: 24,
         behavior: 'smooth'
       }
     }

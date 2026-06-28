@@ -31,24 +31,18 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const emit = defineEmits<{
-  started: []
+  start: []
 }>()
 
 const isLeaving = ref(false)
-let finishTimer = 0
 
 function startGame() {
   if (isLeaving.value) return
 
   isLeaving.value = true
-  window.dispatchEvent(new CustomEvent('catto-game-start'))
+  emit('start')
   window.setTimeout(() => document.body.classList.add('game-start-flash'), 20)
   window.setTimeout(() => document.body.classList.remove('game-start-flash'), 150)
-
-  finishTimer = window.setTimeout(() => {
-    document.body.classList.remove('game-locked')
-    emit('started')
-  }, 3500)
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -62,7 +56,6 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  window.clearTimeout(finishTimer)
   window.removeEventListener('keydown', handleKeydown)
   document.body.classList.remove('game-locked')
 })

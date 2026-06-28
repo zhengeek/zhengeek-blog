@@ -245,8 +245,8 @@ function sendInvite() {
 
 <style scoped>
 .home-page { position: relative; overflow: clip; }
-.section-shell { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; scroll-margin-top: 110px; }
-.core-observation { position: relative; min-height: 100vh; min-height: 100svh; pointer-events: none; }
+.section-shell { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; scroll-margin-top: 32px; }
+.core-observation { display: none; }
 
 .core-status-cluster {
   position: absolute;
@@ -408,7 +408,7 @@ function sendInvite() {
 
 @media (max-width: 680px) {
   .section-shell { width: min(100% - 1rem, 1180px); }
-  .core-observation { min-height: 100vh; min-height: 100svh; }
+  .core-observation { display: none; }
   .scroll-cue { width: 100%; font-size: .58rem; }
   .section-title { align-items: flex-start; }
   .section-title.align-right { align-items: flex-end; }
