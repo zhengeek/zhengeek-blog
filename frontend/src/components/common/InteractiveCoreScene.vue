@@ -18,6 +18,7 @@ const emit = defineEmits<{
 const containerRef = ref<HTMLDivElement | null>(null)
 const isHovered = ref(false)
 const isHudMode = computed(() => ['transitioning', 'radar', 'terminal'].includes(props.mode))
+const isRaisedMode = computed(() => ['menu', 'transitioning', 'radar', 'terminal'].includes(props.mode))
 const isHidden = computed(() => props.mode === 'hidden')
 
 let renderer: THREE.WebGLRenderer
@@ -198,12 +199,12 @@ function playIntro() {
     .to(particles.position, { z: 0, duration: 0.7, ease: 'power2.out' }, 2.8)
 }
 
-function moveToCenter(duration: number, done?: () => void) {
+function moveToCenter(duration: number, done?: () => void, scale = 0.9) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   coreAnchor.visible = true
   camera.position.z = 19.5
   gsap.to(coreAnchor.position, { x: 0, y: 0, z: -1, duration: reduced ? 0.01 : duration, ease: 'power3.inOut' })
-  gsap.to(coreAnchor.scale, { x: 0.9, y: 0.9, z: 0.9, duration: reduced ? 0.01 : duration, ease: 'power3.inOut', onComplete: done })
+  gsap.to(coreAnchor.scale, { x: scale, y: scale, z: scale, duration: reduced ? 0.01 : duration, ease: 'power3.inOut', onComplete: done })
 }
 
 function moveToRadar(duration: number) {
@@ -234,13 +235,13 @@ function changeMode(mode: CoreMode, oldMode: CoreMode) {
     gsap.to(particleMaterial.uniforms.uOpacity, { value: 1, duration: 0.35 })
     moveToCenter(oldMode === 'intro' ? 0.01 : 0.55)
   } else if (mode === 'menu') {
+    particles.visible = oldMode !== 'radar' && oldMode !== 'terminal' && oldMode !== 'transitioning'
+    if (particles.visible) gsap.to(particleMaterial.uniforms.uOpacity, { value: 0.14, duration: 0.3 })
     if (oldMode === 'radar' || oldMode === 'terminal' || oldMode === 'transitioning') {
       particles.visible = false
-      moveToCenter(0.75, () => emit('menu-ready'))
+      moveToCenter(0.75, () => emit('menu-ready'), 1.06)
     } else {
-      gsap.timeline({ onComplete: () => emit('menu-ready') })
-        .to(interactionScale, { value: 1.08, duration: 0.16 })
-        .to(interactionScale, { value: 1, duration: 0.2, ease: 'back.out(2)' })
+      moveToCenter(0.38, () => emit('menu-ready'), 1.06)
     }
   } else if (mode === 'transitioning') {
     moveToRadar(0.9)
@@ -458,7 +459,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="containerRef" class="interactive-core-scene" :class="{ 'is-hud': isHudMode, 'is-hidden': isHidden }" aria-hidden="true"></div>
+  <div ref="containerRef" class="interactive-core-scene" :class="{ 'is-hud': isRaisedMode, 'is-hidden': isHidden }" aria-hidden="true"></div>
   <div
     v-if="!isHidden"
     class="core-focus-proxy"

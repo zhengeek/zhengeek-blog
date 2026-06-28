@@ -9,6 +9,15 @@ defineProps<{
 const emit = defineEmits<{
   select: [item: CoreNavItem]
 }>()
+
+const lineColors = {
+  cyan: '#00f0ff',
+  violet: '#a78bfa',
+  red: '#ff5a72',
+  blue: '#4d91ff',
+  gold: '#ffd24a',
+  pink: '#ff62bd'
+}
 </script>
 
 <template>
@@ -23,6 +32,7 @@ const emit = defineEmits<{
             y1="50"
             :x2="item.x"
             :y2="item.y"
+            :style="{ '--line-color': lineColors[item.theme] }"
           />
           <circle cx="50" cy="50" r="15" />
         </svg>
@@ -54,8 +64,6 @@ const emit = defineEmits<{
   display: grid;
   place-items: center;
   pointer-events: none;
-  background: radial-gradient(circle at center, rgba(5, 12, 31, 0.18) 0 20%, rgba(4, 3, 16, 0.72) 68%, rgba(4, 3, 16, 0.9) 100%);
-  backdrop-filter: blur(4px);
 }
 
 .core-navigation-field {
@@ -73,15 +81,15 @@ const emit = defineEmits<{
 .connector-field line,
 .connector-field circle {
   fill: none;
-  stroke: rgba(0, 240, 255, 0.58);
+  stroke: var(--line-color, rgba(0, 240, 255, 0.58));
   stroke-width: 0.16;
   vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 5px rgba(0, 240, 255, 0.7));
+  filter: drop-shadow(0 0 6px var(--line-color, rgba(0, 240, 255, 0.7)));
   stroke-dasharray: 120;
   animation: draw-connector 0.65s ease forwards;
 }
 
-.connector-field circle { stroke: rgba(255, 215, 0, 0.32); stroke-dasharray: 3 3; }
+.connector-field circle { --line-color: rgba(255, 215, 0, 0.38); stroke-dasharray: 3 3; }
 
 .core-nav-node {
   --node-color: #00f0ff;
@@ -160,4 +168,3 @@ const emit = defineEmits<{
   .core-nav-node { animation-duration: 0.01ms; }
 }
 </style>
-
