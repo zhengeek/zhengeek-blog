@@ -10,7 +10,7 @@ declare global {
 }
 
 const THREE_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js'
-const GAME_START_DURATION = 2800
+const GAME_START_DURATION = 3500
 const CAMERA_START_Z = 48
 const CAMERA_END_Z = 19.5
 const CORE_START_SCALE = 0.28
@@ -268,21 +268,21 @@ function animate() {
   const startProgress = gameStarted
     ? Math.min((performance.now() - gameStartTime) / GAME_START_DURATION, 1)
     : 0
-  const rapidProgress = Math.min(startProgress / 0.16, 1)
+  const rapidProgress = Math.min(startProgress / 0.286, 1)
   const easedRapidProgress = 1 - Math.pow(1 - rapidProgress, 4)
-  const travelProgress = Math.max(0, Math.min((startProgress - 0.16) / 0.58, 1))
+  const travelProgress = Math.max(0, Math.min((startProgress - 0.286) / 0.514, 1))
   const easedTravelProgress = travelProgress < 0.5
     ? 4 * Math.pow(travelProgress, 3)
     : 1 - Math.pow(-2 * travelProgress + 2, 3) / 2
-  const settleProgress = Math.max(0, Math.min((startProgress - 0.74) / 0.26, 1))
+  const settleProgress = Math.max(0, Math.min((startProgress - 0.8) / 0.2, 1))
   const easedSettleProgress = 1 - Math.pow(1 - settleProgress, 3)
   const particleRushProgress = Math.min(startProgress / 0.12, 1)
   const particleRush = 1 - Math.pow(1 - particleRushProgress, 3)
   const tunnelPulse = Math.sin(Math.PI * travelProgress)
 
-  if (startProgress < 0.16) {
+  if (startProgress < 0.286) {
     cameraZ = CAMERA_START_Z + (34 - CAMERA_START_Z) * easedRapidProgress
-  } else if (startProgress < 0.74) {
+  } else if (startProgress < 0.8) {
     cameraZ = 34 + (21 - 34) * easedTravelProgress
   } else {
     cameraZ = 21 + (CAMERA_END_Z - 21) * easedSettleProgress

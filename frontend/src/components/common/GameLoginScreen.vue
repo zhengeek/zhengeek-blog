@@ -48,7 +48,7 @@ function startGame() {
   finishTimer = window.setTimeout(() => {
     document.body.classList.remove('game-locked')
     emit('started')
-  }, 2800)
+  }, 3500)
 }
 
 function handleKeydown(event: KeyboardEvent) {
