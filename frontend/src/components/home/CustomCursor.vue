@@ -1,11 +1,7 @@
 <template>
-  <div
-    v-show="isVisible"
-    ref="cursorRef"
-    class="custom-cursor"
-    :class="{ hover: isHovering }"
-    aria-hidden="true"
-  />
+  <div v-show="isVisible" ref="cursorRef" class="custom-cursor" :class="{ hovering: isHovering }" aria-hidden="true">
+    <span class="cursor-dot"></span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -13,23 +9,31 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 const cursorRef = ref<HTMLDivElement | null>(null)
 const isHovering = ref(false)
-const isVisible = ref(true)
-
+const isVisible = ref(false)
 let mouseX = 0
 let mouseY = 0
 let cursorX = 0
 let cursorY = 0
 let animationId = 0
-let hoverables: Element[] = []
 
 function handleMouseMove(event: MouseEvent) {
   mouseX = event.clientX
   mouseY = event.clientY
+  isVisible.value = true
+}
+
+function handleMouseOver(event: MouseEvent) {
+  const target = event.target as Element | null
+  isHovering.value = Boolean(target?.closest('a, button, input, textarea, .hoverable, .hud-panel'))
+}
+
+function handleDocumentLeave() {
+  isVisible.value = false
 }
 
 function animateCursor() {
-  cursorX += (mouseX - cursorX) * 0.2
-  cursorY += (mouseY - cursorY) * 0.2
+  cursorX += (mouseX - cursorX) * 0.34
+  cursorY += (mouseY - cursorY) * 0.34
 
   if (cursorRef.value) {
     cursorRef.value.style.left = `${cursorX}px`
@@ -39,79 +43,61 @@ function animateCursor() {
   animationId = window.requestAnimationFrame(animateCursor)
 }
 
-function handleMouseEnter() {
-  isVisible.value = true
-}
-
-function handleMouseLeave() {
-  isVisible.value = false
-}
-
-function enableHover() {
-  isHovering.value = true
-}
-
-function disableHover() {
-  isHovering.value = false
-}
-
 onMounted(() => {
   window.addEventListener('mousemove', handleMouseMove)
-  document.addEventListener('mouseenter', handleMouseEnter)
-  document.addEventListener('mouseleave', handleMouseLeave)
-
-  hoverables = Array.from(document.querySelectorAll('.hoverable, a, button'))
-  hoverables.forEach((element) => {
-    element.addEventListener('mouseenter', enableHover)
-    element.addEventListener('mouseleave', disableHover)
-  })
-
+  document.addEventListener('mouseover', handleMouseOver)
+  document.addEventListener('mouseleave', handleDocumentLeave)
   animateCursor()
 })
 
 onUnmounted(() => {
   window.removeEventListener('mousemove', handleMouseMove)
-  document.removeEventListener('mouseenter', handleMouseEnter)
-  document.removeEventListener('mouseleave', handleMouseLeave)
-  hoverables.forEach((element) => {
-    element.removeEventListener('mouseenter', enableHover)
-    element.removeEventListener('mouseleave', disableHover)
-  })
+  document.removeEventListener('mouseover', handleMouseOver)
+  document.removeEventListener('mouseleave', handleDocumentLeave)
   window.cancelAnimationFrame(animationId)
 })
 </script>
 
 <style scoped>
 .custom-cursor {
-  width: 24px;
-  height: 24px;
-  border: 1px solid rgba(176, 38, 255, 0.58);
-  border-radius: 50%;
   position: fixed;
+  z-index: 12000;
+  width: 30px;
+  height: 30px;
   pointer-events: none;
-  z-index: 9999;
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 18px rgba(0, 210, 255, 0.38);
-  mix-blend-mode: screen;
-  transition:
-    width 0.2s,
-    height 0.2s,
-    background-color 0.2s,
-    border-color 0.2s,
-    opacity 0.2s;
+  filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.7));
+  transition: transform 0.12s ease, opacity 0.2s ease;
 }
 
-.custom-cursor.hover {
-  width: 60px;
-  height: 60px;
-  background-color: rgba(255, 42, 133, 0.12);
-  border-color: var(--vg-pink);
-  opacity: 0.92;
+.custom-cursor::before,
+.custom-cursor::after {
+  content: '';
+  position: absolute;
+  background: var(--vg-accent);
+  transition: background 0.15s ease;
 }
 
-@media (max-width: 768px) {
-  .custom-cursor {
-    display: none;
-  }
+.custom-cursor::before { top: 50%; left: 0; width: 100%; height: 2px; transform: translateY(-50%); }
+.custom-cursor::after { top: 0; left: 50%; width: 2px; height: 100%; transform: translateX(-50%); }
+
+.cursor-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--vg-gold);
+  box-shadow: 0 0 8px var(--vg-gold);
+  transform: translate(-50%, -50%);
+}
+
+.custom-cursor.hovering { transform: translate(-50%, -50%) rotate(45deg) scale(1.24); }
+.custom-cursor.hovering::before,
+.custom-cursor.hovering::after { background: var(--vg-gold); }
+
+@media (max-width: 768px), (hover: none), (pointer: coarse) {
+  .custom-cursor { display: none; }
 }
 </style>

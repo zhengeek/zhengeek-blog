@@ -227,8 +227,8 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: rgba(0, 210, 255, 0.72);
-  box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.08), 0 0 22px rgba(0, 210, 255, 0.14);
+  border-color: rgba(0, 243, 255, 0.72);
+  box-shadow: 0 0 0 3px rgba(0, 243, 255, 0.08), 0 0 22px rgba(0, 243, 255, 0.14);
 }
 
 input:disabled,
@@ -273,8 +273,8 @@ textarea {
 }
 
 .success-message {
-  border: 1px solid rgba(0, 210, 255, 0.42);
-  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.42);
+  background: rgba(0, 243, 255, 0.1);
   color: #b7f4ff;
 }
 
@@ -304,8 +304,8 @@ button {
 }
 
 .primary-action {
-  border-color: rgba(0, 210, 255, 0.5);
-  background: rgba(0, 210, 255, 0.1);
+  border-color: rgba(0, 243, 255, 0.5);
+  background: rgba(0, 243, 255, 0.1);
   color: var(--vg-accent);
 }
 

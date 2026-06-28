@@ -170,8 +170,8 @@ const initialValue = computed<Article | undefined>(() => {
 }
 
 .success-message {
-  border: 1px solid rgba(0, 210, 255, 0.42);
-  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.42);
+  background: rgba(0, 243, 255, 0.1);
   color: #b7f4ff;
 }
 

@@ -123,7 +123,7 @@
 .skill-code {
   padding: 4px 8px;
   color: var(--vg-accent);
-  background: rgba(0, 210, 255, 0.1);
+  background: rgba(0, 243, 255, 0.1);
   font-size: 14px;
 }
 
@@ -213,7 +213,7 @@
   margin: 32px 0 0;
   padding: 8px 0 8px 20px;
   border-left: 4px solid var(--vg-accent);
-  background: rgba(0, 210, 255, 0.06);
+  background: rgba(0, 243, 255, 0.06);
   color: var(--vg-accent);
   font-family: var(--font-mono);
   font-weight: 600;

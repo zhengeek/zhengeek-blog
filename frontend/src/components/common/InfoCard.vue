@@ -19,8 +19,16 @@ defineProps<{
 .info-card {
   border: 1px solid var(--vg-card-border);
   background: var(--vg-panel);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 243, 255, 0.07);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease, transform 0.35s ease;
+}
+
+.info-card:hover {
+  border-color: rgba(0, 243, 255, 0.3);
+  background: rgba(20, 10, 40, 0.52);
+  box-shadow: 0 12px 38px rgba(0, 0, 0, 0.52), 0 0 36px rgba(0, 243, 255, 0.15);
 }
 
 .label {

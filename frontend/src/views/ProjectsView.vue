@@ -176,7 +176,7 @@ h3 {
 .api-panel {
   border: 1px solid var(--vg-card-border);
   background: var(--vg-panel);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 243, 255, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -219,9 +219,9 @@ h3 {
 .project-badge {
   flex: 0 0 auto;
   padding: 0.65rem 0.9rem;
-  border: 1px solid rgba(0, 210, 255, 0.44);
+  border: 1px solid rgba(0, 243, 255, 0.44);
   border-radius: 999px;
-  background: rgba(0, 210, 255, 0.08);
+  background: rgba(0, 243, 255, 0.08);
 }
 
 .stack-row,
@@ -250,7 +250,7 @@ h3 {
 }
 
 .accent-card {
-  background: linear-gradient(135deg, rgba(0, 210, 255, 0.12), rgba(176, 38, 255, 0.12), var(--vg-panel-strong));
+  background: linear-gradient(135deg, rgba(0, 243, 255, 0.12), rgba(176, 38, 255, 0.12), var(--vg-panel-strong));
 }
 
 .progress-card h3 {
@@ -297,7 +297,7 @@ h3 {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   background:
-    linear-gradient(135deg, rgba(0, 210, 255, 0.18), rgba(176, 38, 255, 0.2), rgba(255, 42, 133, 0.14)),
+    linear-gradient(135deg, rgba(0, 243, 255, 0.18), rgba(176, 38, 255, 0.2), rgba(255, 0, 127, 0.14)),
     rgba(5, 5, 15, 0.72);
 }
 
@@ -306,7 +306,7 @@ h3 {
 }
 
 .case-visual span:nth-child(2) {
-  background: rgba(0, 210, 255, 0.12);
+  background: rgba(0, 243, 255, 0.12);
 }
 
 .side-project-card h3 {
@@ -387,7 +387,7 @@ h3 {
   .progress-card,
   .side-project-card,
   .api-panel {
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(0, 210, 255, 0.07);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(0, 243, 255, 0.07);
   }
 
   .case-visual {

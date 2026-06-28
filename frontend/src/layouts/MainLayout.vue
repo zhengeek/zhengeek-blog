@@ -3,42 +3,39 @@ import { onBeforeUnmount, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import PageTransitionOverlay from '../components/common/PageTransitionOverlay.vue'
 
+defineProps<{
+  gameStarted: boolean
+}>()
+
 type TransitionPhase = 'idle' | 'leaving' | 'entering'
 
 const router = useRouter()
 const transitionPhase = ref<TransitionPhase>('idle')
 const isTransitioning = ref(false)
-
+const mobileMenuOpen = ref(false)
 const wait = (duration: number) => new Promise((resolve) => setTimeout(resolve, duration))
 
 const isSamePageHashNavigation = (to: { path: string; query: unknown; hash: string }, from: { path: string; query: unknown; hash: string }) => {
   return to.path === from.path && JSON.stringify(to.query) === JSON.stringify(from.query) && to.hash !== from.hash
 }
 
-const shouldSkipCurtain = (to: { path: string; query: unknown; hash: string }, from: { path: string; query: unknown; hash: string }) => {
-  return isSamePageHashNavigation(to, from)
-}
-
 const getRouteViewKey = (fullPath: string) => fullPath.split('#')[0]
 
 const removeBeforeGuard = router.beforeEach(async (to, from) => {
-  if (!from.name || shouldSkipCurtain(to, from)) {
-    return true
-  }
+  mobileMenuOpen.value = false
+  if (!from.name || isSamePageHashNavigation(to, from)) return true
 
   isTransitioning.value = true
   transitionPhase.value = 'leaving'
-  await wait(680)
+  await wait(520)
   return true
 })
 
 const removeAfterHook = router.afterEach(async (to, from) => {
-  if (!from.name || shouldSkipCurtain(to, from)) {
-    return
-  }
+  if (!from.name || isSamePageHashNavigation(to, from)) return
 
   transitionPhase.value = 'entering'
-  await wait(720)
+  await wait(560)
   transitionPhase.value = 'idle'
   isTransitioning.value = false
 })
@@ -50,23 +47,28 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="main-layout">
-    <header class="site-header">
-      <RouterLink class="brand-lockup" to="/" aria-label="Go to ZhenGeek homepage">
-        <span class="brand-mark">Z</span>
+  <div class="main-layout" :class="{ 'is-started': gameStarted }">
+    <header class="site-header hud-panel" :class="{ 'is-visible': gameStarted }">
+      <RouterLink class="brand-lockup hoverable" to="/" aria-label="CattoCake Studio home">
+        <span class="brand-reactor"><i></i></span>
         <span class="brand-text">
-          <strong>ZhenGeek</strong>
-          <small>Frontend Studio · Full-stack Lab</small>
+          <strong>LV.99 <b>CATTOCAKE</b></strong>
+          <small>GAME STUDIO // ONLINE</small>
         </span>
       </RouterLink>
 
-      <nav class="site-nav" aria-label="Primary navigation">
-        <RouterLink to="/#about">Studio</RouterLink>
-        <RouterLink to="/#projects">Cases</RouterLink>
-        <RouterLink to="/#blog">Blog</RouterLink>
-        <RouterLink to="/#lab">Lab</RouterLink>
-        <RouterLink to="/#contact">Contact</RouterLink>
+      <nav class="site-nav" :class="{ 'is-open': mobileMenuOpen }" aria-label="Game HUD navigation">
+        <RouterLink to="/#about">GUILD_LORE</RouterLink>
+        <RouterLink class="gold-link" to="/#projects">REALMS</RouterLink>
+        <RouterLink to="/projects">MAIN_QUEST</RouterLink>
+        <RouterLink to="/#lab">TECH_TREE</RouterLink>
+        <RouterLink to="/#blog">PATCH_NOTES</RouterLink>
+        <RouterLink class="coop-link" to="/#contact">CO_OP</RouterLink>
       </nav>
+
+      <button class="menu-toggle hoverable" type="button" aria-label="Toggle game menu" @click="mobileMenuOpen = !mobileMenuOpen">
+        <span></span><span></span><span></span>
+      </button>
     </header>
 
     <main>
@@ -83,141 +85,179 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .main-layout {
+  position: relative;
+  z-index: 5;
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 18% 0%, rgba(0, 210, 255, 0.16), transparent 27rem),
-    radial-gradient(circle at 86% 10%, rgba(176, 38, 255, 0.2), transparent 30rem),
-    radial-gradient(circle at 60% 70%, rgba(255, 42, 133, 0.1), transparent 34rem),
-    #05050f;
-  color: #ffffff;
+  color: #e2e8f0;
 }
 
 .site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: fixed;
+  top: 1rem;
+  right: clamp(1rem, 2.5vw, 2rem);
+  left: clamp(1rem, 2.5vw, 2rem);
+  z-index: 100;
   display: flex;
+  min-height: 62px;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
-  min-height: 76px;
-  padding: 0.85rem clamp(1rem, 4vw, 4rem);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(5, 5, 15, 0.68);
-  backdrop-filter: blur(18px);
-  opacity: 0.86;
-  transition: opacity 0.2s ease, background 0.2s ease;
+  gap: 1.5rem;
+  padding: 0.65rem 1.4rem;
+  opacity: 0;
+  transform: translateY(-140%);
+  transition: opacity 0.7s ease 0.18s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.18s;
 }
 
-.site-header:hover,
-.site-header:focus-within {
-  background: rgba(5, 5, 15, 0.86);
-  opacity: 1;
+.site-header::before,
+.site-header::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 32px;
+  height: 1px;
+  background: var(--vg-accent);
+  box-shadow: 0 0 10px var(--vg-accent);
 }
+.site-header::before { left: -18px; }
+.site-header::after { right: -18px; }
+.site-header.is-visible { opacity: 1; transform: translateY(0); }
 
 .brand-lockup {
   display: inline-flex;
+  min-width: max-content;
   align-items: center;
-  gap: 0.85rem;
+  gap: 0.8rem;
   color: inherit;
   text-decoration: none;
 }
 
-.brand-mark {
+.brand-reactor {
+  position: relative;
   display: grid;
-  width: 42px;
-  height: 42px;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
   place-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 14px;
-  background: var(--vg-gradient);
-  color: #ffffff;
-  font-family: var(--font-display);
-  font-size: 1.45rem;
-  font-weight: 900;
-  box-shadow: 0 0 24px rgba(0, 210, 255, 0.32), 0 0 42px rgba(176, 38, 255, 0.18);
+  border: 2px solid var(--vg-accent);
+  border-radius: 50%;
+  box-shadow: inset 0 0 12px rgba(0, 240, 255, 0.2), 0 0 14px rgba(0, 240, 255, 0.24);
+  animation: reactor-spin 5s linear infinite;
+}
+.brand-reactor::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px dashed rgba(255, 215, 0, 0.55);
+  border-radius: 50%;
+}
+.brand-reactor i {
+  width: 11px;
+  height: 11px;
+  background: var(--vg-accent);
+  box-shadow: 0 0 12px var(--vg-accent);
+  transform: rotate(45deg);
 }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
+.brand-text { display: flex; flex-direction: column; line-height: 1; }
 .brand-text strong {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  letter-spacing: 0.03em;
+  font-family: var(--font-mono);
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
-
+.brand-text strong b { color: var(--vg-accent); font-weight: 700; }
 .brand-text small {
-  margin-top: 0.2rem;
-  color: var(--vg-muted);
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
+  margin-top: 0.3rem;
+  color: rgba(148, 163, 184, 0.72);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
 }
 
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-
+.site-nav { display: flex; align-items: center; justify-content: flex-end; gap: clamp(0.8rem, 2vw, 2.1rem); }
 .site-nav a {
-  padding: 0.55rem 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.035);
-  color: rgba(255, 255, 255, 0.76);
-  font-size: 0.9rem;
+  position: relative;
+  padding: 0.65rem 0;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.79rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
-
+.site-nav a::after {
+  content: '';
+  position: absolute;
+  right: 50%;
+  bottom: 0.25rem;
+  left: 50%;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  transition: right 0.2s ease, left 0.2s ease;
+}
 .site-nav a:hover,
-.site-nav a.router-link-active {
-  border-color: rgba(0, 210, 255, 0.36);
-  background: rgba(0, 210, 255, 0.08);
-  color: var(--vg-accent);
-  box-shadow: 0 0 22px rgba(0, 210, 255, 0.14);
+.site-nav a.router-link-active { color: var(--vg-accent); text-shadow: 0 0 12px rgba(0, 240, 255, 0.55); }
+.site-nav a:hover::after,
+.site-nav a.router-link-active::after { right: 0; left: 0; }
+.site-nav .gold-link:hover { color: var(--vg-gold); }
+.site-nav .coop-link { color: var(--vg-amber); }
+.site-nav .coop-link:hover { color: #ffffff; }
+
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 38px;
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  background: rgba(0, 240, 255, 0.04);
 }
+.menu-toggle span { display: block; width: 21px; height: 1px; margin: 5px auto; background: var(--vg-accent); }
 
 main {
-  min-height: calc(100vh - 76px);
+  min-height: 100vh;
+  opacity: 0;
+  transition: opacity 0.9s ease 0.35s;
 }
+.main-layout.is-started main { opacity: 1; }
 
 .page-fade-enter-active,
-.page-fade-leave-active {
-  transition: opacity 0.18s ease;
-}
-
+.page-fade-leave-active { transition: opacity 0.18s ease; }
 .page-fade-enter-from,
-.page-fade-leave-to {
-  opacity: 0;
+.page-fade-leave-to { opacity: 0; }
+
+@keyframes reactor-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1050px) {
+  .site-nav { gap: 0.8rem; }
+  .site-nav a { font-size: 0.7rem; letter-spacing: 0.1em; }
 }
 
-@media (max-width: 760px) {
-  .site-header {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 0.85rem;
-    padding: 0.75rem 1rem;
-  }
-
+@media (max-width: 820px) {
+  .site-header { align-items: center; padding: 0.65rem 0.85rem; }
+  .menu-toggle { display: block; }
   .site-nav {
-    width: 100%;
-    justify-content: flex-start;
+    position: absolute;
+    top: calc(100% + 0.55rem);
+    right: 0;
+    left: 0;
+    display: grid;
+    padding: 1rem 1.25rem;
+    border: 1px solid rgba(0, 240, 255, 0.28);
+    background: rgba(7, 5, 20, 0.94);
+    backdrop-filter: blur(16px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
   }
+  .site-nav.is-open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .site-nav a { padding: 0.7rem; text-align: center; }
+}
 
-  .site-nav a {
-    padding: 0.48rem 0.68rem;
-    font-size: 0.82rem;
-  }
-
-  .brand-text small {
-    display: none;
-  }
+@media (max-width: 480px) {
+  .brand-text strong { font-size: 0.92rem; }
+  .brand-text small { display: none; }
+  .brand-reactor { width: 32px; height: 32px; flex-basis: 32px; }
 }
 </style>

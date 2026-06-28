@@ -48,7 +48,7 @@ withDefaults(
   place-items: center;
   overflow: hidden;
   pointer-events: none;
-  background: #05050f;
+  background: #05030a;
   opacity: 0;
   transform: translateY(-100%);
   transition:
@@ -74,9 +74,9 @@ withDefaults(
   opacity: 0.34;
   background:
     linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-    radial-gradient(circle at 50% 42%, rgba(0, 210, 255, 0.12), transparent 22rem),
+    radial-gradient(circle at 50% 42%, rgba(0, 243, 255, 0.12), transparent 22rem),
     radial-gradient(circle at 58% 52%, rgba(176, 38, 255, 0.13), transparent 18rem),
-    radial-gradient(circle at 45% 58%, rgba(255, 42, 133, 0.08), transparent 20rem);
+    radial-gradient(circle at 45% 58%, rgba(255, 0, 127, 0.08), transparent 20rem);
   background-size: 100% 4px, auto, auto;
   animation: scanline-drift 1.1s linear infinite;
 }
@@ -132,8 +132,8 @@ withDefaults(
 }
 
 .orb-one {
-  --orb-color: #00d2ff;
-  --orb-glow: rgba(0, 210, 255, 0.58);
+  --orb-color: #00f3ff;
+  --orb-glow: rgba(0, 243, 255, 0.58);
 }
 
 .orb-two {
@@ -142,8 +142,8 @@ withDefaults(
 }
 
 .orb-three {
-  --orb-color: #ff2a85;
-  --orb-glow: rgba(255, 42, 133, 0.52);
+  --orb-color: #ff007f;
+  --orb-glow: rgba(255, 0, 127, 0.52);
 }
 
 .orb-two .orb,
@@ -163,7 +163,7 @@ withDefaults(
   font-size: clamp(0.82rem, 2.4vw, 1rem);
   font-weight: 800;
   letter-spacing: 0.08em;
-  text-shadow: 0 0 22px rgba(0, 210, 255, 0.36);
+  text-shadow: 0 0 22px rgba(0, 243, 255, 0.36);
 }
 
 @keyframes orb-bounce {

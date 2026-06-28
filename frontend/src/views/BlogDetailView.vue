@@ -127,9 +127,9 @@ onMounted(async () => {
 
 .pinned-badge {
   padding: 0.28rem 0.48rem;
-  border: 1px solid rgba(0, 210, 255, 0.44);
+  border: 1px solid rgba(0, 243, 255, 0.44);
   border-radius: 999px;
-  background: rgba(0, 210, 255, 0.08);
+  background: rgba(0, 243, 255, 0.08);
 }
 
 h1,

@@ -232,7 +232,7 @@ h3 {
 .timeline-card {
   border: 1px solid var(--vg-card-border);
   background: var(--vg-panel);
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 210, 255, 0.08);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36), 0 0 34px rgba(0, 243, 255, 0.08);
   backdrop-filter: blur(16px);
 }
 
@@ -291,12 +291,12 @@ h3 {
 
 .large-panel {
   background:
-    linear-gradient(135deg, rgba(0, 210, 255, 0.1), var(--vg-panel-strong));
+    linear-gradient(135deg, rgba(0, 243, 255, 0.1), var(--vg-panel-strong));
 }
 
 .mission-panel {
   background:
-    linear-gradient(135deg, rgba(176, 38, 255, 0.18), rgba(255, 42, 133, 0.1), var(--vg-panel-strong));
+    linear-gradient(135deg, rgba(176, 38, 255, 0.18), rgba(255, 0, 127, 0.1), var(--vg-panel-strong));
 }
 
 .principle-grid {
@@ -410,7 +410,7 @@ h3 {
   .principle-card,
   .track-list,
   .timeline-card {
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(0, 210, 255, 0.07);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32), 0 0 26px rgba(0, 243, 255, 0.07);
   }
 
   .identity-card strong {

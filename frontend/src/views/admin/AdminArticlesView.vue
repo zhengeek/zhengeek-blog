@@ -144,9 +144,9 @@ const deleteArticle = async (article: Article) => {
 
 .primary-link {
   flex: 0 0 auto;
-  border: 1px solid rgba(0, 210, 255, 0.44);
+  border: 1px solid rgba(0, 243, 255, 0.44);
   border-radius: 999px;
-  background: rgba(0, 210, 255, 0.08);
+  background: rgba(0, 243, 255, 0.08);
   padding: 0.75rem 0.9rem;
 }
 
@@ -179,8 +179,8 @@ const deleteArticle = async (article: Article) => {
 }
 
 .success-message {
-  border: 1px solid rgba(0, 210, 255, 0.42);
-  background: rgba(0, 210, 255, 0.1);
+  border: 1px solid rgba(0, 243, 255, 0.42);
+  background: rgba(0, 243, 255, 0.1);
   color: #b7f4ff;
 }
 
@@ -250,8 +250,8 @@ const deleteArticle = async (article: Article) => {
 .row-actions a:hover,
 .primary-link:hover,
 .delete-button:hover:not(:disabled) {
-  border-color: rgba(0, 210, 255, 0.42);
-  background: rgba(0, 210, 255, 0.08);
+  border-color: rgba(0, 243, 255, 0.42);
+  background: rgba(0, 243, 255, 0.08);
   text-decoration: none;
 }
 
