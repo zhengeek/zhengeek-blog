@@ -3,6 +3,7 @@ import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import CoreNavigationOverlay from './components/common/CoreNavigationOverlay.vue'
+import CoreLobbyHud from './components/common/CoreLobbyHud.vue'
 import DeveloperTerminal from './components/common/DeveloperTerminal.vue'
 import GameLoginScreen from './components/common/GameLoginScreen.vue'
 import InteractiveCoreScene from './components/common/InteractiveCoreScene.vue'
@@ -19,10 +20,10 @@ import {
 
 const route = useRoute()
 const router = useRouter()
-const freshRootVisit = route.path === '/'
-const gateVisible = ref(freshRootVisit)
-const hasBooted = ref(!freshRootVisit)
-const coreMode = ref<CoreMode>(route.path.startsWith('/admin') ? 'hidden' : freshRootVisit ? 'boot' : 'radar')
+const freshPublicVisit = !route.path.startsWith('/admin')
+const gateVisible = ref(freshPublicVisit)
+const hasBooted = ref(!freshPublicVisit)
+const coreMode = ref<CoreMode>(freshPublicVisit ? 'boot' : 'hidden')
 const coreTheme = ref<CoreTheme>('cyan')
 const menuVisible = ref(false)
 const terminalVisible = ref(false)
@@ -143,6 +144,15 @@ function observeNexusSections() {
 }
 
 async function handleRouteChange() {
+  if (gateVisible.value && !isAdminRoute.value) {
+    coreMode.value = 'boot'
+    menuVisible.value = false
+    document.body.classList.add('core-lobby-locked')
+    await nextTick()
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    return
+  }
+
   routeTheme()
   if (isAdminRoute.value) {
     menuVisible.value = false
@@ -165,7 +175,14 @@ function handleEscape(event: KeyboardEvent) {
 
 watch(() => route.fullPath, handleRouteChange, { immediate: true })
 
-onMounted(() => window.addEventListener('keydown', handleEscape))
+onMounted(() => {
+  window.addEventListener('keydown', handleEscape)
+  if (freshPublicVisit) {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    if (route.path !== '/') void router.replace('/')
+  }
+})
 onBeforeUnmount(() => {
   flashTimeline?.kill()
   fallbackIntro?.kill()
@@ -192,6 +209,7 @@ onBeforeUnmount(() => {
     <div class="scanline" aria-hidden="true"></div>
     <GameLoginScreen v-if="gateVisible" @start="beginIntro" />
     <CoreMainLayout />
+    <CoreLobbyHud v-if="route.path === '/' && !gateVisible && coreMode === 'lobby'" />
     <CoreNavigationOverlay :visible="menuVisible || fallbackNavVisible" :items="coreNavItems" @select="selectNavigation" />
     <button
       v-if="webglFailed && !gateVisible && !isAdminRoute && route.path !== '/'"
