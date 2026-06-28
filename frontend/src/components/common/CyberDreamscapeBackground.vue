@@ -122,6 +122,10 @@ function createCore(THREE: any) {
 
   coreGroup.add(coreMesh, wireMesh, innerCore, ...ringMeshes)
   coreGroup.position.z = -1
+  coreGroup.renderOrder = 2
+  coreGroup.traverse((object: any) => {
+    object.renderOrder = 2
+  })
   scene.add(coreGroup)
 
   scene.add(new THREE.AmbientLight(0x8eb8ff, 0.18))
@@ -213,6 +217,7 @@ function createParticles(THREE: any) {
 
   particles = new THREE.Points(particleGeometry, particleMaterial)
   particles.frustumCulled = false
+  particles.renderOrder = 0
   scene.add(particles)
 }
 

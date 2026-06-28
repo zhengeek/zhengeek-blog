@@ -46,7 +46,7 @@ function startGame() {
   finishTimer = window.setTimeout(() => {
     document.body.classList.remove('game-locked')
     emit('started')
-  }, 960)
+  }, 1500)
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -76,7 +76,7 @@ onBeforeUnmount(() => {
   overflow: hidden;
   background: rgba(7, 5, 20, 0.52);
   backdrop-filter: blur(3px);
-  transition: opacity 0.9s ease, visibility 0.9s ease, filter 0.9s ease;
+  transition: opacity 1.45s ease, visibility 1.45s ease, filter 1.45s ease;
 }
 
 .login-screen::before {
@@ -122,17 +122,18 @@ onBeforeUnmount(() => {
 }
 
 h1 {
+  max-width: 100%;
   margin: 0;
   background: linear-gradient(180deg, #ffffff 5%, #bafaff 42%, #00b8d8 67%, #12245c 100%);
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 0 24px rgba(0, 240, 255, 0.48));
   font-family: var(--font-display);
-  font-size: clamp(3.45rem, 10vw, 9.2rem);
+  font-size: clamp(3.45rem, 9vw, 8.4rem);
   font-weight: 900;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   line-height: 0.95;
-  text-indent: 0.08em;
+  text-indent: 0.06em;
 }
 
 .studio-label {
