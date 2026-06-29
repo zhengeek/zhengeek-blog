@@ -235,10 +235,9 @@ function changeMode(mode: CoreMode, oldMode: CoreMode) {
     gsap.to(particleMaterial.uniforms.uOpacity, { value: 1, duration: 0.35 })
     moveToCenter(oldMode === 'intro' ? 0.01 : 0.55)
   } else if (mode === 'menu') {
-    particles.visible = oldMode !== 'radar' && oldMode !== 'terminal' && oldMode !== 'transitioning'
-    if (particles.visible) gsap.to(particleMaterial.uniforms.uOpacity, { value: 0.14, duration: 0.3 })
+    particles.visible = false
+    particleMaterial.uniforms.uOpacity.value = 0
     if (oldMode === 'radar' || oldMode === 'terminal' || oldMode === 'transitioning') {
-      particles.visible = false
       moveToCenter(0.75, () => emit('menu-ready'), 1.06)
     } else {
       moveToCenter(0.38, () => emit('menu-ready'), 1.06)
@@ -355,19 +354,27 @@ function handleResize() {
 function animate() {
   frameId = requestAnimationFrame(animate)
   const elapsed = clock.getElapsedTime()
-  particleMaterial.uniforms.uTime.value = elapsed
-  const positions = particles.geometry.attributes.position.array as Float32Array
-  for (let index = 0; index < positions.length; index += 3) {
-    positions[index + 1] = basePositions[index + 1] + Math.sin(elapsed * 1.55 + basePositions[index] * 0.045 + basePositions[index + 2] * 0.025) * 1.05
+  if (particles.visible) {
+    particleMaterial.uniforms.uTime.value = elapsed
+    const positions = particles.geometry.attributes.position.array as Float32Array
+    for (let index = 0; index < positions.length; index += 3) {
+      positions[index + 1] = basePositions[index + 1] + Math.sin(elapsed * 1.55 + basePositions[index] * 0.045 + basePositions[index + 2] * 0.025) * 1.05
+    }
+    particles.geometry.attributes.position.needsUpdate = true
   }
-  particles.geometry.attributes.position.needsUpdate = true
 
   pointerX += (targetX - pointerX) * 0.065
   pointerY += (targetY - pointerY) * 0.065
+  const menuLocked = props.mode === 'menu'
   const central = ['boot', 'intro', 'lobby', 'menu'].includes(props.mode)
-  const influence = central ? 1 : 0.22
-  camera.position.x += (pointerX * 2.2 * influence - camera.position.x) * 0.045
-  camera.position.y += (-pointerY * 1.5 * influence - camera.position.y) * 0.045
+  const influence = menuLocked ? 0 : central ? 1 : 0.22
+  if (menuLocked) {
+    camera.position.x = 0
+    camera.position.y = 0
+  } else {
+    camera.position.x += (pointerX * 2.2 * influence - camera.position.x) * 0.045
+    camera.position.y += (-pointerY * 1.5 * influence - camera.position.y) * 0.045
+  }
   camera.lookAt(0, 0, -3)
 
   let holdProgress = 0
@@ -385,7 +392,7 @@ function animate() {
 
   const shake = holdProgress * 0.11
   coreGroup.position.x = Math.sin(elapsed * 75) * shake
-  coreGroup.position.y = Math.sin(elapsed * 0.82) * 0.7 + Math.cos(elapsed * 68) * shake
+  coreGroup.position.y = (menuLocked ? 0 : Math.sin(elapsed * 0.82) * 0.7) + Math.cos(elapsed * 68) * shake
   coreGroup.scale.setScalar(interactionScale.value)
   coreGroup.rotation.y = elapsed * 0.2 * spin.value + pointerX * 0.22
   coreGroup.rotation.x = Math.sin(elapsed * 0.48) * 0.18 + pointerY * 0.12
