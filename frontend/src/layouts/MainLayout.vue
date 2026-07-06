@@ -58,12 +58,11 @@ onBeforeUnmount(() => {
       </RouterLink>
 
       <nav class="site-nav" :class="{ 'is-open': mobileMenuOpen }" aria-label="Game HUD navigation">
-        <RouterLink to="/#about">GUILD_LORE</RouterLink>
-        <RouterLink class="gold-link" to="/#projects">REALMS</RouterLink>
-        <RouterLink to="/projects">MAIN_QUEST</RouterLink>
-        <RouterLink to="/#lab">TECH_TREE</RouterLink>
-        <RouterLink to="/#blog">PATCH_NOTES</RouterLink>
-        <RouterLink class="coop-link" to="/#contact">CO_OP</RouterLink>
+        <RouterLink to="/about">个人简介</RouterLink>
+        <RouterLink to="/projects">我的作品</RouterLink>
+        <RouterLink to="/skills">技能树</RouterLink>
+        <RouterLink class="gold-link" to="/blog">项目日志</RouterLink>
+        <RouterLink class="coop-link" to="/contact">联系我</RouterLink>
       </nav>
 
       <button class="menu-toggle hoverable" type="button" aria-label="Toggle game menu" @click="mobileMenuOpen = !mobileMenuOpen">

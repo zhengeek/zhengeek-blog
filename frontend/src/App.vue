@@ -180,7 +180,6 @@ onMounted(() => {
   if (freshPublicVisit) {
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-    if (route.path !== '/') void router.replace('/')
   }
 })
 onBeforeUnmount(() => {
@@ -208,7 +207,7 @@ onBeforeUnmount(() => {
     <div class="crt-overlay" aria-hidden="true"></div>
     <div class="scanline" aria-hidden="true"></div>
     <GameLoginScreen v-if="gateVisible" @start="beginIntro" />
-    <CoreMainLayout />
+    <CoreMainLayout v-if="!gateVisible || isAdminRoute" />
     <CoreLobbyHud v-if="route.path === '/' && !gateVisible && coreMode === 'lobby'" />
     <div v-if="coreMode === 'menu'" class="core-menu-dimmer" aria-hidden="true"></div>
     <CoreNavigationOverlay :visible="menuVisible || fallbackNavVisible" :items="coreNavItems" @select="selectNavigation" />

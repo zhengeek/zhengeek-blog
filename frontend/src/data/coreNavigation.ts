@@ -21,12 +21,11 @@ export type CoreNavItem = {
 }
 
 export const coreNavItems: CoreNavItem[] = [
-  { id: 'about', label: 'GUILD_LORE', eyebrow: 'PLAYER PROFILE', to: '/nexus#about', theme: 'cyan', x: 50, y: 8 },
-  { id: 'realms', label: 'REALMS', eyebrow: 'SELECT WORLD', to: '/nexus#projects', theme: 'violet', x: 82, y: 27 },
-  { id: 'quest', label: 'MAIN_QUEST', eyebrow: 'ACTIVE MISSION', to: '/projects', theme: 'red', x: 82, y: 73 },
-  { id: 'tech', label: 'TECH_TREE', eyebrow: 'ABILITY GRID', to: '/nexus#lab', theme: 'blue', x: 50, y: 92 },
-  { id: 'logs', label: 'PATCH_NOTES', eyebrow: 'SYSTEM HISTORY', to: '/nexus#blog', theme: 'gold', x: 18, y: 73 },
-  { id: 'contact', label: 'CO_OP', eyebrow: 'OPEN CHANNEL', to: '/nexus#contact', theme: 'pink', x: 18, y: 27 }
+  { id: 'about', label: '个人简介', eyebrow: 'PLAYER PROFILE', to: '/about', theme: 'cyan', x: 50, y: 8 },
+  { id: 'projects', label: '我的作品', eyebrow: 'WORK ARCHIVE', to: '/projects', theme: 'violet', x: 82, y: 34 },
+  { id: 'skills', label: '技能树', eyebrow: 'VERTICAL SKILL TREE', to: '/skills', theme: 'blue', x: 70, y: 84 },
+  { id: 'logs', label: '项目日志', eyebrow: 'PROJECT LOG', to: '/blog', theme: 'gold', x: 30, y: 84 },
+  { id: 'contact', label: '联系我', eyebrow: 'OPEN CHANNEL', to: '/contact', theme: 'pink', x: 18, y: 34 }
 ]
 
 export const coreThemeColors: Record<CoreTheme, { color: string; emissive: string; spin: number }> = {
@@ -49,8 +48,9 @@ export const sectionThemeMap: Record<string, CoreTheme> = {
 
 export const routeThemeMap: Record<string, CoreTheme> = {
   '/about': 'cyan',
-  '/projects': 'red',
+  '/projects': 'violet',
+  '/skills': 'blue',
   '/lab': 'blue',
-  '/blog': 'gold'
+  '/blog': 'gold',
+  '/contact': 'pink'
 }
-

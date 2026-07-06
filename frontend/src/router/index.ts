@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 import CoreLobbyView from '../views/CoreLobbyView.vue'
-import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import ProjectsView from '../views/ProjectsView.vue'
 import BlogView from '../views/BlogView.vue'
 import BlogDetailView from '../views/BlogDetailView.vue'
 import LabView from '../views/LabView.vue'
+import SkillsView from '../views/SkillsView.vue'
+import ContactView from '../views/ContactView.vue'
 import AdminLoginView from '../views/admin/AdminLoginView.vue'
 import AdminDashboardView from '../views/admin/AdminDashboardView.vue'
 import AdminArticlesView from '../views/admin/AdminArticlesView.vue'
@@ -21,8 +22,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/nexus',
-    name: 'nexus',
-    component: HomeView
+    redirect: '/about'
   },
   {
     path: '/about',
@@ -48,6 +48,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/lab',
     name: 'lab',
     component: LabView
+  },
+  {
+    path: '/skills',
+    name: 'skills',
+    component: SkillsView
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: ContactView
   },
   {
     path: '/admin/login',

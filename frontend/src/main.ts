@@ -7,4 +7,15 @@ const app = createApp(App)
 
 app.use(router)
 
-app.mount('#app')
+async function bootstrap() {
+  await router.isReady()
+
+  const initialRoute = router.currentRoute.value
+  if (!initialRoute.path.startsWith('/admin') && initialRoute.path !== '/') {
+    await router.replace('/')
+  }
+
+  app.mount('#app')
+}
+
+void bootstrap()

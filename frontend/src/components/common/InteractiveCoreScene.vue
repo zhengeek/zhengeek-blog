@@ -47,6 +47,9 @@ let holdTriggered = false
 let lastHoldProgress = -1
 let initialized = false
 
+const HOLD_REVEAL_DELAY = 300
+const HOLD_TOTAL_DURATION = 1500
+
 const raycaster = new THREE.Raycaster()
 const pointerNdc = new THREE.Vector2()
 const interactionScale = { value: 1 }
@@ -379,14 +382,20 @@ function animate() {
 
   let holdProgress = 0
   if (holdStartedAt && !holdTriggered) {
-    holdProgress = Math.min((performance.now() - holdStartedAt) / 1500, 1)
-    if (Math.abs(holdProgress - lastHoldProgress) > 0.01) {
-      lastHoldProgress = holdProgress
-      emit('hold-progress', holdProgress)
-    }
-    if (holdProgress >= 1) {
-      holdTriggered = true
-      emit('hold-complete')
+    const holdElapsed = performance.now() - holdStartedAt
+    if (holdElapsed >= HOLD_REVEAL_DELAY) {
+      holdProgress = Math.min(
+        (holdElapsed - HOLD_REVEAL_DELAY) / (HOLD_TOTAL_DURATION - HOLD_REVEAL_DELAY),
+        1
+      )
+      if (Math.abs(holdProgress - lastHoldProgress) > 0.01) {
+        lastHoldProgress = holdProgress
+        emit('hold-progress', holdProgress)
+      }
+      if (holdProgress >= 1) {
+        holdTriggered = true
+        emit('hold-complete')
+      }
     }
   }
 
