@@ -187,18 +187,6 @@ onBeforeUnmount(() => {
   height: 100vh;
 }
 
-.core-navigation-field::before {
-  content: '';
-  position: absolute;
-  inset: 7% 3%;
-  background:
-    linear-gradient(rgba(0, 240, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-  background-size: 100% 34px, 62px 100%;
-  opacity: 0.18;
-  pointer-events: none;
-}
-
 .connector-field {
   position: absolute;
   inset: 0;

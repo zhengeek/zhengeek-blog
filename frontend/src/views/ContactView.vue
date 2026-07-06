@@ -1,72 +1,183 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onBeforeUnmount, ref } from 'vue'
+import {
+  MessageApiError,
+  submitContactMessage,
+  type MessageTopic
+} from '../services/messageApi'
 
-const senderName = ref('')
-const senderEmail = ref('')
-const projectBrief = ref('')
+type SubmissionState = 'idle' | 'sending' | 'success' | 'error'
 
-function sendMessage() {
-  const subject = encodeURIComponent(`Project inquiry from ${senderName.value || 'New visitor'}`)
-  const body = encodeURIComponent(
-    `Name: ${senderName.value}\nEmail: ${senderEmail.value}\n\nProject brief:\n${projectBrief.value}`
-  )
-  window.location.href = `mailto:hello@cattocake.studio?subject=${subject}&body=${body}`
+const visitorName = ref('')
+const visitorEmail = ref('')
+const messageTopic = ref<MessageTopic>('creative')
+const messageContent = ref('')
+const submissionState = ref<SubmissionState>('idle')
+const feedbackMessage = ref('')
+let feedbackTimer = 0
+
+const contactChannels = [
+  {
+    code: '01',
+    label: '我的 GitHub 账号',
+    value: '@zhengeek',
+    detail: '查看我的项目、代码和持续更新。',
+    href: 'https://github.com/zhengeek',
+    action: '访问 GitHub'
+  },
+  {
+    code: '02',
+    label: '我的电话号码',
+    value: '暂未公开',
+    detail: '需要电话沟通时，可以先通过邮件与我联系。',
+    href: '',
+    action: ''
+  },
+  {
+    code: '03',
+    label: '我的邮箱',
+    value: 'hello@cattocake.studio',
+    detail: '适合项目企划、技术交流和其他合作沟通。',
+    href: 'mailto:hello@cattocake.studio',
+    action: '发送邮件'
+  }
+]
+
+async function sendMessage() {
+  if (submissionState.value === 'sending') return
+
+  window.clearTimeout(feedbackTimer)
+  submissionState.value = 'sending'
+  feedbackMessage.value = '正在发送信号...'
+
+  try {
+    const response = await submitContactMessage({
+      name: visitorName.value,
+      email: visitorEmail.value,
+      topic: messageTopic.value,
+      content: messageContent.value
+    })
+
+    submissionState.value = 'success'
+    feedbackMessage.value = `信号已送达，留言编号 #${response.id}。`
+    visitorName.value = ''
+    visitorEmail.value = ''
+    messageTopic.value = 'creative'
+    messageContent.value = ''
+    feedbackTimer = window.setTimeout(() => {
+      submissionState.value = 'idle'
+      feedbackMessage.value = ''
+    }, 4200)
+  } catch (error) {
+    submissionState.value = 'error'
+    feedbackMessage.value = error instanceof MessageApiError
+      ? error.message
+      : '留言发送失败，请稍后再试。'
+  }
 }
+
+onBeforeUnmount(() => window.clearTimeout(feedbackTimer))
 </script>
 
 <template>
   <main class="contact-page">
     <section class="contact-hero page-shell">
       <p class="eyebrow">CONTACT // OPEN CHANNEL</p>
-      <h1>把你的想法发过来，我们从目标和范围开始聊。</h1>
+      <h1>把你的想法发过来，我们可以聊聊。</h1>
       <p class="hero-lead">
-        如果你正在计划个人网站、作品集、内容型站点或需要有辨识度的前端体验，可以通过下面的任务简报联系我。
+        很高兴你能逛到这里！无论你是想探讨技术细节、交流项目想法，还是有制作游戏的企划，我都非常欢迎。
       </p>
-      <a class="direct-mail" href="mailto:hello@cattocake.studio">hello@cattocake.studio</a>
     </section>
 
-    <section class="status-section page-shell">
-      <div class="status-copy">
-        <p class="eyebrow">STATUS // AVAILABLE</p>
-        <h2>适合从一个清晰的小版本开始。</h2>
+    <section class="channel-section page-shell">
+      <header>
+        <p class="eyebrow">DIRECT LINKS // CONTACT</p>
+        <h2>你可以通过这些方式找到我。</h2>
+      </header>
+
+      <div class="channel-grid">
+        <component
+          :is="channel.href ? 'a' : 'article'"
+          v-for="channel in contactChannels"
+          :key="channel.code"
+          class="channel-card"
+          :href="channel.href || undefined"
+          :target="channel.href.startsWith('https://') ? '_blank' : undefined"
+          :rel="channel.href.startsWith('https://') ? 'noreferrer' : undefined"
+        >
+          <span>{{ channel.code }}</span>
+          <small>{{ channel.label }}</small>
+          <strong>{{ channel.value }}</strong>
+          <p>{{ channel.detail }}</p>
+          <b v-if="channel.action">{{ channel.action }} →</b>
+        </component>
       </div>
-      <dl class="status-list">
-        <div>
-          <dt>合作方向</dt>
-          <dd>个人品牌、作品集、内容网站、交互原型</dd>
-        </div>
-        <div>
-          <dt>工作方式</dt>
-          <dd>远程沟通，分阶段确认设计与实现</dd>
-        </div>
-        <div>
-          <dt>时区</dt>
-          <dd>Asia / Shanghai</dd>
-        </div>
-      </dl>
     </section>
 
     <section class="brief-section page-shell">
       <header>
-        <p class="eyebrow">MISSION BRIEF // START HERE</p>
-        <h2>项目任务简报</h2>
-        <p>简单说明你想做什么、面向谁，以及期望的时间范围。提交后会唤起你的邮件客户端。</p>
+        <p class="eyebrow">MESSAGE BOARD // LEAVE A SIGNAL</p>
+        <h2>轻量留言板</h2>
+        <p>留下你的想法，消息会安全送到后端并保存。我看到后会通过你填写的邮箱回复。</p>
       </header>
 
-      <form class="contact-form" @submit.prevent="sendMessage">
+      <form
+        class="contact-form"
+        :class="`is-${submissionState}`"
+        @submit.prevent="sendMessage"
+      >
         <label>
-          <span>你的称呼</span>
-          <input v-model="senderName" type="text" autocomplete="name" placeholder="Name" required />
+          <span>你的名字 / 昵称 *</span>
+          <input
+            v-model="visitorName"
+            type="text"
+            autocomplete="name"
+            maxlength="80"
+            placeholder="怎么称呼你？"
+            required
+          />
         </label>
         <label>
-          <span>联系邮箱</span>
-          <input v-model="senderEmail" type="email" autocomplete="email" placeholder="Email" required />
+          <span>你的邮箱 *（方便我回信）</span>
+          <input
+            v-model="visitorEmail"
+            type="email"
+            autocomplete="email"
+            maxlength="254"
+            placeholder="name@example.com"
+            required
+          />
         </label>
-        <label class="brief-field">
-          <span>项目简报</span>
-          <textarea v-model="projectBrief" rows="7" placeholder="项目目标、主要内容、时间范围..." required></textarea>
+        <label class="topic-field">
+          <span>你想聊点什么？</span>
+          <select v-model="messageTopic">
+            <option value="creative">创意探讨</option>
+            <option value="studio">工作室合作</option>
+            <option value="technology">技术研究</option>
+            <option value="casual">随便聊聊</option>
+          </select>
         </label>
-        <button type="submit">发送任务简报</button>
+        <label class="message-field">
+          <span>留言内容 *</span>
+          <textarea
+            v-model="messageContent"
+            rows="7"
+            maxlength="4000"
+            placeholder="写下你想说的话..."
+            required
+          ></textarea>
+        </label>
+        <button class="send-button" type="submit" :disabled="submissionState === 'sending'">
+          <span>{{ submissionState === 'sending' ? '发送中...' : submissionState === 'success' ? '发送成功' : '发送留言' }}</span>
+          <i v-for="spark in 6" :key="spark" :style="{ '--spark-index': spark }" aria-hidden="true"></i>
+        </button>
+        <p
+          v-if="feedbackMessage"
+          class="form-feedback"
+          :class="`is-${submissionState}`"
+          role="status"
+          aria-live="polite"
+        >{{ feedbackMessage }}</p>
       </form>
     </section>
   </main>
@@ -126,8 +237,7 @@ h2 {
 }
 
 .hero-lead,
-.brief-section header > p,
-.status-list dd {
+.brief-section header > p {
   color: #a8b3c7;
   font-size: 1rem;
   line-height: 1.85;
@@ -137,44 +247,79 @@ h2 {
   max-width: 720px;
 }
 
-.direct-mail {
-  width: fit-content;
-  margin-top: 1.4rem;
-  color: #ffffff;
-  font-family: var(--font-mono);
-  font-size: clamp(0.9rem, 2vw, 1.15rem);
-  text-decoration-color: #ff62bd;
-  text-underline-offset: 0.45rem;
-}
-
-.status-section {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
-  gap: clamp(2rem, 6vw, 5rem);
+.channel-section {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.status-list {
-  margin: 0;
-  border-top: 1px solid rgba(255, 98, 189, 0.28);
+.channel-section header {
+  max-width: 760px;
+  margin-bottom: 2.5rem;
 }
 
-.status-list div {
+.channel-grid {
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  padding: 1.25rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.status-list dt {
-  color: #ff62bd;
+.channel-card {
+  display: flex;
+  min-height: 260px;
+  flex-direction: column;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 98, 189, 0.26);
+  border-radius: 6px;
+  background: rgba(10, 7, 25, 0.82);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.channel-card[href]:hover,
+.channel-card[href]:focus-visible {
+  outline: none;
+  border-color: #ff62bd;
+  background: rgba(255, 98, 189, 0.08);
+  transform: translateY(-3px);
+}
+
+.channel-card > span,
+.channel-card small,
+.channel-card b {
   font-family: var(--font-mono);
-  font-size: 0.74rem;
 }
 
-.status-list dd {
-  margin: 0;
+.channel-card > span {
+  align-self: flex-end;
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.channel-card small {
+  margin-top: 1.1rem;
+  color: #ff9bd7;
+  font-size: 0.7rem;
+}
+
+.channel-card strong {
+  margin-top: 0.6rem;
+  overflow-wrap: anywhere;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.1vw, 1.8rem);
+  letter-spacing: 0;
+}
+
+.channel-card p {
+  margin: 1rem 0;
+  color: #a8b3c7;
+  line-height: 1.7;
+}
+
+.channel-card b {
+  margin-top: auto;
+  color: #ff62bd;
+  font-size: 0.72rem;
 }
 
 .brief-section {
@@ -208,7 +353,8 @@ h2 {
 }
 
 .contact-form input,
-.contact-form textarea {
+.contact-form textarea,
+.contact-form select {
   width: 100%;
   border: 1px solid rgba(255, 98, 189, 0.24);
   border-radius: 4px;
@@ -217,21 +363,41 @@ h2 {
   color: #ffffff;
   font: inherit;
   padding: 0.85rem;
+}
+
+.contact-form textarea {
   resize: vertical;
 }
 
 .contact-form input:focus,
-.contact-form textarea:focus {
+.contact-form textarea:focus,
+.contact-form select:focus {
   border-color: #ff62bd;
   box-shadow: 0 0 18px rgba(255, 98, 189, 0.12);
 }
 
-.brief-field,
-.contact-form button {
+.topic-field,
+.message-field,
+.send-button,
+.form-feedback {
   grid-column: 1 / -1;
 }
 
-.contact-form button {
+.contact-form select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #ff62bd 50%),
+    linear-gradient(135deg, #ff62bd 50%, transparent 50%);
+  background-position:
+    calc(100% - 17px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-repeat: no-repeat;
+  background-size: 5px 5px, 5px 5px;
+}
+
+.send-button {
+  position: relative;
+  overflow: visible;
   min-height: 50px;
   border: 1px solid #ff62bd;
   border-radius: 4px;
@@ -243,12 +409,93 @@ h2 {
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.contact-form button:hover,
-.contact-form button:focus-visible {
+.send-button:hover,
+.send-button:focus-visible {
   outline: none;
   background: #ff62bd;
   color: #090611;
   box-shadow: 0 0 24px rgba(255, 98, 189, 0.3);
+}
+
+.send-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.send-button::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid #ff62bd;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-form.is-sending .send-button::after {
+  animation: signal-scan 0.8s ease-in-out infinite;
+}
+
+.contact-form.is-success .send-button {
+  background: #ff62bd;
+  color: #090611;
+  box-shadow: 0 0 30px rgba(255, 98, 189, 0.42);
+}
+
+.contact-form.is-success .send-button::after {
+  animation: signal-burst 0.65s ease-out both;
+}
+
+.send-button i {
+  --spark-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.contact-form.is-success .send-button i {
+  animation: signal-spark 0.7s ease-out both;
+  animation-delay: calc(var(--spark-index) * 35ms);
+}
+
+.form-feedback {
+  min-height: 1.2rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.form-feedback.is-sending {
+  color: #a8b3c7;
+}
+
+.form-feedback.is-success {
+  color: #ff9bd7;
+}
+
+.form-feedback.is-error {
+  color: #ff8a9d;
+}
+
+@keyframes signal-scan {
+  0%, 100% { opacity: 0.15; transform: scaleX(0.9); }
+  50% { opacity: 0.8; transform: scaleX(1.02); }
+}
+
+@keyframes signal-burst {
+  from { opacity: 0.9; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.12, 1.7); }
+}
+
+@keyframes signal-spark {
+  0% { opacity: 1; transform: translate(-50%, -50%) rotate(calc(var(--spark-index) * 60deg)) translateX(0); }
+  100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--spark-index) * 60deg)) translateX(54px); }
 }
 
 @media (max-width: 760px) {
@@ -265,20 +512,21 @@ h2 {
     font-size: 3.15rem;
   }
 
-  .status-section,
+  .channel-grid,
   .brief-section,
   .contact-form {
     grid-template-columns: 1fr;
   }
 
-  .brief-field,
-  .contact-form button {
+  .topic-field,
+  .message-field,
+  .send-button,
+  .form-feedback {
     grid-column: auto;
   }
 
-  .status-list div {
-    grid-template-columns: 1fr;
-    gap: 0.4rem;
+  .channel-card {
+    min-height: 220px;
   }
 }
 </style>

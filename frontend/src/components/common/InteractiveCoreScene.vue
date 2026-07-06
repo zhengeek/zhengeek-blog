@@ -18,7 +18,8 @@ const emit = defineEmits<{
 const containerRef = ref<HTMLDivElement | null>(null)
 const isHovered = ref(false)
 const isHudMode = computed(() => ['transitioning', 'radar', 'terminal'].includes(props.mode))
-const isRaisedMode = computed(() => ['menu', 'transitioning', 'radar', 'terminal'].includes(props.mode))
+const isSceneCoverMode = computed(() => props.mode === 'menu' || props.mode === 'transitioning')
+const isTransparentHudMode = computed(() => props.mode === 'radar' || props.mode === 'terminal')
 const isHidden = computed(() => props.mode === 'hidden')
 
 let renderer: THREE.WebGLRenderer
@@ -210,15 +211,17 @@ function moveToCenter(duration: number, done?: () => void, scale = 0.9) {
   gsap.to(coreAnchor.scale, { x: scale, y: scale, z: scale, duration: reduced ? 0.01 : duration, ease: 'power3.inOut', onComplete: done })
 }
 
-function moveToRadar(duration: number) {
+function moveToRadar(duration: number, hideParticles = true) {
   const target = radarTarget()
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   camera.position.z = 19.5
-  gsap.to(particleMaterial.uniforms.uOpacity, {
-    value: 0,
-    duration: reduced ? 0.01 : Math.min(duration, 0.4),
-    onComplete: () => { particles.visible = false }
-  })
+  if (hideParticles) {
+    gsap.to(particleMaterial.uniforms.uOpacity, {
+      value: 0,
+      duration: reduced ? 0.01 : Math.min(duration, 0.4),
+      onComplete: () => { particles.visible = false }
+    })
+  }
   gsap.to(coreAnchor.position, { x: target.x, y: target.y, z: -1, duration: reduced ? 0.01 : duration, ease: 'power3.inOut' })
   gsap.to(coreAnchor.scale, { x: target.scale, y: target.scale, z: target.scale, duration: reduced ? 0.01 : duration, ease: 'power3.inOut' })
 }
@@ -238,15 +241,17 @@ function changeMode(mode: CoreMode, oldMode: CoreMode) {
     gsap.to(particleMaterial.uniforms.uOpacity, { value: 1, duration: 0.35 })
     moveToCenter(oldMode === 'intro' ? 0.01 : 0.55)
   } else if (mode === 'menu') {
-    particles.visible = false
-    particleMaterial.uniforms.uOpacity.value = 0
+    particles.visible = true
+    gsap.to(particleMaterial.uniforms.uOpacity, { value: 1, duration: 0.3 })
     if (oldMode === 'radar' || oldMode === 'terminal' || oldMode === 'transitioning') {
       moveToCenter(0.75, () => emit('menu-ready'), 1.06)
     } else {
       moveToCenter(0.38, () => emit('menu-ready'), 1.06)
     }
   } else if (mode === 'transitioning') {
-    moveToRadar(0.9)
+    particles.visible = true
+    particleMaterial.uniforms.uOpacity.value = 1
+    moveToRadar(0.9, false)
   } else if (mode === 'radar' || mode === 'terminal') {
     coreAnchor.visible = true
     particles.visible = false
@@ -357,7 +362,7 @@ function handleResize() {
 function animate() {
   frameId = requestAnimationFrame(animate)
   const elapsed = clock.getElapsedTime()
-  if (particles.visible) {
+  if (particles.visible && props.mode !== 'menu') {
     particleMaterial.uniforms.uTime.value = elapsed
     const positions = particles.geometry.attributes.position.array as Float32Array
     for (let index = 0; index < positions.length; index += 3) {
@@ -475,7 +480,12 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="containerRef" class="interactive-core-scene" :class="{ 'is-hud': isRaisedMode, 'is-hidden': isHidden }" aria-hidden="true"></div>
+  <div
+    ref="containerRef"
+    class="interactive-core-scene"
+    :class="{ 'is-cover': isSceneCoverMode, 'is-hud': isTransparentHudMode, 'is-hidden': isHidden }"
+    aria-hidden="true"
+  ></div>
   <div
     v-if="!isHidden"
     class="core-focus-proxy"
@@ -493,6 +503,7 @@ onBeforeUnmount(() => {
 .interactive-core-scene::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .interactive-core-scene::before { background: linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,240,255,.02) 1px,transparent 1px); background-size: 100% 5px,82px 82px; mix-blend-mode: screen; opacity: .46; }
 .interactive-core-scene::after { background: radial-gradient(circle at 50% 50%,transparent 0 31%,rgba(7,5,20,.12) 61%,rgba(7,5,20,.66) 100%); }
+.interactive-core-scene.is-cover { z-index: 45; }
 .interactive-core-scene.is-hud { z-index: 45; background: transparent; }
 .interactive-core-scene.is-hud::before,
 .interactive-core-scene.is-hud::after { display: none; }

@@ -209,7 +209,6 @@ onBeforeUnmount(() => {
     <GameLoginScreen v-if="gateVisible" @start="beginIntro" />
     <CoreMainLayout v-if="!gateVisible || isAdminRoute" />
     <CoreLobbyHud v-if="route.path === '/' && !gateVisible && coreMode === 'lobby'" />
-    <div v-if="coreMode === 'menu'" class="core-menu-dimmer" aria-hidden="true"></div>
     <CoreNavigationOverlay :visible="menuVisible || fallbackNavVisible" :items="coreNavItems" @select="selectNavigation" />
     <button
       v-if="webglFailed && !gateVisible && !isAdminRoute && route.path !== '/'"
@@ -265,17 +264,6 @@ body.game-start-flash { filter: brightness(2.6); }
   pointer-events: none;
   background: #fff;
   opacity: 0;
-}
-
-.core-menu-dimmer {
-  position: fixed;
-  inset: 0;
-  z-index: 30;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at center, rgba(7, 5, 20, 0.08) 0 19%, rgba(4, 3, 16, 0.68) 62%, rgba(4, 3, 16, 0.9) 100%),
-    rgba(2, 2, 10, 0.38);
-  animation: menu-dimmer-in 0.3s ease both;
 }
 
 .core-charge-ring {
@@ -354,8 +342,6 @@ a { font: inherit; }
   60% { transform: translate(-2px, -2px); }
   80% { transform: translate(2px, 1px); }
 }
-
-@keyframes menu-dimmer-in { from { opacity: 0; } to { opacity: 1; } }
 
 @media (max-width: 720px) {
   .core-charge-ring { width: 108px; }
